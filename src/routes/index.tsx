@@ -1,15 +1,15 @@
 import {createFileRoute} from '@tanstack/react-router'
 import {motion, type Variants} from "framer-motion";
 import {Header} from "@/components/header.tsx";
-import {BlogCard} from "@/components/cards/BlogCard";
-import {SecurityLabCard} from "@/components/cards/SecurityLabCard";
-import {FeaturedProjectCard} from "@/components/cards/FeaturedProjectCard";
-import {ReceiptLogCard} from "@/components/cards/ReceiptLogCard";
-import {SocialCard} from "@/components/cards/SocialCard";
-import {SkillsCard} from "@/components/cards/SkillsCard";
-import {LocationCard} from "@/components/cards/LocationCard";
-import {AvailabilityCard} from "@/components/cards/AvailabilityCard";
-import {WorkExperienceCard} from "@/components/cards/WorkExperienceCard";
+import {BlogCard} from "@/components/cards/blog-card.tsx";
+import {SecurityLabCard} from "@/components/cards/security-lab-card.tsx";
+import {FeaturedProjectCard} from "@/components/cards/featured-project-card.tsx";
+import {ReceiptLogCard} from "@/components/cards/receipt-log-card.tsx";
+import {SocialCard} from "@/components/cards/social-card.tsx";
+import {SkillsCard} from "@/components/cards/skills-card.tsx";
+import {LocationCard} from "@/components/cards/location-card.tsx";
+import {AvailabilityCard} from "@/components/cards/availability-card.tsx";
+import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
 
 export const Route = createFileRoute('/')({component: App});
 
