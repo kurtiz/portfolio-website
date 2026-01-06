@@ -1,19 +1,6 @@
 import {motion} from "framer-motion";
 import {ThemeToggle} from "./theme-toggle.tsx";
-
-const AudioWaveform = () => {
-    return (
-        <div className="flex items-center gap-1 h-5">
-            {[1, 2, 3, 4, 5].map((bar) => (
-                <motion.div
-                    key={bar}
-                    className={`w-1 bg-primary-foreground rounded-full animate-waveform-${bar}`}
-                    initial={{height: 4}}
-                />
-            ))}
-        </div>
-    );
-};
+import AudioWaveform from "@/components/audio-wave.tsx";
 
 export const Header = () => {
     return (
@@ -33,7 +20,7 @@ export const Header = () => {
                     animate={{opacity: 1, y: 0}}
                     transition={{duration: 0.5, delay: 0.1}}
                 >
-                    I'm a Full Stack Web Developer and Cybersecurity Analyst crafting
+                    I'm a Full Stack Web/Mobile Developer and Cybersecurity Analyst crafting
                     secure, beautiful digital experiences.
                 </motion.p>
             </div>
@@ -51,7 +38,7 @@ export const Header = () => {
                     whileHover={{scale: 1.02}}
                 >
                     <span className="w-2 h-2 rounded-full bg-success animate-pulse-glow"/>
-                    <span className="font-mono text-xs">system active</span>
+                    <span className="font-mono text-xs">System Active</span>
                     <AudioWaveform/>
                 </motion.div>
             </motion.div>

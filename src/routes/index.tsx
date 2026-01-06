@@ -11,7 +11,7 @@ import {LocationCard} from "@/components/cards/location-card.tsx";
 import {AvailabilityCard} from "@/components/cards/availability-card.tsx";
 import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
 
-export const Route = createFileRoute('/')({component: App});
+export const Route = createFileRoute('/')({ssr: false, component: App});
 
 const containerVariants: Variants = {
     hidden: {opacity: 0},
