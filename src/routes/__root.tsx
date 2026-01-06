@@ -1,58 +1,73 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import {createRootRoute, HeadContent, Scripts} from '@tanstack/react-router';
+import {TanStackRouterDevtoolsPanel} from '@tanstack/react-router-devtools';
+import {TanStackDevtools} from '@tanstack/react-devtools';
 
-import Header from '../components/Header'
-
-import appCss from '../styles.css?url'
+import appCss from '../styles.css?url';
+import {ReactQueryDevtoolsPanel} from "@tanstack/react-query-devtools";
+import * as React from "react";
+import {QueryClientProvider} from "@tanstack/react-query";
+import {queryClient} from "@/query";
+import {ThemeProvider} from "@/components/theme-provider.tsx";
+import {Toaster} from "sonner";
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'TanStack Start Starter',
-      },
-    ],
-    links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
-    ],
-  }),
-
-  shellComponent: RootDocument,
-})
-
-function RootDocument({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <Header />
-        {children}
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
+    head: () => ({
+        meta: [
             {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
+                charSet: 'utf-8',
             },
-          ]}
-        />
-        <Scripts />
-      </body>
-    </html>
-  )
+            {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1',
+            },
+            {
+                title: 'TanStack Start Starter',
+            },
+        ],
+        links: [
+            {
+                rel: 'stylesheet',
+                href: appCss,
+            },
+        ],
+    }),
+
+    shellComponent: RootDocument,
+});
+
+function RootDocument({children}: { children: React.ReactNode }) {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider
+                defaultTheme="light"
+                storageKey="portfolio-ui-theme"
+            >
+                <html lang="en">
+                <head>
+                    <HeadContent/>
+                </head>
+                <body>
+                {children}
+                <TanStackDevtools
+                    config={{
+                        position: 'bottom-right',
+                    }}
+                    plugins={[
+                        {
+                            name: 'Tanstack Router',
+                            render: <TanStackRouterDevtoolsPanel/>,
+                        },
+                        {
+                            name: 'Tanstack Query',
+                            render: <ReactQueryDevtoolsPanel/>,
+                        },
+                    ]}
+                />
+                <Toaster richColors/>
+                <Scripts/>
+                </body>
+                </html>
+            </ThemeProvider>
+        </QueryClientProvider>
+    )
 }
