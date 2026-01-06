@@ -1,12 +1,24 @@
 import {motion} from "framer-motion";
 import PenIcon from "@/components/ui/pen-icon.tsx";
+import {useRef} from "react";
+import {AnimatedIconHandle} from "@/components/ui/types.ts";
 
 export const BlogCard = () => {
+    const penIconRef = useRef<AnimatedIconHandle>(null);
     return (
         <motion.div
             className="card-neumorphic p-6 h-full flex flex-col justify-between cursor-pointer group"
             whileHover={{scale: 1.02}}
             transition={{duration: 0.2}}
+            onTap={() => {
+                penIconRef?.current?.startAnimation();
+            }}
+            onHoverStart={() => {
+                penIconRef?.current?.startAnimation();
+            }}
+            onHoverEnd={() => {
+                penIconRef?.current?.stopAnimation();
+            }}
         >
             <div className="flex-1 flex items-center justify-center">
                 <motion.div
@@ -16,7 +28,7 @@ export const BlogCard = () => {
                 >
                     <div
                         className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-soft group-hover:shadow-elevated transition-shadow">
-                        <PenIcon className="w-7 h-7 text-foreground"/>
+                        <PenIcon ref={penIconRef} className="w-7 h-7 text-foreground"/>
                     </div>
                     {/* 3D shadow effect */}
                     <div
