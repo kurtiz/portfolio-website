@@ -20,7 +20,7 @@ export const Header = () => {
         <header className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-8">
             <div className="space-y-3">
                 <motion.h1
-                    className="text-3xl sm:text-4xl font-bold tracking-tight lowercase"
+                    className="text-3xl sm:text-4xl font-bold tracking-tight normal-case"
                     initial={{opacity: 0, y: 20}}
                     animate={{opacity: 1, y: 0}}
                     transition={{duration: 0.5}}

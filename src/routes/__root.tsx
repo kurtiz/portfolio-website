@@ -21,13 +21,17 @@ export const Route = createRootRoute({
                 content: 'width=device-width, initial-scale=1',
             },
             {
-                title: 'TanStack Start Starter',
+                title: 'Aaron Will Djaba',
             },
         ],
         links: [
             {
                 rel: 'stylesheet',
                 href: appCss,
+            },
+            {
+                rel: "icon",
+                href: "/logo.png",
             },
         ],
     }),
