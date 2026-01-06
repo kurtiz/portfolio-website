@@ -3,6 +3,11 @@ import {Mail} from "lucide-react";
 import {GithubIcon} from "@/components/animated-socials/github-icon.tsx";
 import {LinkedinIcon} from "@/components/animated-socials/linkedin-icon.tsx";
 import {TwitterIcon} from "@/components/animated-socials/twitter-icon.tsx";
+import {useRef} from "react";
+import type {GithubIconHandle} from "@/components/animated-socials/github-icon";
+import type {LinkedInIconHandle} from "@/components/animated-socials/linkedin-icon";
+import type {TwitterIconHandle} from "@/components/animated-socials/twitter-icon";
+
 
 const socials = [
     {icon: GithubIcon, label: "GitHub", href: "#"},
@@ -12,6 +17,13 @@ const socials = [
 ];
 
 export const SocialCard = () => {
+
+    const iconRefs = {
+        GitHub: useRef<GithubIconHandle>(null),
+        LinkedIn: useRef<LinkedInIconHandle>(null),
+        Twitter: useRef<TwitterIconHandle>(null),
+    };
+
     return (
         <motion.div
             className="card-neumorphic p-6 h-full flex flex-col"
@@ -22,20 +34,34 @@ export const SocialCard = () => {
 
             <div className="flex-1 flex items-center justify-center">
                 <div className="grid grid-cols-2 gap-3">
-                    {socials.map((social, index) => (
-                        <motion.a
-                            key={social.label}
-                            href={social.href}
-                            className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center hover:bg-muted transition-colors"
-                            whileHover={{y: -4}}
-                            whileTap={{scale: 0.95}}
-                            initial={{opacity: 0, scale: 0.8}}
-                            animate={{opacity: 1, scale: 1}}
-                            transition={{delay: index * 0.05}}
-                        >
-                            <social.icon className="w-5 h-5"/>
-                        </motion.a>
-                    ))}
+                    {socials.map((social, index) => {
+                        const Icon = social.icon;
+                        const ref =
+                            social.label === "GitHub"
+                                ? iconRefs.GitHub
+                                : social.label === "LinkedIn"
+                                    ? iconRefs.LinkedIn
+                                    : social.label === "Twitter"
+                                        ? iconRefs.Twitter
+                                        : undefined;
+
+                        return (
+                            <motion.a
+                                key={social.label}
+                                href={social.href}
+                                className="group w-12 h-12 bg-secondary rounded-xl flex items-center justify-center hover:bg-muted transition-colors"
+                                whileHover={{y: -4}}
+                                whileTap={{scale: 0.95}}
+                                initial={{opacity: 0, scale: 0.8}}
+                                animate={{opacity: 1, scale: 1}}
+                                transition={{delay: index * 0.05}}
+                                onHoverStart={() => ref?.current?.startAnimation()}
+                                onHoverEnd={() => ref?.current?.stopAnimation()}
+                            >
+                                <Icon ref={ref as any} className="w-5 h-5"/>
+                            </motion.a>
+                        );
+                    })}
                 </div>
             </div>
 
