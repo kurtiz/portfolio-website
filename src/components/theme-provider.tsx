@@ -10,13 +10,21 @@ type ThemeProviderProps = {
     storageKey?: string
 }
 
-export function ThemeProvider(
-    {
-        children,
-        defaultTheme = "system",
-        storageKey = "ui-theme",
-    }: ThemeProviderProps) {
-    const [theme, setTheme] = React.useState<Theme>(() => defaultTheme)
+type ThemeContextType = {
+    theme: Theme
+    setTheme: (theme: Theme) => void
+}
+
+const ThemeContext = React.createContext<ThemeContextType | undefined>(
+    undefined
+)
+
+export function ThemeProvider({
+                                  children,
+                                  defaultTheme = "system",
+                                  storageKey = "ui-theme",
+                              }: ThemeProviderProps) {
+    const [theme, setTheme] = React.useState<Theme>(defaultTheme)
     const [mounted, setMounted] = React.useState(false)
 
     // Mark client mount
@@ -24,7 +32,7 @@ export function ThemeProvider(
         setMounted(true)
     }, [])
 
-    // Read from localStorage ONLY on client
+    // Read from localStorage (client only)
     React.useEffect(() => {
         if (!mounted) return
 
@@ -52,26 +60,12 @@ export function ThemeProvider(
         localStorage.setItem(storageKey, theme)
     }, [theme, mounted, storageKey])
 
-    // Prevent hydration mismatch
-    if (!mounted) {
-        return <>{children}</>
-    }
-
     return (
         <ThemeContext.Provider value={{theme, setTheme}}>
             {children}
         </ThemeContext.Provider>
     )
 }
-
-type ThemeContextType = {
-    theme: Theme
-    setTheme: (theme: Theme) => void
-}
-
-const ThemeContext = React.createContext<ThemeContextType | undefined>(
-    undefined
-)
 
 export function useTheme() {
     const ctx = React.useContext(ThemeContext)

@@ -37,7 +37,8 @@ const itemVariants: Variants = {
 };
 
 function App() {
-    return (<div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
+    return (
+        <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
             <motion.div
                 className="floating-container max-w-5xl mx-auto p-6 sm:p-10"
                 initial={{opacity: 0, y: 30}}
@@ -53,7 +54,7 @@ function App() {
                     animate="visible"
                 >
                     {/* Blog Card - 1x1 */}
-                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
+                    <motion.div variants={itemVariants} className="col-span-2 sm:col-span-2 md:col-span-1 row-span-1">
                         <BlogCard/>
                     </motion.div>
 
@@ -102,9 +103,9 @@ function App() {
                         variants={itemVariants}
                         className="col-span-1 row-span-1 card-inset flex items-center justify-center"
                     >
-            <span className="font-mono text-xs text-muted-foreground">
-              more coming soon...
-            </span>
+                        <span className="font-mono text-xs text-muted-foreground">
+                          more coming soon...
+                        </span>
                     </motion.div>
                 </motion.div>
 
