@@ -17,18 +17,6 @@ export default function AudioWaveform() {
         audio.volume = 0.5
         audioRef.current = audio
 
-        // Try autoplay (it may be blocked)
-        audio
-            .play()
-            .then(() => {
-                setPlaying(true)
-                controls.start("playing")
-            })
-            .catch(() => {
-                // Autoplay blocked — wait for user interaction
-                setPlaying(false)
-            })
-
         return () => {
             audio.pause()
             audioRef.current = null
