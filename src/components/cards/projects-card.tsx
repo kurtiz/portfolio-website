@@ -1,13 +1,14 @@
 import {motion} from "framer-motion";
-import PenIcon from "@/components/ui/pen-icon.tsx";
+import {FolderOpenIcon} from "@/components/folder-open-icon.tsx";
 
-export const BlogCard = () => {
+export const ProjectsCard = () => {
     return (
         <motion.div
             className="card-neumorphic p-6 h-full flex flex-col justify-between cursor-pointer group"
             whileHover={{scale: 1.02}}
             transition={{duration: 0.2}}
         >
+            {/* Icon / Visual */}
             <div className="flex-1 flex items-center justify-center">
                 <motion.div
                     className="relative"
@@ -16,18 +17,20 @@ export const BlogCard = () => {
                 >
                     <div
                         className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-soft group-hover:shadow-elevated transition-shadow">
-                        <PenIcon className="w-7 h-7 text-foreground"/>
+                        <FolderOpenIcon className="w-7 h-7 text-foreground"/>
                     </div>
-                    {/* 3D shadow effect */}
+
+                    {/* 3D shadow */}
                     <div
                         className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-2 bg-muted/50 rounded-full blur-sm"/>
                 </motion.div>
             </div>
 
-            <div className="mt-4">
-                <h3 className="font-semibold text-lg">Blog</h3>
+            {/* Text */}
+            <div className="mt-4 text-center">
+                <h3 className="font-semibold text-lg">Projects</h3>
                 <p className="font-mono text-xs text-muted-foreground mt-1">
-                    thoughts & tutorials
+                    selected work & experiments
                 </p>
             </div>
         </motion.div>

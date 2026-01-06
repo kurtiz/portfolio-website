@@ -7,9 +7,9 @@ import {FeaturedProjectCard} from "@/components/cards/featured-project-card.tsx"
 import {ReceiptLogCard} from "@/components/cards/receipt-log-card.tsx";
 import {SocialCard} from "@/components/cards/social-card.tsx";
 import {SkillsCard} from "@/components/cards/skills-card.tsx";
-import {LocationCard} from "@/components/cards/location-card.tsx";
 import {AvailabilityCard} from "@/components/cards/availability-card.tsx";
 import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
+import {ProjectsCard} from "@/components/cards/projects-card.tsx";
 
 export const Route = createFileRoute('/')({ssr: false, component: App});
 
@@ -65,7 +65,7 @@ function App() {
 
                     {/* Location Card - 1x1 */}
                     <motion.div variants={itemVariants} className="col-span-1 row-span-1">
-                        <LocationCard/>
+                        <ProjectsCard/>
                     </motion.div>
 
                     {/* Security Lab - 1x2 tall */}

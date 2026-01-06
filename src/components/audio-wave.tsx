@@ -1,17 +1,17 @@
 "use client"
 
-import * as React from "react"
+import {useEffect, useRef, useState} from "react"
 import {motion, useAnimation} from "framer-motion"
 
 const BARS = [1, 2, 3, 4, 5]
 
 export default function AudioWaveform() {
-    const audioRef = React.useRef<HTMLAudioElement | null>(null);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
     const controls = useAnimation();
-    const [playing, setPlaying] = React.useState(false);
+    const [playing, setPlaying] = useState(false);
 
     // Initialize audio (client only)
-    React.useEffect(() => {
+    useEffect(() => {
         const audio = new Audio("/lofi.mp3")
         audio.loop = true
         audio.volume = 0.5

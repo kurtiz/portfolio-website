@@ -7,6 +7,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@plugin "tailwindcss-motion";
+
 
 @custom-variant dark (&:is(.dark *));
 
