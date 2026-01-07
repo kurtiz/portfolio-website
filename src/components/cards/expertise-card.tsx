@@ -1,22 +1,22 @@
 import {motion} from "framer-motion";
 import {useRef} from "react";
-import {BuildingIcon, BuildingIconHandle} from "@/components/animated-socials/building-icon.tsx";
+import {CodeXmlIcon, CodeXmlIconHandle} from "@/components/animated-socials/code-xml-icon.tsx";
 
-export const WorkExperienceCard = () => {
-    const buildingIconRef = useRef<BuildingIconHandle>(null);
+export const ExpertiseCard = () => {
+    const codeIconRef = useRef<CodeXmlIconHandle>(null);
     return (
         <motion.div
             className="card-neumorphic p-6 h-full flex flex-col justify-between cursor-pointer group"
             whileHover={{scale: 1.02}}
             transition={{duration: 0.2}}
             onTap={() => {
-                buildingIconRef?.current?.startAnimation();
+                codeIconRef?.current?.startAnimation();
             }}
             onHoverStart={() => {
-                buildingIconRef?.current?.startAnimation();
+                codeIconRef?.current?.startAnimation();
             }}
             onHoverEnd={() => {
-                buildingIconRef?.current?.stopAnimation();
+                codeIconRef?.current?.stopAnimation();
             }}
         >
             <div className="flex-1 flex items-center justify-center">
@@ -27,7 +27,7 @@ export const WorkExperienceCard = () => {
                 >
                     <div
                         className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-soft group-hover:shadow-elevated transition-shadow">
-                        <BuildingIcon ref={buildingIconRef} className="w-7 h-7 text-foreground"/>
+                        <CodeXmlIcon ref={codeIconRef} className="w-7 h-7 text-foreground"/>
                     </div>
                     {/* 3D shadow effect */}
                     <div
@@ -36,9 +36,9 @@ export const WorkExperienceCard = () => {
             </div>
 
             <div className="mt-4">
-                <h3 className="font-semibold text-lg">Work Experiences</h3>
+                <h3 className="font-semibold text-lg">My Expertise</h3>
                 <p className="font-mono text-xs text-muted-foreground mt-1">
-                    where or who I have worked with
+                    skills & tools
                 </p>
             </div>
         </motion.div>

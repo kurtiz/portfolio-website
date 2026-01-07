@@ -39,7 +39,7 @@ export const ProjectsCard = () => {
             </div>
 
             {/* Text */}
-            <div className="mt-4 text-center">
+            <div className="mt-4">
                 <h3 className="font-semibold text-lg">Projects</h3>
                 <p className="font-mono text-xs text-muted-foreground mt-1">
                     selected work & experiments

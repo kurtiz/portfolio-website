@@ -32,7 +32,7 @@ export const SocialCard = () => {
             whileHover={{scale: 1.02}}
             transition={{duration: 0.2}}
         >
-            <h3 className="font-semibold mb-4">Connect</h3>
+            <h3 className="font-semibold mb-4">Connect With Me</h3>
 
             <div className="flex-1 flex items-center justify-center">
                 <div className="grid grid-cols-2 gap-3">

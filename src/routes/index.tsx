@@ -2,14 +2,12 @@ import {createFileRoute} from '@tanstack/react-router'
 import {motion, type Variants} from "framer-motion";
 import {Header} from "@/components/header.tsx";
 import {BlogCard} from "@/components/cards/blog-card.tsx";
-import {SecurityLabCard} from "@/components/cards/security-lab-card.tsx";
 import {FeaturedProjectCard} from "@/components/cards/featured-project-card.tsx";
-import {ReceiptLogCard} from "@/components/cards/receipt-log-card.tsx";
+import {TerminalCard} from "@/components/cards/terminal-card.tsx";
 import {SocialCard} from "@/components/cards/social-card.tsx";
-import {SkillsCard} from "@/components/cards/skills-card.tsx";
-import {AvailabilityCard} from "@/components/cards/availability-card.tsx";
-import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
 import {ProjectsCard} from "@/components/cards/projects-card.tsx";
+import {ExpertiseCard} from "@/components/cards/expertise-card.tsx";
+import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
 
 export const Route = createFileRoute('/')({ssr: false, component: App});
 
@@ -69,33 +67,24 @@ function App() {
                     </motion.div>
 
                     {/* Security Lab - 1x2 tall */}
-                    <motion.div variants={itemVariants} className="col-span-1 row-span-2">
-                        <SecurityLabCard/>
+                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
+                        <ExpertiseCard/>
                     </motion.div>
 
                     {/* Social Card - 1x1 */}
-                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
+                    <motion.div variants={itemVariants} className=" md:col-span-1 col-span-2 row-span-1">
                         <SocialCard/>
                     </motion.div>
 
-                    {/* Skills Card - 2x1 wide */}
-                    <motion.div variants={itemVariants} className="col-span-2 row-span-1">
-                        <SkillsCard/>
-                    </motion.div>
-
                     {/* Work Experience - 1x2 tall */}
-                    <motion.div variants={itemVariants} className="col-span-1 row-span-2">
+                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
                         <WorkExperienceCard/>
                     </motion.div>
 
-                    {/* Availability Card - 1x1 */}
-                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
-                        <AvailabilityCard/>
-                    </motion.div>
 
                     {/* Receipt Log - 2x1 wide */}
                     <motion.div variants={itemVariants} className="col-span-2 sm:col-span-2 row-span-1">
-                        <ReceiptLogCard/>
+                        <TerminalCard/>
                     </motion.div>
 
                     {/* Empty decorative card */}
