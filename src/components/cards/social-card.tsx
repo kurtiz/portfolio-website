@@ -1,8 +1,9 @@
 import {motion} from "framer-motion";
-import {Mail} from "lucide-react";
 import {GithubIcon} from "@/components/animated-socials/github-icon.tsx";
 import {LinkedinIcon} from "@/components/animated-socials/linkedin-icon.tsx";
 import {TwitterIcon} from "@/components/animated-socials/twitter-icon.tsx";
+import type {QuoraIconHandle} from "@/components/animated-socials/quora-icon.tsx";
+import {QuoraIcon} from "@/components/animated-socials/quora-icon.tsx";
 import {useRef} from "react";
 import type {GithubIconHandle} from "@/components/animated-socials/github-icon";
 import type {LinkedInIconHandle} from "@/components/animated-socials/linkedin-icon";
@@ -13,7 +14,7 @@ const socials = [
     {icon: GithubIcon, label: "GitHub", href: "#"},
     {icon: LinkedinIcon, label: "LinkedIn", href: "#"},
     {icon: TwitterIcon, label: "Twitter", href: "#"},
-    {icon: Mail, label: "Email", href: "#"},
+    {icon: QuoraIcon, label: "Email", href: "#"},
 ];
 
 export const SocialCard = () => {
@@ -22,6 +23,7 @@ export const SocialCard = () => {
         GitHub: useRef<GithubIconHandle>(null),
         LinkedIn: useRef<LinkedInIconHandle>(null),
         Twitter: useRef<TwitterIconHandle>(null),
+        Quora: useRef<QuoraIconHandle>(null),
     };
 
     return (
@@ -43,7 +45,9 @@ export const SocialCard = () => {
                                     ? iconRefs.LinkedIn
                                     : social.label === "Twitter"
                                         ? iconRefs.Twitter
-                                        : undefined;
+                                        : social.label === "Quora"
+                                            ? iconRefs.Quora
+                                            : undefined;
 
                         return (
                             <motion.a
