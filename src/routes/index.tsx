@@ -77,13 +77,13 @@ function App() {
                     </motion.div>
 
                     {/* Work Experience - 1x2 tall */}
-                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
+                    <motion.div variants={itemVariants} className="sm:col-span-1 col-span-2 row-span-1">
                         <WorkExperienceCard/>
                     </motion.div>
 
 
                     {/* Receipt Log - 2x1 wide */}
-                    <motion.div variants={itemVariants} className="col-span-2 sm:col-span-2 row-span-1">
+                    <motion.div variants={itemVariants} className="col-span-2 row-span-1">
                         <TerminalCard/>
                     </motion.div>
 
