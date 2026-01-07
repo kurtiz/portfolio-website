@@ -11,10 +11,10 @@ import type {TwitterIconHandle} from "@/components/animated-socials/twitter-icon
 
 
 const socials = [
-    {icon: GithubIcon, label: "GitHub", href: "#"},
-    {icon: LinkedinIcon, label: "LinkedIn", href: "#"},
-    {icon: TwitterIcon, label: "Twitter", href: "#"},
-    {icon: QuoraIcon, label: "Email", href: "#"},
+    {icon: GithubIcon, label: "GitHub", href: "https://github.com/kurtiz"},
+    {icon: LinkedinIcon, label: "LinkedIn", href: "https://www.linkedin.com/in/aaron-will-djaba-424b7a184"},
+    {icon: TwitterIcon, label: "Twitter", href: "https://x.com/aaronwilldjaba"},
+    {icon: QuoraIcon, label: "Quora", href: "https://www.quora.com/profile/Aaron-Will-Djaba"},
 ];
 
 export const SocialCard = () => {
