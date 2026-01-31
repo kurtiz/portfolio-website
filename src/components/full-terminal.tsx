@@ -165,17 +165,17 @@ export const FullTerminal = () => {
 
                         {/* Input */}
                         <form
-                            onSubmit={(e) => {
+                            onSubmit={async (e) => {
                                 e.preventDefault();
                                 if (!input.trim()) return;
-                                runCommand(input);
+                                await runCommand(input);
                                 setInput("");
                             }}
                             className="flex items-center gap-2"
                         >
-              <span className="text-accent select-none">
-                {path.join("/")}
-              </span>
+                            <span className="text-accent select-none">
+                                {path.join("/")}
+                            </span>
                             <span className="text-success font-semibold select-none">$</span>
                             <input
                                 ref={inputRef}
