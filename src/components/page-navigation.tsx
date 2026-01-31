@@ -93,6 +93,7 @@ function getPageTitle(path: string): string {
     const titles: Record<string, string> = {
         "/terminal": "terminal",
         "/work-experience": "work experience",
+        "/expertise": "expertise",
         "/projects": "projects",
         "/blog": "blog",
     };
