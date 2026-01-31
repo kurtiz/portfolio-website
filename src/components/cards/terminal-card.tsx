@@ -6,6 +6,7 @@ import {TerminalLine} from "@/types/terminal.types.ts";
 import {FolderNode, fs} from "@/fs/fs";
 import {commands} from "@/fs/command.ts";
 import {useNavigate} from "@tanstack/react-router";
+import {getAutocompleteSuggestions, applyAutocomplete} from "@/fs/fs.utils";
 
 
 /* -----------------------------
@@ -110,6 +111,35 @@ export const TerminalCard = () => {
 
     const navigate = useNavigate();
 
+    /* Handle tab autocomplete */
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Tab") {
+            e.preventDefault();
+            
+            const suggestions = getAutocompleteSuggestions(
+                input,
+                cwd,
+                Object.keys(commands)
+            );
+            
+            if (suggestions.length === 1) {
+                // Single match - autocomplete it
+                setInput(applyAutocomplete(input, suggestions[0]));
+            } else if (suggestions.length > 1) {
+                // Multiple matches - show them
+                setHistory((h) => [
+                    ...h,
+                    {text: input, type: "command", prefix: "$"},
+                    {
+                        text: suggestions.join("  "),
+                        type: "output",
+                        prefix: " ",
+                    },
+                ]);
+            }
+        }
+    };
+
     return (
         <motion.div
             className="relative h-[500px] rounded-2xl overflow-hidden bg-card border border-border font-mono text-sm cursor-text"
@@ -157,6 +187,7 @@ export const TerminalCard = () => {
                             ref={inputRef}
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
+                            onKeyDown={handleKeyDown}
                             className="flex-1 bg-transparent outline-none caret-accent"
                             spellCheck={false}
                             autoComplete="off"

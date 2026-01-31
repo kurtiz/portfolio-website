@@ -1,10 +1,12 @@
 "use client";
 
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import {TerminalLine} from "@/types/terminal.types.ts";
 import {FolderNode, fs} from "@/fs/fs.ts";
 import {commands} from "@/fs/command.ts";
+import {applyAutocomplete, getAutocompleteSuggestions} from "@/fs/fs.utils";
+import {useNavigate} from "@tanstack/react-router";
 
 
 /* -----------------------------
@@ -108,6 +110,37 @@ export const FullTerminal = () => {
         setHistory((h) => [...h, ...output]);
     };
 
+    /* Handle tab autocomplete */
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Tab") {
+            e.preventDefault();
+
+            const suggestions = getAutocompleteSuggestions(
+                input,
+                cwd,
+                Object.keys(commands)
+            );
+
+            if (suggestions.length === 1) {
+                // Single match - autocomplete it
+                setInput(applyAutocomplete(input, suggestions[0]));
+            } else if (suggestions.length > 1) {
+                // Multiple matches - show them
+                setHistory((h) => [
+                    ...h,
+                    {text: input, type: "command", prefix: "$"},
+                    {
+                        text: suggestions.join("  "),
+                        type: "output",
+                        prefix: " ",
+                    },
+                ]);
+            }
+        }
+    };
+
+    const navigate = useNavigate();
+
     return (
         <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
             {/* Terminal Window */}
@@ -116,7 +149,7 @@ export const FullTerminal = () => {
                 <div className="flex items-center gap-2 px-4 py-3 bg-secondary/50 border-b border-border/50">
                     <div className="flex items-center gap-1.5">
                         <button
-                            onClick={() => window.close()}
+                            onClick={() => navigate({to: "/"})}
                             className="w-3 h-3 rounded-full bg-[#ff5f57]"
                         />
                         <div className="w-3 h-3 rounded-full bg-[#febc2e]"/>
@@ -169,6 +202,7 @@ export const FullTerminal = () => {
                                 ref={inputRef}
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
                                 className="flex-1 bg-transparent outline-none caret-accent"
                                 spellCheck={false}
                                 autoComplete="off"
