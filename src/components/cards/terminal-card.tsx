@@ -142,7 +142,7 @@ export const TerminalCard = () => {
 
     return (
         <motion.div
-            className="relative h-[500px] rounded-2xl overflow-hidden bg-card border border-border font-mono text-sm cursor-text"
+            className="relative h-[500px] rounded-2xl overflow-hidden card-neumorphic border border-border font-mono text-sm cursor-text"
             onClick={() => inputRef.current?.focus()}
             whileHover={{scale: 1.01}}
         >

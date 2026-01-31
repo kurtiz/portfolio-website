@@ -142,7 +142,7 @@ export const FullTerminal = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
+        <div className="h-screen w-screen bg-background flex flex-col overflow-hidden motion-preset-blur-down">
             {/* Terminal Window */}
             <div className="h-full flex flex-col bg-card/80 dark:bg-card/90 backdrop-blur-xl">
                 {/* Window Chrome */}
