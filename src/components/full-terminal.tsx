@@ -11,29 +11,15 @@ import {commands} from "@/fs/command.ts";
     Animated Line Component
 ------------------------------ */
 const AnimatedLine = ({line}: { line: TerminalLine }) => {
-    const getTextColor = () => {
-        switch (line.type) {
-            case "command":
-                return "text-foreground";
-            case "output":
-                return "text-muted-foreground";
-            case "path":
-                return "text-accent";
-            case "success":
-                return "text-success";
-            case "accent":
-                return "text-accent";
-            case "error":
-                return "text-destructive";
-            default:
-                return "text-foreground";
-        }
-    };
-
-    const getPrefixColor = () => {
-        if (line.type === "command") return "text-success";
-        if (line.prefix === "→") return "text-accent";
-        return "text-muted-foreground";
+    const colorMap: Record<string, string> = {
+        command: "text-foreground",
+        output: "text-muted-foreground",
+        path: "text-accent",
+        success: "text-success",
+        accent: "text-accent",
+        error: "text-destructive",
+        folder: "text-blue-400 dark:text-blue-500 font-semibold",
+        file: "text-green-400 dark:text-green-500",
     };
 
     return (
@@ -44,11 +30,13 @@ const AnimatedLine = ({line}: { line: TerminalLine }) => {
             className="flex items-start gap-2"
         >
             {line.prefix && (
-                <span className={`${getPrefixColor()} select-none font-semibold`}>
+                <span className="text-accent font-semibold select-none">
           {line.prefix}
         </span>
             )}
-            <span className={`${getTextColor()} whitespace-pre-wrap break-words`}>
+            <span
+                className={`${colorMap[line.type]} whitespace-pre-wrap break-words`}
+            >
         {line.text}
       </span>
         </motion.div>

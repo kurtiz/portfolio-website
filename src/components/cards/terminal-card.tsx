@@ -19,6 +19,8 @@ const AnimatedLine = ({line}: { line: TerminalLine }) => {
         success: "text-success",
         accent: "text-accent",
         error: "text-destructive",
+        folder: "text-blue-400 dark:text-blue-500 font-semibold",
+        file: "text-foreground",
     };
 
     return (

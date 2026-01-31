@@ -18,10 +18,17 @@ type CommandHandler = (
 export const commands: Record<string, CommandHandler> = {
     help: async () => [
         {text: "Available commands:", type: "accent", prefix: "→"},
-        {text: "  ls [dir]", type: "output", prefix: " "},
-        {text: "  cat <file>", type: "output", prefix: " "},
-        {text: "  cd <dir>", type: "output", prefix: " "},
-        {text: "  clear", type: "output", prefix: " "},
+        {text: "", type: "output", prefix: " "},
+        {text: "  ls [dir]       - List files and folders", type: "output", prefix: " "},
+        {text: "  cat <file>     - Read file contents", type: "output", prefix: " "},
+        {text: "  cd <dir>       - Change directory", type: "output", prefix: " "},
+        {text: "  cd ..          - Go to parent directory", type: "output", prefix: " "},
+        {text: "  whoami         - About me", type: "output", prefix: " "},
+        {text: "  clear          - Clear terminal", type: "output", prefix: " "},
+        {text: "", type: "output", prefix: " "},
+        {text: "Color coding:", type: "accent", prefix: "→"},
+        {text: "  📁 folder/     - Folders (blue)", type: "folder", prefix: " "},
+        {text: "  📄 file.txt    - Files (green)", type: "file", prefix: " "},
     ],
 
     ls: async (args, ctx) => {
@@ -33,13 +40,21 @@ export const commands: Record<string, CommandHandler> = {
             return [{text: "Not a directory", type: "error", prefix: "✗"}];
         }
 
-        return [
-            {
-                text: Object.keys(target.children).join("  "),
-                type: "path",
+        const entries = Object.entries(target.children).map(([name, node]) => {
+            if (node.type === "folder") {
+                return `📁 ${name}/`;
+            } else {
+                return `📄 ${name}`;
+            }
+        });
+
+        return entries.length > 0
+            ? entries.map(entry => ({
+                text: entry,
+                type: entry.startsWith("📁") ? "folder" : "file",
                 prefix: " ",
-            },
-        ];
+            }))
+            : [{text: "Empty directory", type: "output", prefix: " "}];
     },
 
     cat: async (args, ctx) => {

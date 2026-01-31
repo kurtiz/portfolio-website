@@ -7,7 +7,9 @@ export type TerminalLineType =
     | "path"
     | "success"
     | "accent"
-    | "error";
+    | "error"
+    | "folder"
+    | "file";
 
 export type TerminalLine = {
     text: string;
