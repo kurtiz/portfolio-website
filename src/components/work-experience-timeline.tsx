@@ -101,7 +101,7 @@ const TimelineItem = ({
     const [isExpanded, setIsExpanded] = useState(false);
     const hasRoles = experience.roles && experience.roles.length > 0;
     const isCurrent = hasRoles 
-        ? !experience.roles[0].endDate 
+        ? !experience?.roles?.[0].endDate
         : !experience.endDate;
 
     return (
@@ -211,7 +211,7 @@ const TimelineItem = ({
                                 <div className="h-px flex-1 bg-gradient-to-l from-accent/50 to-transparent"/>
                             </div>
                             <div className="bg-secondary/20 rounded-lg p-4 border border-border/50">
-                                {experience.roles.map((role, i) => (
+                                {experience?.roles?.map((role, i) => (
                                     <RoleItem
                                         key={i}
                                         role={role}

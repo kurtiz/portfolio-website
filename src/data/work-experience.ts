@@ -21,7 +21,7 @@ export interface WorkExperience {
 
 /**
  * Work Experience Data
- * 
+ *
  * Instructions:
  * - Add your work experiences in reverse chronological order (newest first)
  * - Leave `endDate` undefined for current positions (will show green "Current" badge)
@@ -29,61 +29,153 @@ export interface WorkExperience {
  * - Add technologies you used in each role
  * - Keep descriptions concise but informative
  */
+/**
+ * Work Experience Data
+ */
 export const workExperiences: WorkExperience[] = [
     {
-        company: "Tech Corp",
-        position: "Senior Full-Stack Developer", // Overall position (used if no roles)
-        startDate: "Jun 2022", // Company start date
-        // endDate: undefined, // Current position - green dot will show
-        location: "San Francisco, CA",
+        company: "OpenSSF",
+        position: "Special Interest Group Lead",
+        startDate: "Dec 2025",
+        location: "Remote",
+        type: "Part-time",
+        description: "Leading a Special Interest Group focused on open-source security initiatives, collaboration, and community-driven standards within the OpenSSF ecosystem.",
+        technologies: ["Open Source Security", "Governance", "Community Leadership"],
+    },
+    {
+        company: "Open Source & Security Africa (OSSAfrica)",
+        position: "Co-Founder & Security Lead",
+        startDate: "Oct 2025",
+        location: "Hybrid · Ghana",
         type: "Full-time",
-        // Multiple roles within the same company (promotions/transfers)
         roles: [
             {
-                position: "Senior Full-Stack Developer",
-                startDate: "Jan 2024",
-                // endDate: undefined, // Current role
-                description: "Leading development of cloud-native applications. Mentoring junior developers and architecting scalable solutions.",
-                technologies: ["React", "Node.js", "TypeScript", "AWS", "PostgreSQL", "Docker"],
+                position: "Security Lead",
+                startDate: "Nov 2025",
+                description: "Leading security operations, governance, and security-focused initiatives across the OSSAfrica community.",
+                technologies: [
+                    "Security Operations",
+                    "Security Operations Management",
+                    "Open Source Security",
+                ],
             },
             {
-                position: "Full-Stack Developer",
-                startDate: "Jun 2022",
-                endDate: "Dec 2023",
-                description: "Built and maintained multiple web applications. Implemented CI/CD pipelines and improved deployment processes.",
-                technologies: ["React", "Node.js", "Express", "MongoDB", "Docker"],
+                position: "Co-Founder",
+                startDate: "Oct 2025",
+                description:
+                    "Co-founded a community focused on open-source and security awareness and capacity building in Africa. Lead strategic partnerships, community growth, governance, documentation, and contributor onboarding across Africa and EMEA.",
+                technologies: [
+                    "Open-Source Development",
+                    "Community Building",
+                    "Governance",
+                    "Start-up Leadership",
+                ],
             },
         ],
     },
     {
-        company: "StartupXYZ",
-        position: "Full-Stack Developer",
-        startDate: "Jun 2022",
-        endDate: "Dec 2023",
-        description: "Built and maintained multiple web applications. Implemented CI/CD pipelines and improved deployment processes by 40%.",
-        technologies: ["Next.js", "Express", "MongoDB", "Docker", "GitHub Actions"],
-        location: "Remote",
+        company: "AmaliTech",
+        position: "Cyber Security Analyst",
+        startDate: "Oct 2024",
+        location: "Accra, Greater Accra Region, Ghana",
         type: "Full-time",
+        roles: [
+            {
+                position: "Cyber Security Analyst",
+                startDate: "Sep 2025",
+                description:
+                    "Performing security monitoring, incident response, and operational security analysis to support enterprise systems.",
+                technologies: [
+                    "Penetration Testing",
+                    "SIEM",
+                    "Incident Response",
+                    "Security Monitoring",
+                    "Threat Analysis",
+                ],
+            },
+            {
+                position: "Junior Cyber Security Analyst",
+                startDate: "Dec 2024",
+                endDate: "Sep 2025",
+                description:
+                    "Supported security operations, vulnerability analysis, and monitoring activities under senior analysts.",
+                technologies: [
+                    "Security Operations",
+                    "Vulnerability Assessment",
+                    "Log Analysis",
+                ],
+            },
+            {
+                position: "Junior DevOps Engineer",
+                startDate: "Oct 2024",
+                endDate: "Dec 2024",
+                description:
+                    "Supported security operations, vulnerability analysis, and monitoring activities under senior analysts.",
+                technologies: [
+                    "Security Operations",
+                    "Vulnerability Assessment",
+                    "Log Analysis",
+                ],
+            },
+        ],
     },
     {
-        company: "Digital Agency",
-        position: "Frontend Developer",
-        startDate: "Mar 2021",
-        endDate: "May 2022",
-        description: "Developed responsive web applications for various clients. Collaborated with designers to implement pixel-perfect UIs and improve user experience.",
-        technologies: ["React", "Tailwind CSS", "JavaScript", "Figma", "Git"],
-        location: "New York, NY",
-        type: "Full-time",
+        company: "The Digicoast",
+        position: "Senior Software Engineer",
+        startDate: "Mar 2025",
+        endDate: "Jan 2026",
+        location: "Oyarifa, Greater Accra, Ghana · Hybrid",
+        type: "Part-time",
+        description:
+            "Designing and maintaining secure, scalable software systems with a strong focus on infrastructure and application security.",
+        technologies: [
+            "Software Architecture",
+            "System Design",
+            "Security Engineering",
+            "Backend Development",
+        ],
     },
     {
-        company: "Freelance",
-        position: "Web Developer",
+        company: "Empire DHV",
+        position: "Chief Technology Officer",
+        startDate: "Jun 2024",
+        endDate: "Dec 2024",
+        location: "Accra, Greater Accra Region, Ghana",
+        type: "Part-time",
+        description:
+            "Led technical strategy, system architecture, and engineering decisions for business technology solutions.",
+        technologies: [
+            "Technical Leadership",
+            "System Architecture",
+            "Product Engineering",
+        ],
+    },
+    {
+        company: "247 Technologies Consortium",
+        position: "Lead Software Engineer",
         startDate: "Jan 2020",
-        endDate: "Feb 2021",
-        description: "Worked with multiple clients to build custom websites and web applications. Managed projects from conception to deployment.",
-        technologies: ["HTML", "CSS", "JavaScript", "WordPress", "PHP"],
-        location: "Remote",
-        type: "Freelance",
+        endDate: "Feb 2024",
+        location: "Greater Accra Region, Ghana",
+        type: "Part-time",
+        description:
+            "Led development teams in building and maintaining web and mobile applications, while mentoring engineers and managing technical delivery.",
+        technologies: [
+            "PHP",
+            "Flutter",
+            "Backend Development",
+            "Team Leadership",
+        ],
+    },
+    {
+        company: "JenamGh Co. Ltd",
+        position: "Operations Manager",
+        startDate: "Jan 2014",
+        endDate: "Jun 2024",
+        location: "Ghana",
+        type: "Part-time",
+        description:
+            "Managed operations, coordinated teams, and supported business growth through effective communication and leadership.",
+        technologies: ["Operations Management", "Team Coordination"],
     },
 ];
 
@@ -92,11 +184,11 @@ export const workExperiences: WorkExperience[] = [
  */
 export const getTotalYearsOfExperience = (): number => {
     if (workExperiences.length === 0) return 0;
-    
+
     const oldestExperience = workExperiences[workExperiences.length - 1];
     const startYear = new Date(oldestExperience.startDate).getFullYear();
     const currentYear = new Date().getFullYear();
-    
+
     return currentYear - startYear;
 };
 
