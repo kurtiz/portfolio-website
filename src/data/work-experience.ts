@@ -153,7 +153,7 @@ export const workExperiences: WorkExperience[] = [
     {
         company: "247 Technologies Consortium",
         position: "Lead Software Engineer",
-        startDate: "Jan 2020",
+        startDate: "Jan 2018",
         endDate: "Feb 2024",
         location: "Greater Accra Region, Ghana",
         type: "Part-time",
@@ -165,17 +165,6 @@ export const workExperiences: WorkExperience[] = [
             "Backend Development",
             "Team Leadership",
         ],
-    },
-    {
-        company: "JenamGh Co. Ltd",
-        position: "Operations Manager",
-        startDate: "Jan 2014",
-        endDate: "Jun 2024",
-        location: "Ghana",
-        type: "Part-time",
-        description:
-            "Managed operations, coordinated teams, and supported business growth through effective communication and leadership.",
-        technologies: ["Operations Management", "Team Coordination"],
     },
 ];
 

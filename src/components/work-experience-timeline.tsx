@@ -113,21 +113,21 @@ const TimelineItem = ({
         >
             {/* Timeline line */}
             <div
-                className="absolute left-[11px] top-6 bottom-0 w-[2px] bg-gradient-to-b from-border to-transparent last:hidden"/>
+                className="absolute left-[5px] top-6 bottom-0 w-[2px] bg-gradient-to-b from-border to-transparent last:hidden"/>
 
             {/* Timeline dot */}
             <div className="absolute left-0 top-2 flex items-center justify-center">
                 {isCurrent ? (
                     <motion.div
-                        className="relative w-6 h-6"
+                        className="relative w-3 h-3"
                         animate={{scale: [1, 1.1, 1]}}
                         transition={{duration: 2, repeat: Infinity}}
                     >
                         <div className="absolute inset-0 bg-success rounded-full"/>
-                        <div className="absolute inset-0 bg-success rounded-full animate-ping opacity-75"/>
+                        <div className="absolute inset-0 bg-success rounded-full motion-preset-pulse duration-500 opacity-75"/>
                     </motion.div>
                 ) : (
-                    <div className="w-6 h-6 bg-muted border-2 border-border rounded-full"/>
+                    <div className="w-3 h-3 bg-muted border-2 border-border rounded-full"/>
                 )}
             </div>
 
