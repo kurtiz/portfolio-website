@@ -168,6 +168,7 @@ export const pageSEO = {
         description: siteConfig.description,
         keywords: ['full-stack developer', 'web developer', 'react developer', 'node.js', 'portfolio', 'Aaron Djaba'],
         url: '/',
+        image: '/api/og?page=home',
     },
 
     workExperience: {
@@ -176,6 +177,7 @@ export const pageSEO = {
         keywords: ['work experience', 'career', 'professional history', 'software engineer', 'developer jobs'],
         url: '/work-experience',
         type: 'profile' as const,
+        image: '/api/og?page=work-experience',
     },
 
     expertise: {
@@ -183,6 +185,7 @@ export const pageSEO = {
         description: 'Skills and technologies I work with. From frontend development with React to backend systems with Node.js, explore my technical expertise.',
         keywords: ['skills', 'expertise', 'technologies', 'react', 'node.js', 'typescript', 'web development'],
         url: '/expertise',
+        image: '/api/og?page=expertise',
     },
 
     terminal: {
@@ -190,6 +193,7 @@ export const pageSEO = {
         description: 'Explore my portfolio through an interactive terminal interface. Navigate my projects, skills, and experience using command-line commands.',
         keywords: ['terminal', 'cli', 'interactive', 'command line', 'developer tools'],
         url: '/terminal',
+        image: '/api/og?page=terminal',
     },
 
     projects: {
@@ -197,6 +201,7 @@ export const pageSEO = {
         description: 'A showcase of my recent projects and work. From web applications to mobile apps, see what I\'ve built.',
         keywords: ['projects', 'portfolio', 'web apps', 'mobile apps', 'case studies'],
         url: '/projects',
+        image: '/api/og?page=projects',
     },
 
     blog: {
@@ -205,6 +210,7 @@ export const pageSEO = {
         keywords: ['blog', 'articles', 'tutorials', 'web development', 'programming'],
         url: '/blog',
         type: 'website' as const,
+        image: '/api/og?page=blog',
     },
 };
 

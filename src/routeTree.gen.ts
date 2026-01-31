@@ -13,6 +13,7 @@ import { Route as WorkExperienceRouteImport } from './routes/work-experience'
 import { Route as TerminalRouteImport } from './routes/terminal'
 import { Route as ExpertiseRouteImport } from './routes/expertise'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiOgRouteImport } from './routes/api/og'
 
 const WorkExperienceRoute = WorkExperienceRouteImport.update({
   id: '/work-experience',
@@ -34,18 +35,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiOgRoute = ApiOgRouteImport.update({
+  id: '/api/og',
+  path: '/api/og',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/expertise': typeof ExpertiseRoute
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
+  '/api/og': typeof ApiOgRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/expertise': typeof ExpertiseRoute
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
+  '/api/og': typeof ApiOgRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,20 @@ export interface FileRoutesById {
   '/expertise': typeof ExpertiseRoute
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
+  '/api/og': typeof ApiOgRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/expertise' | '/terminal' | '/work-experience'
+  fullPaths: '/' | '/expertise' | '/terminal' | '/work-experience' | '/api/og'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/expertise' | '/terminal' | '/work-experience'
-  id: '__root__' | '/' | '/expertise' | '/terminal' | '/work-experience'
+  to: '/' | '/expertise' | '/terminal' | '/work-experience' | '/api/og'
+  id:
+    | '__root__'
+    | '/'
+    | '/expertise'
+    | '/terminal'
+    | '/work-experience'
+    | '/api/og'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +82,7 @@ export interface RootRouteChildren {
   ExpertiseRoute: typeof ExpertiseRoute
   TerminalRoute: typeof TerminalRoute
   WorkExperienceRoute: typeof WorkExperienceRoute
+  ApiOgRoute: typeof ApiOgRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/og': {
+      id: '/api/og'
+      path: '/api/og'
+      fullPath: '/api/og'
+      preLoaderRoute: typeof ApiOgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +130,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExpertiseRoute: ExpertiseRoute,
   TerminalRoute: TerminalRoute,
   WorkExperienceRoute: WorkExperienceRoute,
+  ApiOgRoute: ApiOgRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
