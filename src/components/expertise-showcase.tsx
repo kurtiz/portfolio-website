@@ -2,13 +2,7 @@
 
 import {motion} from "framer-motion";
 import {useState} from "react";
-import {
-    expertise,
-    getAverageExperience,
-    getTotalSkills,
-    type SkillCategory,
-    type Skill
-} from "@/data/expertise";
+import {expertise, getAverageExperience, getTotalSkills, type Skill, type SkillCategory} from "@/data/expertise";
 
 /* -----------------------------
     Skill Chip Component
@@ -39,7 +33,7 @@ const SkillChip = ({skill, index, categoryColor}: { skill: Skill; index: number;
                     whileHover={{x: "100%"}}
                     transition={{duration: 0.6}}
                 />
-                
+
                 {/* Content */}
                 <div className="relative flex items-center gap-2">
                     <span className="font-medium text-white text-sm">
@@ -148,19 +142,21 @@ const CategoryCard = ({category, index}: { category: SkillCategory; index: numbe
 /* -----------------------------
     Stats Card Component
  ------------------------------ */
-const StatCard = ({
-                      label,
-                      value,
-                      icon,
-                      color,
-                      delay
-                  }: {
-    label: string;
-    value: string | number;
-    icon: string;
-    color: string;
-    delay: number;
-}) => {
+const StatCard = (
+    {
+        label,
+        value,
+        icon,
+        imagePath,
+        delay
+    }: {
+        label: string;
+        value: string | number;
+        icon?: string;
+        imagePath?: string;
+        color: string;
+        delay: number;
+    }) => {
     return (
         <motion.div
             initial={{opacity: 0, scale: 0.9}}
@@ -170,11 +166,19 @@ const StatCard = ({
             whileHover={{scale: 1.05}}
         >
             <motion.div
-                className={`w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center text-2xl shadow-lg`}
+                className={`w-16 h-16 mx-auto mb-3 rounded-xl flex items-center justify-center p-3`}
                 whileHover={{rotate: 360}}
                 transition={{duration: 0.6}}
             >
-                {icon}
+                {imagePath ? (
+                    <img
+                        src={imagePath}
+                        alt={label}
+                        className="w-full h-full object-contain"
+                    />
+                ) : (
+                    <span className="text-2xl">{icon}</span>
+                )}
             </motion.div>
             <motion.p
                 className="text-3xl font-bold text-foreground mb-1"
@@ -225,21 +229,21 @@ export const ExpertiseShowcase = () => {
                     <StatCard
                         label="Total Skills"
                         value={getTotalSkills()}
-                        icon="🎯"
+                        imagePath="/expertise/skills.png"
                         color="from-blue-500 to-cyan-500"
                         delay={0.3}
                     />
                     <StatCard
                         label="Avg Experience"
                         value={`${getAverageExperience()}y`}
-                        icon="📊"
+                        imagePath="/expertise/year-of-experience.png"
                         color="from-green-500 to-emerald-500"
                         delay={0.4}
                     />
                     <StatCard
                         label="Categories"
                         value={expertise.length}
-                        icon="📚"
+                        imagePath="/expertise/categories.png"
                         color="from-purple-500 to-pink-500"
                         delay={0.5}
                     />
@@ -260,7 +264,7 @@ export const ExpertiseShowcase = () => {
                     transition={{delay: 1}}
                 >
                     <p className="text-sm text-muted-foreground">
-                        💡 Click on any category to view detailed skill levels
+                        Click on any category to view detailed skill levels
                     </p>
                 </motion.div>
             </motion.div>
