@@ -120,7 +120,6 @@ const CategoryCard = ({category, index}: { category: SkillCategory; index: numbe
                     opacity: isExpanded ? 1 : 0,
                 }}
                 transition={{duration: 0.3}}
-                className="overflow-hidden"
             >
                 <div className="px-6 pb-6 bg-secondary/20">
                     <div className="flex flex-wrap gap-2">

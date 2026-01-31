@@ -8,8 +8,26 @@ import {SocialCard} from "@/components/cards/social-card.tsx";
 import {ProjectsCard} from "@/components/cards/projects-card.tsx";
 import {ExpertiseCard} from "@/components/cards/expertise-card.tsx";
 import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
+import {generateMetaTags, pageSEO, generateStructuredData} from "@/lib/seo";
 
-export const Route = createFileRoute('/')({ssr: false, component: App});
+export const Route = createFileRoute('/')({
+    ssr: false,
+    component: App,
+    head: () => {
+        const metaTags = generateMetaTags(pageSEO.home);
+        const structuredData = generateStructuredData('person');
+        
+        return {
+            ...metaTags,
+            scripts: structuredData ? [
+                {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(structuredData),
+                },
+            ] : [],
+        };
+    },
+});
 
 const containerVariants: Variants = {
     hidden: {opacity: 0},
