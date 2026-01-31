@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkExperienceRouteImport } from './routes/work-experience'
 import { Route as TerminalRouteImport } from './routes/terminal'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WorkExperienceRoute = WorkExperienceRouteImport.update({
+  id: '/work-experience',
+  path: '/work-experience',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TerminalRoute = TerminalRouteImport.update({
   id: '/terminal',
   path: '/terminal',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/terminal': typeof TerminalRoute
+  '/work-experience': typeof WorkExperienceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/terminal': typeof TerminalRoute
+  '/work-experience': typeof WorkExperienceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/terminal': typeof TerminalRoute
+  '/work-experience': typeof WorkExperienceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/terminal'
+  fullPaths: '/' | '/terminal' | '/work-experience'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/terminal'
-  id: '__root__' | '/' | '/terminal'
+  to: '/' | '/terminal' | '/work-experience'
+  id: '__root__' | '/' | '/terminal' | '/work-experience'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TerminalRoute: typeof TerminalRoute
+  WorkExperienceRoute: typeof WorkExperienceRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/work-experience': {
+      id: '/work-experience'
+      path: '/work-experience'
+      fullPath: '/work-experience'
+      preLoaderRoute: typeof WorkExperienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terminal': {
       id: '/terminal'
       path: '/terminal'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TerminalRoute: TerminalRoute,
+  WorkExperienceRoute: WorkExperienceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

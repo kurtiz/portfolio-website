@@ -1,14 +1,18 @@
 import {motion} from "framer-motion";
 import {useRef} from "react";
 import {BuildingIcon, BuildingIconHandle} from "@/components/animated-socials/building-icon.tsx";
+import {useNavigate} from "@tanstack/react-router";
 
 export const WorkExperienceCard = () => {
     const buildingIconRef = useRef<BuildingIconHandle>(null);
+    const navigate = useNavigate();
+
     return (
         <motion.div
             className="card-neumorphic p-6 h-full flex flex-col justify-between cursor-pointer group"
             whileHover={{scale: 1.02}}
             transition={{duration: 0.2}}
+            onClick={() => navigate({to: "/work-experience"})}
             onTap={() => {
                 buildingIconRef?.current?.startAnimation();
             }}
