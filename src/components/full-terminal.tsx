@@ -2,64 +2,8 @@
 
 import {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
+import {commands, TerminalLine} from "@/components/cards/terminal-card.tsx";
 
-/* -----------------------------
-    Types
- ------------------------------ */
-export type TerminalLine = {
-    text: string;
-    type: "command" | "output" | "path" | "success" | "accent" | "error";
-    prefix?: string;
-};
-
-/* -----------------------------
-    Command responses
- ------------------------------ */
-export const commands: Record<string, TerminalLine[]> = {
-    whoami: [
-        {text: "Full-Stack Developer", type: "accent", prefix: "→"},
-        {text: "Building digital experiences with code", type: "output", prefix: " "},
-    ],
-    "ls skills/": [
-        {text: "frontend/ backend/ devops/ mobile/", type: "path", prefix: " "},
-    ],
-    "ls skills": [
-        {text: "frontend/ backend/ devops/ mobile/", type: "path", prefix: " "},
-    ],
-    "cat status.txt": [
-        {text: "☕ Fueled by coffee, shipping code", type: "output", prefix: " "},
-        {text: "Status: Available for opportunities", type: "success", prefix: "→"},
-    ],
-    uptime: [
-        {text: "5+ years building for the web", type: "success", prefix: "→"},
-    ],
-    help: [
-        {text: "Available commands:", type: "accent", prefix: "→"},
-        {text: "  whoami        - Who am I?", type: "output", prefix: " "},
-        {text: "  ls skills     - List my skills", type: "output", prefix: " "},
-        {text: "  cat status    - Current status", type: "output", prefix: " "},
-        {text: "  uptime        - Experience", type: "output", prefix: " "},
-        {text: "  projects      - View my projects", type: "output", prefix: " "},
-        {text: "  contact       - Get in touch", type: "output", prefix: " "},
-        {text: "  clear         - Clear terminal", type: "output", prefix: " "},
-    ],
-    projects: [
-        {text: "Recent Projects:", type: "accent", prefix: "→"},
-        {text: "  • Portfolio Website - React + TypeScript", type: "output", prefix: " "},
-        {text: "  • E-commerce Platform - Next.js + Stripe", type: "output", prefix: " "},
-        {text: "  • Task Manager - React Native + Firebase", type: "output", prefix: " "},
-    ],
-    contact: [
-        {text: "Let's connect!", type: "accent", prefix: "→"},
-        {text: "  Email: your.email@example.com", type: "output", prefix: " "},
-        {text: "  GitHub: github.com/yourusername", type: "output", prefix: " "},
-        {text: "  LinkedIn: linkedin.com/in/yourprofile", type: "output", prefix: " "},
-    ],
-    "cat status": [
-        {text: "☕ Fueled by coffee, shipping code", type: "output", prefix: " "},
-        {text: "Status: Available for opportunities", type: "success", prefix: "→"},
-    ],
-};
 
 /* -----------------------------
     Animated Line Component
@@ -125,14 +69,12 @@ const BlinkingCursor = () => (
     />
 );
 
-
 /* -----------------------------
-    Terminal Card
+    Full Terminal Component
  ------------------------------ */
-export const TerminalCard = () => {
+export const FullTerminal = () => {
     const [history, setHistory] = useState<TerminalLine[]>([]);
     const [currentInput, setCurrentInput] = useState("");
-    const [isActive, setIsActive] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const terminalRef = useRef<HTMLDivElement>(null);
 
@@ -142,6 +84,8 @@ export const TerminalCard = () => {
             {text: "Welcome to my portfolio terminal!", type: "accent", prefix: "→"},
             {text: "Type 'help' to see available commands", type: "output", prefix: " "},
         ]);
+        // Auto-focus input
+        inputRef.current?.focus();
     }, []);
 
     // Auto-scroll to bottom when history updates
@@ -198,49 +142,26 @@ export const TerminalCard = () => {
     };
 
     const handleTerminalClick = () => {
-        setIsActive(true);
         inputRef.current?.focus();
     };
 
     return (
-        <motion.div
-            className="relative h-full flex flex-col overflow-hidden rounded-2xl cursor-text group"
-            whileHover={{scale: 1.02}}
-            transition={{duration: 0.2}}
-            onClick={handleTerminalClick}
-        >
+        <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
             {/* Terminal Window */}
             <div
-                className={`h-full flex flex-col bg-card/80 dark:bg-card/90 backdrop-blur-xl border rounded-2xl overflow-hidden shadow-card transition-colors ${
-                    isActive ? "border-accent/50" : "border-border/50"
-                }`}
-            >
+                className="h-full flex flex-col bg-card/80 dark:bg-card/90 backdrop-blur-xl border-x-0 border-t-0 border-b-0">
                 {/* Window Chrome - macOS style */}
                 <div
                     className="flex items-center gap-2 px-4 py-3 bg-secondary/50 dark:bg-secondary/30 border-b border-border/50">
                     {/* Traffic lights */}
                     <div className="flex items-center gap-1.5">
                         <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                window.open('/terminal', '_blank');
-                            }}
+                            onClick={() => window.close()}
                             className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:brightness-110 transition-all"
                             aria-label="Close"
                         />
-                        <button
-                            onClick={(e) => e.stopPropagation()}
-                            className="w-3 h-3 rounded-full bg-[#febc2e] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:brightness-110 transition-all"
-                            aria-label="Minimize"
-                        />
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                window.open('/terminal', '_blank');
-                            }}
-                            className="w-3 h-3 rounded-full bg-[#28c840] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:brightness-110 transition-all"
-                            aria-label="Maximize"
-                        />
+                        <div className="w-3 h-3 rounded-full bg-[#febc2e] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)]"/>
+                        <div className="w-3 h-3 rounded-full bg-[#28c840] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)]"/>
                     </div>
 
                     {/* Title */}
@@ -257,7 +178,8 @@ export const TerminalCard = () => {
                 {/* Terminal Content */}
                 <div
                     ref={terminalRef}
-                    className="flex-1 p-4 font-mono text-sm relative overflow-y-auto overflow-x-hidden"
+                    className="flex-1 p-6 font-mono text-sm relative overflow-y-auto overflow-x-hidden"
+                    onClick={handleTerminalClick}
                 >
                     {/* Scanline overlay - dark mode only */}
                     <div
@@ -269,7 +191,7 @@ export const TerminalCard = () => {
                     />
 
                     {/* History */}
-                    <div className="space-y-2 relative z-10">
+                    <div className="space-y-2 relative z-10 max-w-4xl mx-auto">
                         {history.map((line, index) => (
                             <AnimatedLine key={index} line={line}/>
                         ))}
@@ -282,8 +204,6 @@ export const TerminalCard = () => {
                                 type="text"
                                 value={currentInput}
                                 onChange={(e) => setCurrentInput(e.target.value)}
-                                onFocus={() => setIsActive(true)}
-                                onBlur={() => setIsActive(false)}
                                 className="flex-1 bg-transparent outline-none text-foreground caret-accent"
                                 spellCheck={false}
                                 autoComplete="off"
@@ -298,24 +218,14 @@ export const TerminalCard = () => {
                 <div
                     className="px-4 py-2 bg-secondary/30 dark:bg-secondary/20 border-t border-border/50 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <span
-                            className={`w-2 h-2 rounded-full transition-colors ${
-                                isActive ? "bg-accent animate-pulse" : "bg-success"
-                            }`}
-                        />
-                        <span className="text-xs text-muted-foreground">
-                            {isActive ? "active" : "ready"}
-                        </span>
+                        <span className="w-2 h-2 bg-accent rounded-full animate-pulse"/>
+                        <span className="text-xs text-muted-foreground">active</span>
                     </div>
                     <span className="text-xs text-muted-foreground font-mono">
                         ~/portfolio
                     </span>
                 </div>
             </div>
-
-            {/* Glow effect on hover - dark mode */}
-            <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 dark:group-hover:opacity-20 transition-opacity duration-300 pointer-events-none bg-gradient-to-br from-accent/10 via-transparent to-success/10"/>
-        </motion.div>
+        </div>
     );
 };
