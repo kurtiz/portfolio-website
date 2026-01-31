@@ -6,8 +6,87 @@ import {
     workExperiences,
     getTotalYearsOfExperience,
     getCurrentPositions,
-    type WorkExperience
+    type WorkExperience,
+    type Role
 } from "@/data/work-experience";
+
+/* -----------------------------
+    Role Sub-Timeline Component
+ ------------------------------ */
+const RoleItem = ({role, index, isLast}: { role: Role; index: number; isLast: boolean }) => {
+    const isCurrent = !role.endDate;
+
+    return (
+        <motion.div
+            initial={{opacity: 0, x: -10}}
+            animate={{opacity: 1, x: 0}}
+            transition={{delay: index * 0.1}}
+            className="relative pl-6 pb-6 last:pb-0"
+        >
+            {/* Sub-timeline line */}
+            {!isLast && (
+                <div className="absolute left-[7px] top-4 bottom-0 w-[1px] bg-gradient-to-b from-accent/50 to-transparent"/>
+            )}
+
+            {/* Sub-timeline dot */}
+            <div className="absolute left-0 top-1 flex items-center justify-center">
+                {isCurrent ? (
+                    <motion.div
+                        className="w-4 h-4 bg-success rounded-full border-2 border-background"
+                        animate={{scale: [1, 1.2, 1]}}
+                        transition={{duration: 2, repeat: Infinity}}
+                    />
+                ) : (
+                    <div className="w-4 h-4 bg-accent/30 rounded-full border-2 border-background"/>
+                )}
+            </div>
+
+            {/* Role content */}
+            <div className="ml-2">
+                <div className="flex items-start justify-between gap-4 mb-2">
+                    <div className="flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                            <h4 className="font-semibold text-foreground">{role.position}</h4>
+                            {isCurrent && (
+                                <span
+                                    className="px-2 py-0.5 bg-success/10 text-success text-xs font-medium rounded-full border border-success/20">
+                                    Current
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                    <div className="text-right">
+                        <p className="font-mono text-xs text-muted-foreground">
+                            {role.startDate}
+                        </p>
+                        <p className="font-mono text-xs text-muted-foreground">
+                            {role.endDate || "Present"}
+                        </p>
+                    </div>
+                </div>
+
+                {role.description && (
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                        {role.description}
+                    </p>
+                )}
+
+                {role.technologies && role.technologies.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5">
+                        {role.technologies.map((tech, i) => (
+                            <span
+                                key={i}
+                                className="px-2 py-0.5 bg-secondary/50 text-foreground text-xs rounded border border-border/50"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </motion.div>
+    );
+};
 
 /* -----------------------------
     Timeline Item Component
@@ -20,7 +99,10 @@ const TimelineItem = ({
     index: number;
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const isCurrent = !experience.endDate;
+    const hasRoles = experience.roles && experience.roles.length > 0;
+    const isCurrent = hasRoles 
+        ? !experience.roles[0].endDate 
+        : !experience.endDate;
 
     return (
         <motion.div
@@ -72,8 +154,16 @@ const TimelineItem = ({
                   {experience.type}
                 </span>
                             )}
+                            {hasRoles && experience.roles!.length > 1 && (
+                                <span
+                                    className="px-2 py-0.5 bg-purple-500/10 text-purple-500 text-xs font-medium rounded-full border border-purple-500/20">
+                  {experience.roles!.length} Roles
+                </span>
+                            )}
                         </div>
-                        <p className="text-accent font-medium">{experience.position}</p>
+                        <p className="text-accent font-medium">
+                            {hasRoles ? experience.roles![0].position : experience.position}
+                        </p>
                         {experience.location && (
                             <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -92,7 +182,10 @@ const TimelineItem = ({
                             {experience.startDate}
                         </p>
                         <p className="font-mono text-sm text-muted-foreground">
-                            {experience.endDate || "Present"}
+                            {hasRoles 
+                                ? (experience.roles![0].endDate || "Present")
+                                : (experience.endDate || "Present")
+                            }
                         </p>
                     </div>
                 </div>
@@ -107,28 +200,54 @@ const TimelineItem = ({
                     transition={{duration: 0.3}}
                     className="overflow-hidden"
                 >
-                    {experience.description && (
-                        <p className="mt-4 text-muted-foreground leading-relaxed">
-                            {experience.description}
-                        </p>
-                    )}
-
-                    {experience.technologies && experience.technologies.length > 0 && (
+                    {hasRoles ? (
+                        // Show roles sub-timeline
                         <div className="mt-4">
-                            <p className="text-xs font-semibold text-muted-foreground mb-2">
-                                Technologies:
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                                {experience.technologies.map((tech, i) => (
-                                    <span
+                            <div className="flex items-center gap-2 mb-4">
+                                <div className="h-px flex-1 bg-gradient-to-r from-accent/50 to-transparent"/>
+                                <p className="text-xs font-semibold text-accent uppercase tracking-wider">
+                                    Career Progression
+                                </p>
+                                <div className="h-px flex-1 bg-gradient-to-l from-accent/50 to-transparent"/>
+                            </div>
+                            <div className="bg-secondary/20 rounded-lg p-4 border border-border/50">
+                                {experience.roles.map((role, i) => (
+                                    <RoleItem
                                         key={i}
-                                        className="px-3 py-1 bg-secondary text-foreground text-xs font-medium rounded-full border border-border"
-                                    >
-                    {tech}
-                  </span>
+                                        role={role}
+                                        index={i}
+                                        isLast={i === experience.roles!.length - 1}
+                                    />
                                 ))}
                             </div>
                         </div>
+                    ) : (
+                        // Show single position details
+                        <>
+                            {experience.description && (
+                                <p className="mt-4 text-muted-foreground leading-relaxed">
+                                    {experience.description}
+                                </p>
+                            )}
+
+                            {experience.technologies && experience.technologies.length > 0 && (
+                                <div className="mt-4">
+                                    <p className="text-xs font-semibold text-muted-foreground mb-2">
+                                        Technologies:
+                                    </p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {experience.technologies.map((tech, i) => (
+                                            <span
+                                                key={i}
+                                                className="px-3 py-1 bg-secondary text-foreground text-xs font-medium rounded-full border border-border"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </>
                     )}
                 </motion.div>
 

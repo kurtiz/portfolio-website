@@ -1,6 +1,14 @@
+export interface Role {
+    position: string;
+    startDate: string;
+    endDate?: string; // undefined means current position
+    description?: string;
+    technologies?: string[];
+}
+
 export interface WorkExperience {
     company: string;
-    position: string;
+    position: string; // Used if no roles array (single position)
     startDate: string;
     endDate?: string; // undefined means current position
     description?: string;
@@ -8,6 +16,7 @@ export interface WorkExperience {
     logo?: string; // Optional: path to company logo
     location?: string; // Optional: work location
     type?: "Full-time" | "Part-time" | "Contract" | "Freelance" | "Internship";
+    roles?: Role[]; // Multiple roles within same company (promotions/transfers)
 }
 
 /**
@@ -23,13 +32,28 @@ export interface WorkExperience {
 export const workExperiences: WorkExperience[] = [
     {
         company: "Tech Corp",
-        position: "Senior Full-Stack Developer",
-        startDate: "Jan 2024",
+        position: "Senior Full-Stack Developer", // Overall position (used if no roles)
+        startDate: "Jun 2022", // Company start date
         // endDate: undefined, // Current position - green dot will show
-        description: "Leading development of cloud-native applications using React and Node.js. Mentoring junior developers and architecting scalable solutions.",
-        technologies: ["React", "Node.js", "TypeScript", "AWS", "PostgreSQL", "Docker"],
         location: "San Francisco, CA",
         type: "Full-time",
+        // Multiple roles within the same company (promotions/transfers)
+        roles: [
+            {
+                position: "Senior Full-Stack Developer",
+                startDate: "Jan 2024",
+                // endDate: undefined, // Current role
+                description: "Leading development of cloud-native applications. Mentoring junior developers and architecting scalable solutions.",
+                technologies: ["React", "Node.js", "TypeScript", "AWS", "PostgreSQL", "Docker"],
+            },
+            {
+                position: "Full-Stack Developer",
+                startDate: "Jun 2022",
+                endDate: "Dec 2023",
+                description: "Built and maintained multiple web applications. Implemented CI/CD pipelines and improved deployment processes.",
+                technologies: ["React", "Node.js", "Express", "MongoDB", "Docker"],
+            },
+        ],
     },
     {
         company: "StartupXYZ",
