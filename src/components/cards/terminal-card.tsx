@@ -2,141 +2,60 @@
 
 import {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
+import {TerminalLine} from "@/types/terminal.types.ts";
+import {FolderNode, fs} from "@/fs/fs";
+import {commands} from "@/fs/command.ts";
 
-/* -----------------------------
-    Types
- ------------------------------ */
-export type TerminalLine = {
-    text: string;
-    type: "command" | "output" | "path" | "success" | "accent" | "error";
-    prefix?: string;
-};
-
-/* -----------------------------
-    Command responses
- ------------------------------ */
-export const commands: Record<string, TerminalLine[]> = {
-    whoami: [
-        {text: "Full-Stack Developer", type: "accent", prefix: "→"},
-        {text: "Building digital experiences with code", type: "output", prefix: " "},
-    ],
-    "ls skills/": [
-        {text: "frontend/ backend/ devops/ mobile/", type: "path", prefix: " "},
-    ],
-    "ls skills": [
-        {text: "frontend/ backend/ devops/ mobile/", type: "path", prefix: " "},
-    ],
-    "cat status.txt": [
-        {text: "☕ Fueled by coffee, shipping code", type: "output", prefix: " "},
-        {text: "Status: Available for opportunities", type: "success", prefix: "→"},
-    ],
-    uptime: [
-        {text: "5+ years building for the web", type: "success", prefix: "→"},
-    ],
-    help: [
-        {text: "Available commands:", type: "accent", prefix: "→"},
-        {text: "  whoami        - Who am I?", type: "output", prefix: " "},
-        {text: "  ls skills     - List my skills", type: "output", prefix: " "},
-        {text: "  cat status    - Current status", type: "output", prefix: " "},
-        {text: "  uptime        - Experience", type: "output", prefix: " "},
-        {text: "  projects      - View my projects", type: "output", prefix: " "},
-        {text: "  contact       - Get in touch", type: "output", prefix: " "},
-        {text: "  clear         - Clear terminal", type: "output", prefix: " "},
-    ],
-    projects: [
-        {text: "Recent Projects:", type: "accent", prefix: "→"},
-        {text: "  • Portfolio Website - React + TypeScript", type: "output", prefix: " "},
-        {text: "  • E-commerce Platform - Next.js + Stripe", type: "output", prefix: " "},
-        {text: "  • Task Manager - React Native + Firebase", type: "output", prefix: " "},
-    ],
-    contact: [
-        {text: "Let's connect!", type: "accent", prefix: "→"},
-        {text: "  Email: your.email@example.com", type: "output", prefix: " "},
-        {text: "  GitHub: github.com/yourusername", type: "output", prefix: " "},
-        {text: "  LinkedIn: linkedin.com/in/yourprofile", type: "output", prefix: " "},
-    ],
-    "cat status": [
-        {text: "☕ Fueled by coffee, shipping code", type: "output", prefix: " "},
-        {text: "Status: Available for opportunities", type: "success", prefix: "→"},
-    ],
-};
 
 /* -----------------------------
     Animated Line Component
- ------------------------------ */
+------------------------------ */
 const AnimatedLine = ({line}: { line: TerminalLine }) => {
-    const getTextColor = () => {
-        switch (line.type) {
-            case "command":
-                return "text-foreground";
-            case "output":
-                return "text-muted-foreground";
-            case "path":
-                return "text-accent";
-            case "success":
-                return "text-success";
-            case "accent":
-                return "text-accent";
-            case "error":
-                return "text-destructive";
-            default:
-                return "text-foreground";
-        }
-    };
-
-    const getPrefixColor = () => {
-        if (line.type === "command") return "text-success";
-        if (line.prefix === "→") return "text-accent";
-        return "text-muted-foreground";
+    const colorMap: Record<string, string> = {
+        command: "text-foreground",
+        output: "text-muted-foreground",
+        path: "text-accent",
+        success: "text-success",
+        accent: "text-accent",
+        error: "text-destructive",
     };
 
     return (
         <motion.div
             initial={{opacity: 0, y: 2}}
             animate={{opacity: 1, y: 0}}
-            transition={{
-                duration: 0.15,
-                ease: "easeOut",
-            }}
+            transition={{duration: 0.15, ease: "easeOut"}}
             className="flex items-start gap-2"
         >
             {line.prefix && (
-                <span className={`${getPrefixColor()} select-none font-semibold`}>
+                <span className="text-accent font-semibold select-none">
           {line.prefix}
         </span>
             )}
-            <span className={`${getTextColor()} whitespace-pre-wrap break-words`}>{line.text}</span>
+            <span
+                className={`${colorMap[line.type]} whitespace-pre-wrap break-words`}
+            >
+        {line.text}
+      </span>
         </motion.div>
     );
 };
 
 /* -----------------------------
-    Blinking Cursor
- ------------------------------ */
-const BlinkingCursor = () => (
-    <motion.span
-        className="inline-block w-2 h-4 bg-accent ml-1"
-        animate={{opacity: [1, 1, 0, 0]}}
-        transition={{
-            duration: 1,
-            repeat: Infinity,
-            times: [0, 0.5, 0.5, 1],
-        }}
-    />
-);
-
-
-/* -----------------------------
     Terminal Card
- ------------------------------ */
+------------------------------ */
 export const TerminalCard = () => {
     const [history, setHistory] = useState<TerminalLine[]>([]);
-    const [currentInput, setCurrentInput] = useState("");
-    const [isActive, setIsActive] = useState(false);
+    const [input, setInput] = useState("");
+
+    // filesystem state
+    const [cwd, setCwd] = useState<FolderNode>(fs);
+    const [path, setPath] = useState<string[]>(["~"]);
+
     const inputRef = useRef<HTMLInputElement>(null);
     const terminalRef = useRef<HTMLDivElement>(null);
 
-    // Welcome message on mount
+    /* Welcome message */
     useEffect(() => {
         setHistory([
             {text: "Welcome to my portfolio terminal!", type: "accent", prefix: "→"},
@@ -144,178 +63,101 @@ export const TerminalCard = () => {
         ]);
     }, []);
 
-    // Auto-scroll to bottom when history updates
+    /* Auto-scroll */
     useEffect(() => {
-        if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-        }
+        terminalRef.current?.scrollTo({
+            top: terminalRef.current.scrollHeight,
+            behavior: "smooth",
+        });
     }, [history]);
 
-    const handleCommand = (cmd: string) => {
-        const trimmedCmd = cmd.trim().toLowerCase();
+    /* Command runner */
+    const runCommand = async (raw: string) => {
+        const [cmd, ...args] = raw.trim().toLowerCase().split(" ");
 
-        // Add command to history
-        const newHistory: TerminalLine[] = [
-            ...history,
-            {text: cmd, type: "command", prefix: "$"},
-        ];
+        // echo command
+        setHistory((h) => [
+            ...h,
+            {text: raw, type: "command", prefix: "$"},
+        ]);
 
-        // Handle special commands
-        if (trimmedCmd === "clear") {
+        if (cmd === "clear") {
             setHistory([]);
             return;
         }
 
-        // Find and execute command
-        const response = commands[trimmedCmd];
-        if (response) {
-            setHistory([...newHistory, ...response]);
-        } else if (trimmedCmd === "") {
-            setHistory(newHistory);
-        } else {
-            setHistory([
-                ...newHistory,
-                {
-                    text: `Command not found: ${cmd}`,
-                    type: "error",
-                    prefix: "✗",
-                },
-                {
-                    text: "Type 'help' to see available commands",
-                    type: "output",
-                    prefix: " ",
-                },
+        const handler = commands[cmd];
+        if (!handler) {
+            setHistory((h) => [
+                ...h,
+                {text: `Command not found: ${cmd}`, type: "error", prefix: "✗"},
             ]);
+            return;
         }
-    };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (currentInput.trim()) {
-            handleCommand(currentInput);
-            setCurrentInput("");
-        }
-    };
+        const output = await handler(args, {
+            cwd,
+            setCwd,
+            path,
+            setPath,
+        });
 
-    const handleTerminalClick = () => {
-        setIsActive(true);
-        inputRef.current?.focus();
+        setHistory((h) => [...h, ...output]);
     };
 
     return (
         <motion.div
-            className="relative h-full flex flex-col overflow-hidden rounded-2xl cursor-text group"
-            whileHover={{scale: 1.02}}
-            transition={{duration: 0.2}}
-            onClick={handleTerminalClick}
+            className="relative h-[500px] rounded-2xl overflow-hidden bg-card border border-border font-mono text-sm cursor-text"
+            onClick={() => inputRef.current?.focus()}
+            whileHover={{scale: 1.01}}
         >
-            {/* Terminal Window */}
-            <div
-                className={`h-full flex flex-col bg-card/80 dark:bg-card/90 backdrop-blur-xl border rounded-2xl overflow-hidden shadow-card transition-colors ${
-                    isActive ? "border-accent/50" : "border-border/50"
-                }`}
-            >
-                {/* Window Chrome - macOS style */}
-                <div
-                    className="flex items-center gap-2 px-4 py-3 bg-secondary/50 dark:bg-secondary/30 border-b border-border/50">
-                    {/* Traffic lights */}
-                    <div className="flex items-center gap-1.5">
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                window.open('/terminal', '_blank');
-                            }}
-                            className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:brightness-110 transition-all"
-                            aria-label="Close"
-                        />
-                        <button
-                            onClick={(e) => e.stopPropagation()}
-                            className="w-3 h-3 rounded-full bg-[#febc2e] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:brightness-110 transition-all"
-                            aria-label="Minimize"
-                        />
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                window.open('/terminal', '_blank');
-                            }}
-                            className="w-3 h-3 rounded-full bg-[#28c840] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:brightness-110 transition-all"
-                            aria-label="Maximize"
-                        />
-                    </div>
-
-                    {/* Title */}
-                    <div className="flex-1 text-center">
-                        <span className="text-xs text-muted-foreground font-medium">
-                            terminal — zsh
-                        </span>
-                    </div>
-
-                    {/* Spacer for symmetry */}
-                    <div className="w-[52px]"/>
+            {/* Header */}
+            <div className="flex items-center gap-2 px-4 py-2 bg-secondary/40 border-b border-border">
+                <div className="flex gap-1.5">
+                    <span className="w-3 h-3 rounded-full bg-red-500"/>
+                    <span className="w-3 h-3 rounded-full bg-yellow-500"/>
+                    <span className="w-3 h-3 rounded-full bg-green-500"/>
                 </div>
-
-                {/* Terminal Content */}
-                <div
-                    ref={terminalRef}
-                    className="flex-1 p-4 font-mono text-sm relative overflow-y-auto overflow-x-hidden"
-                >
-                    {/* Scanline overlay - dark mode only */}
-                    <div
-                        className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-[0.03]"
-                        style={{
-                            backgroundImage:
-                                "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px)",
-                        }}
-                    />
-
-                    {/* History */}
-                    <div className="space-y-2 relative z-10">
-                        {history.map((line, index) => (
-                            <AnimatedLine key={index} line={line}/>
-                        ))}
-
-                        {/* Input Line */}
-                        <form onSubmit={handleSubmit} className="flex items-center gap-2">
-                            <span className="text-success font-semibold select-none">$</span>
-                            <input
-                                ref={inputRef}
-                                type="text"
-                                value={currentInput}
-                                onChange={(e) => setCurrentInput(e.target.value)}
-                                onFocus={() => setIsActive(true)}
-                                onBlur={() => setIsActive(false)}
-                                className="flex-1 bg-transparent outline-none text-foreground caret-accent"
-                                spellCheck={false}
-                                autoComplete="off"
-                                placeholder="Type 'help' for commands..."
-                            />
-                            <BlinkingCursor/>
-                        </form>
-                    </div>
-                </div>
-
-                {/* Status Bar */}
-                <div
-                    className="px-4 py-2 bg-secondary/30 dark:bg-secondary/20 border-t border-border/50 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <span
-                            className={`w-2 h-2 rounded-full transition-colors ${
-                                isActive ? "bg-accent animate-pulse" : "bg-success"
-                            }`}
-                        />
-                        <span className="text-xs text-muted-foreground">
-                            {isActive ? "active" : "ready"}
-                        </span>
-                    </div>
-                    <span className="text-xs text-muted-foreground font-mono">
-                        ~/portfolio
-                    </span>
+                <div className="flex-1 text-center text-xs text-muted-foreground">
+                    terminal — zsh
                 </div>
             </div>
 
-            {/* Glow effect on hover - dark mode */}
+            {/* Terminal body */}
             <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 dark:group-hover:opacity-20 transition-opacity duration-300 pointer-events-none bg-gradient-to-br from-accent/10 via-transparent to-success/10"/>
+                ref={terminalRef}
+                className="flex-1 h-full p-4 overflow-y-auto overflow-x-hidden"
+            >
+                <div className="space-y-2">
+                    {history.map((line, i) => (
+                        <AnimatedLine key={i} line={line}/>
+                    ))}
+
+                    {/* Input line */}
+                    <form
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+                            if (!input.trim()) return;
+                            await runCommand(input);
+                            setInput("");
+                        }}
+                        className="flex items-center gap-2"
+                    >
+            <span className="text-accent select-none">
+              {path.join("/")}
+            </span>
+                        <span className="text-success font-semibold select-none">$</span>
+                        <input
+                            ref={inputRef}
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            className="flex-1 bg-transparent outline-none caret-accent"
+                            spellCheck={false}
+                            autoComplete="off"
+                        />
+                    </form>
+                </div>
+            </div>
         </motion.div>
     );
 };

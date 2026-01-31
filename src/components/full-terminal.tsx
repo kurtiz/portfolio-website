@@ -2,7 +2,7 @@
 
 import {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
-import {commands, TerminalLine} from "@/components/cards/terminal-card.tsx";
+import {Commands, TerminalLine} from "@/types/terminal.types.ts";
 
 
 /* -----------------------------
@@ -111,7 +111,7 @@ export const FullTerminal = () => {
         }
 
         // Find and execute command
-        const response = commands[trimmedCmd];
+        const response = Commands[trimmedCmd];
         if (response) {
             setHistory([...newHistory, ...response]);
         } else if (trimmedCmd === "") {
