@@ -2,69 +2,68 @@ import {createFileRoute} from '@tanstack/react-router';
 
 /**
  * OG Image configurations for each page
+ * Using site's actual theme colors from styles.css
  */
 const ogConfigs: Record<string, {
     title: string;
     description: string;
     page: string;
-    gradientStart: string;
-    gradientEnd: string;
     icon: string;
 }> = {
     home: {
         title: 'Aaron Will Djaba',
-        description: 'Full-Stack Developer building digital experiences',
+        description: 'Full-Stack Developer and Open Source contributor building digital experiences',
         page: 'Portfolio',
-        gradientStart: '#667eea',
-        gradientEnd: '#764ba2',
         icon: '👨‍💻',
     },
     'work-experience': {
         title: 'Work Experience',
-        description: '5+ years building for the web',
+        description: '8+ years building for the web',
         page: 'Career',
-        gradientStart: '#f093fb',
-        gradientEnd: '#f5576c',
         icon: '💼',
     },
     expertise: {
         title: 'My Expertise',
         description: 'Skills & technologies I work with',
         page: 'Skills',
-        gradientStart: '#4facfe',
-        gradientEnd: '#00f2fe',
         icon: '🎯',
     },
     terminal: {
         title: 'Interactive Terminal',
         description: 'Explore my portfolio via command line',
         page: 'Terminal',
-        gradientStart: '#43e97b',
-        gradientEnd: '#38f9d7',
         icon: '⌨️',
     },
     projects: {
         title: 'Projects',
         description: 'Showcase of my recent work',
         page: 'Portfolio',
-        gradientStart: '#fa709a',
-        gradientEnd: '#fee140',
         icon: '🚀',
     },
 };
 
 /**
- * Generate SVG OG Image
+ * Generate SVG OG Image using site's actual theme
  */
 function generateOGImageSVG(config: {
     title: string;
     description: string;
     page: string;
-    gradientStart: string;
-    gradientEnd: string;
     icon: string;
 }): string {
-    const {title, description, page, gradientStart, gradientEnd, icon} = config;
+    const {title, description, page, icon} = config;
+
+    // Site theme colors (from styles.css)
+    const colors = {
+        background: '#faf9f7',      // Warm cream (light mode)
+        foreground: '#2d2d35',      // Deep charcoal
+        accent: '#e88d67',          // Coral accent
+        success: '#6bb894',         // Success green
+        card: '#faf9f7',            // Card background
+        secondary: '#f2f1ee',       // Soft cream secondary
+        muted: '#8a8a8f',           // Muted text
+        border: '#e8e7e3',          // Border color
+    };
 
     // Escape special characters for XML
     const escapeXml = (str: string) => str
@@ -77,118 +76,143 @@ function generateOGImageSVG(config: {
     return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Main gradient -->
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:${gradientStart};stop-opacity:1" />
-      <stop offset="100%" style="stop-color:${gradientEnd};stop-opacity:1" />
+    <!-- Subtle gradient overlay -->
+    <linearGradient id="subtleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:${colors.background};stop-opacity:1" />
+      <stop offset="100%" style="stop-color:${colors.secondary};stop-opacity:1" />
     </linearGradient>
     
-    <!-- Pattern for dots -->
-    <pattern id="dots" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-      <circle cx="15" cy="15" r="2" fill="white" opacity="0.1"/>
-      <circle cx="45" cy="45" r="2" fill="white" opacity="0.1"/>
-    </pattern>
-    
-    <!-- Text shadow filter -->
-    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="rgba(0,0,0,0.3)"/>
+    <!-- Card shadow -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="rgba(45,45,53,0.08)"/>
     </filter>
     
-    <!-- Icon shadow filter -->
-    <filter id="iconShadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="rgba(0,0,0,0.3)"/>
+    <!-- Soft shadow for elements -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(45,45,53,0.06)"/>
     </filter>
   </defs>
   
   <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <rect width="1200" height="630" fill="url(#subtleGradient)"/>
   
-  <!-- Dot pattern overlay -->
-  <rect width="1200" height="630" fill="url(#dots)"/>
+  <!-- Main card container (neumorphic style) -->
+  <rect 
+    x="80" 
+    y="80" 
+    width="1040" 
+    height="470" 
+    rx="32" 
+    fill="${colors.card}" 
+    filter="url(#cardShadow)"
+  />
   
-  <!-- Icon -->
+  <!-- Accent bar on left -->
+  <rect 
+    x="80" 
+    y="80" 
+    width="8" 
+    height="470" 
+    rx="4" 
+    fill="${colors.accent}"
+  />
+  
+  <!-- Content area -->
+  
+  <!-- Icon with background -->
+  <circle cx="200" cy="200" r="50" fill="${colors.secondary}"/>
   <text 
-    x="600" 
-    y="180" 
-    font-size="100" 
-    text-anchor="middle" 
-    filter="url(#iconShadow)"
+    x="200" 
+    y="225" 
+    font-size="60" 
+    text-anchor="middle"
   >${icon}</text>
   
-  <!-- Page label badge -->
+  <!-- Page label -->
   <rect 
-    x="480" 
-    y="220" 
-    width="240" 
-    height="50" 
-    rx="25" 
-    fill="rgba(255,255,255,0.2)" 
-    stroke="rgba(255,255,255,0.3)" 
-    stroke-width="2"
+    x="280" 
+    y="165" 
+    width="auto" 
+    height="36" 
+    rx="18" 
+    fill="${colors.accent}" 
+    opacity="0.1"
   />
   <text 
-    x="600" 
-    y="253" 
-    font-family="system-ui, -apple-system, sans-serif" 
-    font-size="20" 
+    x="300" 
+    y="190" 
+    font-family="JetBrains Mono, monospace" 
+    font-size="14" 
     font-weight="600" 
-    fill="white" 
-    text-anchor="middle"
-    letter-spacing="2"
-  >${escapeXml(page.toUpperCase())}</text>
+    fill="${colors.accent}"
+    letter-spacing="1"
+  >${escapeXml(page.toLowerCase())}</text>
   
   <!-- Title -->
   <text 
-    x="600" 
-    y="340" 
-    font-family="system-ui, -apple-system, sans-serif" 
-    font-size="56" 
-    font-weight="900" 
-    fill="white" 
-    text-anchor="middle"
-    filter="url(#textShadow)"
+    x="280" 
+    y="240" 
+    font-family="Inter, system-ui, sans-serif" 
+    font-size="52" 
+    font-weight="700" 
+    fill="${colors.foreground}"
   >${escapeXml(title)}</text>
   
   <!-- Description -->
   <text 
-    x="600" 
-    y="400" 
-    font-family="system-ui, -apple-system, sans-serif" 
-    font-size="28" 
-    fill="rgba(255,255,255,0.9)" 
-    text-anchor="middle"
+    x="280" 
+    y="300" 
+    font-family="Inter, system-ui, sans-serif" 
+    font-size="18" 
+    fill="${colors.muted}"
   >${escapeXml(description)}</text>
   
-  <!-- Footer: Avatar circle -->
-  <circle cx="440" cy="530" r="35" fill="white"/>
-  <text 
-    x="440" 
-    y="542" 
-    font-family="system-ui, -apple-system, sans-serif" 
-    font-size="28" 
-    font-weight="900" 
-    fill="${gradientStart}" 
-    text-anchor="middle"
-  >AD</text>
+  <!-- Decorative line -->
+  <line 
+    x1="280" 
+    y1="340" 
+    x2="480" 
+    y2="340" 
+    stroke="${colors.border}" 
+    stroke-width="2"
+  />
   
-  <!-- Footer: Name -->
-  <text 
-    x="495" 
-    y="520" 
-    font-family="system-ui, -apple-system, sans-serif" 
-    font-size="24" 
-    font-weight="700" 
-    fill="white"
-  >Aaron Will Djaba</text>
+  <!-- Footer section -->
+  <g transform="translate(280, 420)">
+    <!-- Avatar circle -->
+    <circle cx="30" cy="30" r="30" fill="${colors.accent}"/>
+    <text 
+      x="30" 
+      y="40" 
+      font-family="Inter, system-ui, sans-serif" 
+      font-size="24" 
+      font-weight="900" 
+      fill="white" 
+      text-anchor="middle"
+    >AD</text>
+    
+    <!-- Name and domain -->
+    <text 
+      x="80" 
+      y="25" 
+      font-family="Inter, system-ui, sans-serif" 
+      font-size="20" 
+      font-weight="600" 
+      fill="${colors.foreground}"
+    >Aaron Will Djaba</text>
+    
+    <text 
+      x="80" 
+      y="48" 
+      font-family="JetBrains Mono, monospace" 
+      font-size="14" 
+      fill="${colors.muted}"
+    >iamaaronwilldjaba.me</text>
+  </g>
   
-  <!-- Footer: Domain -->
-  <text 
-    x="495" 
-    y="550" 
-    font-family="system-ui, -apple-system, sans-serif" 
-    font-size="18" 
-    fill="rgba(255,255,255,0.8)"
-  >aarondjaba.com</text>
+  <!-- Subtle corner decoration -->
+  <circle cx="1050" cy="150" r="80" fill="${colors.accent}" opacity="0.05"/>
+  <circle cx="1050" cy="150" r="50" fill="${colors.accent}" opacity="0.08"/>
 </svg>`;
 }
 
