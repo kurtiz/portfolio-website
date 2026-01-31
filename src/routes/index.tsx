@@ -34,6 +34,9 @@ const itemVariants: Variants = {
     },
 };
 
+const date = new Date();
+
+
 function App() {
     return (
         <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
@@ -105,7 +108,7 @@ function App() {
                     transition={{delay: 1}}
                 >
                     <p className="font-mono text-xs text-muted-foreground">
-                        © 2024 Aaron Will Djaba — built with care
+                        © {date.getFullYear()} Aaron Will Djaba — built with care
                     </p>
                 </motion.footer>
             </motion.div>
