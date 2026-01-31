@@ -173,9 +173,9 @@ export const FullTerminal = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="h-screen w-screen bg-background flex flex-col overflow-hidden motion-preset-blur-down">
+        <div className="min-h-screen w-full bg-background flex flex-col overflow-hidden">
             {/* Terminal Window */}
-            <div className="h-full flex flex-col bg-card/80 dark:bg-card/90 backdrop-blur-xl">
+            <div className="flex-1 flex flex-col bg-card/80 dark:bg-card/90 backdrop-blur-xl">
                 {/* Window Chrome */}
                 <div className="flex items-center gap-2 px-4 py-3 bg-secondary/50 border-b border-border/50">
                     <div className="flex items-center gap-1.5">

@@ -1,4 +1,4 @@
-import {createRootRoute, HeadContent, Scripts} from '@tanstack/react-router';
+import {createRootRoute, HeadContent, Scripts, Outlet} from '@tanstack/react-router';
 import {TanStackRouterDevtoolsPanel} from '@tanstack/react-router-devtools';
 import {TanStackDevtools} from '@tanstack/react-devtools';
 
@@ -9,6 +9,7 @@ import {QueryClientProvider} from "@tanstack/react-query";
 import {queryClient} from "@/query";
 import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {Toaster} from "sonner";
+import {PageNavigation} from "@/components/page-navigation";
 
 export const Route = createRootRoute({
     head: () => ({
@@ -36,8 +37,18 @@ export const Route = createRootRoute({
         ],
     }),
 
+    component: RootComponent,
     shellComponent: RootDocument,
 });
+
+function RootComponent() {
+    return (
+        <>
+            <PageNavigation />
+            <Outlet />
+        </>
+    );
+}
 
 function RootDocument({children}: { children: React.ReactNode }) {
     return (
