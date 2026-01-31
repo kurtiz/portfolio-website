@@ -5,6 +5,7 @@ import {motion} from "framer-motion";
 import {TerminalLine} from "@/types/terminal.types.ts";
 import {FolderNode, fs} from "@/fs/fs";
 import {commands} from "@/fs/command.ts";
+import {useNavigate} from "@tanstack/react-router";
 
 
 /* -----------------------------
@@ -105,6 +106,8 @@ export const TerminalCard = () => {
         setHistory((h) => [...h, ...output]);
     };
 
+    const navigate = useNavigate();
+
     return (
         <motion.div
             className="relative h-[500px] rounded-2xl overflow-hidden bg-card border border-border font-mono text-sm cursor-text"
@@ -112,11 +115,12 @@ export const TerminalCard = () => {
             whileHover={{scale: 1.01}}
         >
             {/* Header */}
-            <div className="flex items-center gap-2 px-4 py-2 bg-secondary/40 border-b border-border">
-                <div className="flex gap-1.5">
-                    <span className="w-3 h-3 rounded-full bg-red-500"/>
-                    <span className="w-3 h-3 rounded-full bg-yellow-500"/>
-                    <span className="w-3 h-3 rounded-full bg-green-500"/>
+            <div className="flex items-center gap-2 px-4 py-2 bg-secondary/40 border-b border-border cursor-default">
+                <div className="flex gap-1.5 ">
+                    <span className="w-3 h-3 rounded-full bg-red-500 cursor-pointer"/>
+                    <span className=" w-3 h-3 rounded-full bg-yellow-500 cursor-pointer"/>
+                    <span className="w-3 h-3 rounded-full bg-green-500 cursor-pointer"
+                          onClick={() => navigate({to: "/terminal"})}/>
                 </div>
                 <div className="flex-1 text-center text-xs text-muted-foreground">
                     terminal — zsh

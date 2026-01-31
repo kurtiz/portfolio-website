@@ -2,12 +2,14 @@
 
 import {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
-import {Commands, TerminalLine} from "@/types/terminal.types.ts";
+import {TerminalLine} from "@/types/terminal.types.ts";
+import {FolderNode, fs} from "@/fs/fs.ts";
+import {commands} from "@/fs/command.ts";
 
 
 /* -----------------------------
     Animated Line Component
- ------------------------------ */
+------------------------------ */
 const AnimatedLine = ({line}: { line: TerminalLine }) => {
     const getTextColor = () => {
         switch (line.type) {
@@ -38,10 +40,7 @@ const AnimatedLine = ({line}: { line: TerminalLine }) => {
         <motion.div
             initial={{opacity: 0, y: 2}}
             animate={{opacity: 1, y: 0}}
-            transition={{
-                duration: 0.15,
-                ease: "easeOut",
-            }}
+            transition={{duration: 0.15, ease: "easeOut"}}
             className="flex items-start gap-2"
         >
             {line.prefix && (
@@ -49,139 +48,108 @@ const AnimatedLine = ({line}: { line: TerminalLine }) => {
           {line.prefix}
         </span>
             )}
-            <span className={`${getTextColor()} whitespace-pre-wrap break-words`}>{line.text}</span>
+            <span className={`${getTextColor()} whitespace-pre-wrap break-words`}>
+        {line.text}
+      </span>
         </motion.div>
     );
 };
 
-/* -----------------------------
-    Blinking Cursor
- ------------------------------ */
-const BlinkingCursor = () => (
-    <motion.span
-        className="inline-block w-2 h-4 bg-accent ml-1"
-        animate={{opacity: [1, 1, 0, 0]}}
-        transition={{
-            duration: 1,
-            repeat: Infinity,
-            times: [0, 0.5, 0.5, 1],
-        }}
-    />
-);
 
 /* -----------------------------
     Full Terminal Component
- ------------------------------ */
+------------------------------ */
 export const FullTerminal = () => {
     const [history, setHistory] = useState<TerminalLine[]>([]);
-    const [currentInput, setCurrentInput] = useState("");
+    const [input, setInput] = useState("");
+
+    // filesystem state
+    const [cwd, setCwd] = useState<FolderNode>(fs);
+    const [path, setPath] = useState<string[]>(["~"]);
+
     const inputRef = useRef<HTMLInputElement>(null);
     const terminalRef = useRef<HTMLDivElement>(null);
 
-    // Welcome message on mount
+    /* Welcome message */
     useEffect(() => {
         setHistory([
             {text: "Welcome to my portfolio terminal!", type: "accent", prefix: "→"},
             {text: "Type 'help' to see available commands", type: "output", prefix: " "},
         ]);
-        // Auto-focus input
         inputRef.current?.focus();
     }, []);
 
-    // Auto-scroll to bottom when history updates
+    /* Auto-scroll */
     useEffect(() => {
-        if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-        }
+        terminalRef.current?.scrollTo({
+            top: terminalRef.current.scrollHeight,
+            behavior: "smooth",
+        });
     }, [history]);
 
-    const handleCommand = (cmd: string) => {
-        const trimmedCmd = cmd.trim().toLowerCase();
+    /* Run command */
+    const runCommand = async (raw: string) => {
+        const [cmd, ...args] = raw.trim().toLowerCase().split(" ");
 
-        // Add command to history
-        const newHistory: TerminalLine[] = [
-            ...history,
-            {text: cmd, type: "command", prefix: "$"},
-        ];
+        setHistory((h) => [
+            ...h,
+            {text: raw, type: "command", prefix: "$"},
+        ]);
 
-        // Handle special commands
-        if (trimmedCmd === "clear") {
+        if (cmd === "clear") {
             setHistory([]);
             return;
         }
 
-        // Find and execute command
-        const response = Commands[trimmedCmd];
-        if (response) {
-            setHistory([...newHistory, ...response]);
-        } else if (trimmedCmd === "") {
-            setHistory(newHistory);
-        } else {
-            setHistory([
-                ...newHistory,
-                {
-                    text: `Command not found: ${cmd}`,
-                    type: "error",
-                    prefix: "✗",
-                },
-                {
-                    text: "Type 'help' to see available commands",
-                    type: "output",
-                    prefix: " ",
-                },
+        const handler = commands[cmd];
+        if (!handler) {
+            setHistory((h) => [
+                ...h,
+                {text: `Command not found: ${cmd}`, type: "error", prefix: "✗"},
             ]);
+            return;
         }
-    };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (currentInput.trim()) {
-            handleCommand(currentInput);
-            setCurrentInput("");
-        }
-    };
+        const output = await handler(args, {
+            cwd,
+            setCwd,
+            path,
+            setPath,
+        });
 
-    const handleTerminalClick = () => {
-        inputRef.current?.focus();
+        setHistory((h) => [...h, ...output]);
     };
 
     return (
         <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
             {/* Terminal Window */}
-            <div
-                className="h-full flex flex-col bg-card/80 dark:bg-card/90 backdrop-blur-xl border-x-0 border-t-0 border-b-0">
-                {/* Window Chrome - macOS style */}
-                <div
-                    className="flex items-center gap-2 px-4 py-3 bg-secondary/50 dark:bg-secondary/30 border-b border-border/50">
-                    {/* Traffic lights */}
+            <div className="h-full flex flex-col bg-card/80 dark:bg-card/90 backdrop-blur-xl">
+                {/* Window Chrome */}
+                <div className="flex items-center gap-2 px-4 py-3 bg-secondary/50 border-b border-border/50">
                     <div className="flex items-center gap-1.5">
                         <button
                             onClick={() => window.close()}
-                            className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:brightness-110 transition-all"
-                            aria-label="Close"
+                            className="w-3 h-3 rounded-full bg-[#ff5f57]"
                         />
-                        <div className="w-3 h-3 rounded-full bg-[#febc2e] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)]"/>
-                        <div className="w-3 h-3 rounded-full bg-[#28c840] shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)]"/>
+                        <div className="w-3 h-3 rounded-full bg-[#febc2e]"/>
+                        <div className="w-3 h-3 rounded-full bg-[#28c840]"/>
                     </div>
 
-                    {/* Title */}
                     <div className="flex-1 text-center">
-                        <span className="text-xs text-muted-foreground font-medium">
-                            terminal — zsh
-                        </span>
+            <span className="text-xs text-muted-foreground font-medium">
+              terminal — zsh
+            </span>
                     </div>
 
-                    {/* Spacer for symmetry */}
                     <div className="w-[52px]"/>
                 </div>
 
                 {/* Terminal Content */}
                 <div
                     ref={terminalRef}
-                    className="flex-1 p-6 font-mono text-sm relative overflow-y-auto overflow-x-hidden"
-                    onClick={handleTerminalClick}
+                    className="flex-1 p-6 font-mono text-sm relative overflow-y-auto"
+                    onClick={() => inputRef.current?.focus()}
                 >
-                    {/* Scanline overlay - dark mode only */}
                     <div
                         className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-[0.03]"
                         style={{
@@ -190,40 +158,46 @@ export const FullTerminal = () => {
                         }}
                     />
 
-                    {/* History */}
                     <div className="space-y-2 relative z-10 max-w-4xl mx-auto">
-                        {history.map((line, index) => (
-                            <AnimatedLine key={index} line={line}/>
+                        {history.map((line, i) => (
+                            <AnimatedLine key={i} line={line}/>
                         ))}
 
-                        {/* Input Line */}
-                        <form onSubmit={handleSubmit} className="flex items-center gap-2">
+                        {/* Input */}
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                if (!input.trim()) return;
+                                runCommand(input);
+                                setInput("");
+                            }}
+                            className="flex items-center gap-2"
+                        >
+              <span className="text-accent select-none">
+                {path.join("/")}
+              </span>
                             <span className="text-success font-semibold select-none">$</span>
                             <input
                                 ref={inputRef}
-                                type="text"
-                                value={currentInput}
-                                onChange={(e) => setCurrentInput(e.target.value)}
-                                className="flex-1 bg-transparent outline-none text-foreground caret-accent"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                className="flex-1 bg-transparent outline-none caret-accent"
                                 spellCheck={false}
                                 autoComplete="off"
-                                placeholder="Type 'help' for commands..."
                             />
-                            <BlinkingCursor/>
                         </form>
                     </div>
                 </div>
 
                 {/* Status Bar */}
-                <div
-                    className="px-4 py-2 bg-secondary/30 dark:bg-secondary/20 border-t border-border/50 flex items-center justify-between">
+                <div className="px-4 py-2 bg-secondary/30 border-t border-border/50 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <span className="w-2 h-2 bg-accent rounded-full animate-pulse"/>
                         <span className="text-xs text-muted-foreground">active</span>
                     </div>
                     <span className="text-xs text-muted-foreground font-mono">
-                        ~/portfolio
-                    </span>
+            {path.join("/")}
+          </span>
                 </div>
             </div>
         </div>
