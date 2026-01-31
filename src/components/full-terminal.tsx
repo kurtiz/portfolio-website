@@ -150,10 +150,10 @@ export const FullTerminal = () => {
                     <div className="flex items-center gap-1.5">
                         <button
                             onClick={() => navigate({to: "/"})}
-                            className="w-3 h-3 rounded-full bg-[#ff5f57]"
+                            className="w-3 h-3 rounded-full bg-red-400 cursor-pointer"
                         />
-                        <div className="w-3 h-3 rounded-full bg-[#febc2e]"/>
-                        <div className="w-3 h-3 rounded-full bg-[#28c840]"/>
+                        <div className="w-3 h-3 rounded-full bg-yellow-400 cursor-pointer"/>
+                        <div className="w-3 h-3 rounded-full bg-green-500 cursor-pointer"/>
                     </div>
 
                     <div className="flex-1 text-center">
