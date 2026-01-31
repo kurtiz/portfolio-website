@@ -4,78 +4,54 @@ import {motion} from "framer-motion";
 import {useState} from "react";
 import {
     expertise,
-    getAverageProficiency,
+    getAverageExperience,
     getTotalSkills,
     type SkillCategory,
     type Skill
 } from "@/data/expertise";
 
 /* -----------------------------
-    Skill Bar Component
+    Skill Chip Component
  ------------------------------ */
-const SkillBar = ({skill, index, categoryColor}: { skill: Skill; index: number; categoryColor: string }) => {
-    const [isHovered, setIsHovered] = useState(false);
-
-    const getProficiencyLabel = (level: number): string => {
-        if (level >= 90) return "Expert";
-        if (level >= 70) return "Advanced";
-        if (level >= 50) return "Intermediate";
-        return "Beginner";
-    };
-
+const SkillChip = ({skill, index, categoryColor}: { skill: Skill; index: number; categoryColor: string }) => {
     return (
         <motion.div
-            initial={{opacity: 0, x: -20}}
-            animate={{opacity: 1, x: 0}}
-            transition={{delay: index * 0.05}}
-            onHoverStart={() => setIsHovered(true)}
-            onHoverEnd={() => setIsHovered(false)}
+            initial={{opacity: 0, scale: 0.8}}
+            animate={{opacity: 1, scale: 1}}
+            transition={{delay: index * 0.03, type: "spring", stiffness: 200}}
+            whileHover={{scale: 1.05, y: -2}}
+            whileTap={{scale: 0.95}}
             className="group"
         >
-            {/* Skill name and level */}
-            <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                    <span className="font-medium text-foreground">{skill.name}</span>
-                    {skill.yearsOfExperience && (
-                        <span className="text-xs text-muted-foreground">
-                            ({skill.yearsOfExperience}y)
-                        </span>
-                    )}
-                </div>
-                <motion.span
-                    className="text-sm font-semibold text-accent"
-                    animate={{scale: isHovered ? 1.1 : 1}}
-                >
-                    {skill.level}%
-                </motion.span>
-            </div>
-
-            {/* Progress bar */}
-            <div className="relative h-2 bg-secondary rounded-full overflow-hidden">
-                <motion.div
-                    className={`absolute inset-y-0 left-0 bg-gradient-to-r ${categoryColor} rounded-full`}
-                    initial={{width: 0}}
-                    animate={{width: `${skill.level}%`}}
-                    transition={{duration: 1, delay: index * 0.05, ease: "easeOut"}}
-                />
+            <div className={`
+                relative overflow-hidden
+                px-4 py-2.5 
+                bg-gradient-to-br ${categoryColor}
+                rounded-full
+                shadow-sm hover:shadow-md
+                transition-shadow duration-200
+                cursor-default
+            `}>
                 {/* Shine effect on hover */}
                 <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                     initial={{x: "-100%"}}
-                    animate={{x: isHovered ? "100%" : "-100%"}}
+                    whileHover={{x: "100%"}}
                     transition={{duration: 0.6}}
                 />
+                
+                {/* Content */}
+                <div className="relative flex items-center gap-2">
+                    <span className="font-medium text-white text-sm">
+                        {skill.name}
+                    </span>
+                    {skill.yearsOfExperience && (
+                        <span className="text-xs text-white/80 font-mono">
+                            {skill.yearsOfExperience}y
+                        </span>
+                    )}
+                </div>
             </div>
-
-            {/* Proficiency label */}
-            <motion.p
-                className="text-xs text-muted-foreground mt-1"
-                initial={{opacity: 0}}
-                animate={{opacity: isHovered ? 1 : 0}}
-                transition={{duration: 0.2}}
-            >
-                {getProficiencyLabel(skill.level)}
-            </motion.p>
         </motion.div>
     );
 };
@@ -142,7 +118,7 @@ const CategoryCard = ({category, index}: { category: SkillCategory; index: numbe
                 </div>
             </motion.div>
 
-            {/* Skills list */}
+            {/* Skills chips */}
             <motion.div
                 initial={false}
                 animate={{
@@ -152,15 +128,17 @@ const CategoryCard = ({category, index}: { category: SkillCategory; index: numbe
                 transition={{duration: 0.3}}
                 className="overflow-hidden"
             >
-                <div className="px-6 pb-6 space-y-4 bg-secondary/20">
-                    {category.skills.map((skill, i) => (
-                        <SkillBar
-                            key={skill.name}
-                            skill={skill}
-                            index={i}
-                            categoryColor={category.color}
-                        />
-                    ))}
+                <div className="px-6 pb-6 bg-secondary/20">
+                    <div className="flex flex-wrap gap-2">
+                        {category.skills.map((skill, i) => (
+                            <SkillChip
+                                key={skill.name}
+                                skill={skill}
+                                index={i}
+                                categoryColor={category.color}
+                            />
+                        ))}
+                    </div>
                 </div>
             </motion.div>
         </motion.div>
@@ -252,8 +230,8 @@ export const ExpertiseShowcase = () => {
                         delay={0.3}
                     />
                     <StatCard
-                        label="Avg Proficiency"
-                        value={`${getAverageProficiency()}%`}
+                        label="Avg Experience"
+                        value={`${getAverageExperience()}y`}
                         icon="📊"
                         color="from-green-500 to-emerald-500"
                         delay={0.4}

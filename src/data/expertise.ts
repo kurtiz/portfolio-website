@@ -1,6 +1,5 @@
 export interface Skill {
     name: string;
-    level: number; // 1-100 proficiency
     yearsOfExperience?: number;
     icon?: string; // Optional emoji or icon
 }
@@ -16,8 +15,8 @@ export interface SkillCategory {
 /**
  * Expertise & Skills Data
  * 
- * Organize your skills by category with proficiency levels
- * Level: 1-100 (Beginner: 1-30, Intermediate: 31-70, Expert: 71-100)
+ * Organize your skills by category
+ * Add years of experience to show your expertise level
  */
 export const expertise: SkillCategory[] = [
     {
@@ -26,14 +25,14 @@ export const expertise: SkillCategory[] = [
         icon: "🎨",
         color: "from-blue-500 to-cyan-500",
         skills: [
-            { name: "React", level: 95, yearsOfExperience: 5 },
-            { name: "Next.js", level: 90, yearsOfExperience: 3 },
-            { name: "TypeScript", level: 90, yearsOfExperience: 4 },
-            { name: "Tailwind CSS", level: 95, yearsOfExperience: 3 },
-            { name: "JavaScript", level: 95, yearsOfExperience: 6 },
-            { name: "HTML/CSS", level: 98, yearsOfExperience: 6 },
-            { name: "Framer Motion", level: 85, yearsOfExperience: 2 },
-            { name: "Vue.js", level: 75, yearsOfExperience: 2 },
+            { name: "React", yearsOfExperience: 5 },
+            { name: "Next.js", yearsOfExperience: 3 },
+            { name: "TypeScript", yearsOfExperience: 4 },
+            { name: "Tailwind CSS", yearsOfExperience: 3 },
+            { name: "JavaScript", yearsOfExperience: 6 },
+            { name: "HTML/CSS", yearsOfExperience: 6 },
+            { name: "Framer Motion", yearsOfExperience: 2 },
+            { name: "Vue.js", yearsOfExperience: 2 },
         ],
     },
     {
@@ -42,14 +41,14 @@ export const expertise: SkillCategory[] = [
         icon: "⚙️",
         color: "from-green-500 to-emerald-500",
         skills: [
-            { name: "Node.js", level: 90, yearsOfExperience: 5 },
-            { name: "Express.js", level: 88, yearsOfExperience: 4 },
-            { name: "Hono", level: 85, yearsOfExperience: 1 },
-            { name: "PostgreSQL", level: 85, yearsOfExperience: 4 },
-            { name: "MongoDB", level: 80, yearsOfExperience: 3 },
-            { name: "REST APIs", level: 92, yearsOfExperience: 5 },
-            { name: "GraphQL", level: 75, yearsOfExperience: 2 },
-            { name: "Python", level: 70, yearsOfExperience: 3 },
+            { name: "Node.js", yearsOfExperience: 5 },
+            { name: "Express.js", yearsOfExperience: 4 },
+            { name: "Hono", yearsOfExperience: 1 },
+            { name: "PostgreSQL", yearsOfExperience: 4 },
+            { name: "MongoDB", yearsOfExperience: 3 },
+            { name: "REST APIs", yearsOfExperience: 5 },
+            { name: "GraphQL", yearsOfExperience: 2 },
+            { name: "Python", yearsOfExperience: 3 },
         ],
     },
     {
@@ -58,13 +57,13 @@ export const expertise: SkillCategory[] = [
         icon: "☁️",
         color: "from-purple-500 to-pink-500",
         skills: [
-            { name: "Docker", level: 85, yearsOfExperience: 3 },
-            { name: "AWS", level: 80, yearsOfExperience: 3 },
-            { name: "Cloudflare", level: 85, yearsOfExperience: 2 },
-            { name: "CI/CD", level: 82, yearsOfExperience: 3 },
-            { name: "GitHub Actions", level: 85, yearsOfExperience: 2 },
-            { name: "Vercel", level: 90, yearsOfExperience: 3 },
-            { name: "Linux", level: 75, yearsOfExperience: 4 },
+            { name: "Docker", yearsOfExperience: 3 },
+            { name: "AWS", yearsOfExperience: 3 },
+            { name: "Cloudflare", yearsOfExperience: 2 },
+            { name: "CI/CD", yearsOfExperience: 3 },
+            { name: "GitHub Actions", yearsOfExperience: 2 },
+            { name: "Vercel", yearsOfExperience: 3 },
+            { name: "Linux", yearsOfExperience: 4 },
         ],
     },
     {
@@ -73,10 +72,10 @@ export const expertise: SkillCategory[] = [
         icon: "📱",
         color: "from-orange-500 to-red-500",
         skills: [
-            { name: "React Native", level: 85, yearsOfExperience: 3 },
-            { name: "Expo", level: 80, yearsOfExperience: 2 },
-            { name: "iOS Development", level: 70, yearsOfExperience: 2 },
-            { name: "Android Development", level: 70, yearsOfExperience: 2 },
+            { name: "React Native", yearsOfExperience: 3 },
+            { name: "Expo", yearsOfExperience: 2 },
+            { name: "iOS Development", yearsOfExperience: 2 },
+            { name: "Android Development", yearsOfExperience: 2 },
         ],
     },
     {
@@ -85,12 +84,12 @@ export const expertise: SkillCategory[] = [
         icon: "🛠️",
         color: "from-yellow-500 to-amber-500",
         skills: [
-            { name: "Git", level: 95, yearsOfExperience: 6 },
-            { name: "VS Code", level: 98, yearsOfExperience: 6 },
-            { name: "Figma", level: 85, yearsOfExperience: 3 },
-            { name: "Postman", level: 90, yearsOfExperience: 4 },
-            { name: "Jira", level: 80, yearsOfExperience: 3 },
-            { name: "Notion", level: 85, yearsOfExperience: 2 },
+            { name: "Git", yearsOfExperience: 6 },
+            { name: "VS Code", yearsOfExperience: 6 },
+            { name: "Figma", yearsOfExperience: 3 },
+            { name: "Postman", yearsOfExperience: 4 },
+            { name: "Jira", yearsOfExperience: 3 },
+            { name: "Notion", yearsOfExperience: 2 },
         ],
     },
 ];
@@ -103,28 +102,30 @@ export const getAllSkills = (): Skill[] => {
 };
 
 /**
- * Get top skills by proficiency level
+ * Get skills with most experience
  */
 export const getTopSkills = (count: number = 10): Skill[] => {
     return getAllSkills()
-        .sort((a, b) => b.level - a.level)
+        .filter(skill => skill.yearsOfExperience)
+        .sort((a, b) => (b.yearsOfExperience || 0) - (a.yearsOfExperience || 0))
         .slice(0, count);
 };
 
 /**
- * Get skills by proficiency level
+ * Get skills by minimum years of experience
  */
-export const getSkillsByLevel = (minLevel: number): Skill[] => {
-    return getAllSkills().filter(skill => skill.level >= minLevel);
+export const getSkillsByExperience = (minYears: number): Skill[] => {
+    return getAllSkills().filter(skill => (skill.yearsOfExperience || 0) >= minYears);
 };
 
 /**
- * Calculate average proficiency across all skills
+ * Calculate average years of experience
  */
-export const getAverageProficiency = (): number => {
-    const skills = getAllSkills();
-    const total = skills.reduce((sum, skill) => sum + skill.level, 0);
-    return Math.round(total / skills.length);
+export const getAverageExperience = (): number => {
+    const skillsWithExp = getAllSkills().filter(s => s.yearsOfExperience);
+    if (skillsWithExp.length === 0) return 0;
+    const total = skillsWithExp.reduce((sum, skill) => sum + (skill.yearsOfExperience || 0), 0);
+    return Math.round(total / skillsWithExp.length);
 };
 
 /**
