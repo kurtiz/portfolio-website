@@ -52,6 +52,8 @@ const AnimatedLine = ({line}: { line: TerminalLine }) => {
 export const FullTerminal = () => {
     const [history, setHistory] = useState<TerminalLine[]>([]);
     const [input, setInput] = useState("");
+    const [commandHistory, setCommandHistory] = useState<string[]>([]);
+    const [historyIndex, setHistoryIndex] = useState<number>(-1);
 
     // filesystem state
     const [cwd, setCwd] = useState<FolderNode>(fs);
@@ -80,6 +82,12 @@ export const FullTerminal = () => {
     /* Run command */
     const runCommand = async (raw: string) => {
         const [cmd, ...args] = raw.trim().toLowerCase().split(" ");
+
+        // Add to command history
+        if (raw.trim()) {
+            setCommandHistory((prev) => [...prev, raw]);
+            setHistoryIndex(-1);
+        }
 
         setHistory((h) => [
             ...h,
@@ -110,7 +118,7 @@ export const FullTerminal = () => {
         setHistory((h) => [...h, ...output]);
     };
 
-    /* Handle tab autocomplete */
+    /* Handle tab autocomplete and arrow key history */
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Tab") {
             e.preventDefault();
@@ -135,6 +143,29 @@ export const FullTerminal = () => {
                         prefix: " ",
                     },
                 ]);
+            }
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (commandHistory.length === 0) return;
+
+            const newIndex = historyIndex === -1
+                ? commandHistory.length - 1
+                : Math.max(0, historyIndex - 1);
+
+            setHistoryIndex(newIndex);
+            setInput(commandHistory[newIndex]);
+        } else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (historyIndex === -1) return;
+
+            const newIndex = historyIndex + 1;
+
+            if (newIndex >= commandHistory.length) {
+                setHistoryIndex(-1);
+                setInput("");
+            } else {
+                setHistoryIndex(newIndex);
+                setInput(commandHistory[newIndex]);
             }
         }
     };
@@ -192,7 +223,7 @@ export const FullTerminal = () => {
                                 await runCommand(input);
                                 setInput("");
                             }}
-                            className="flex items-center gap-2"
+                            className="flex items-center gap-2 mb-3"
                         >
                             <span className="text-accent select-none">
                                 {path.join("/")}
