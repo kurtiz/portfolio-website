@@ -51,7 +51,7 @@ export const PageNavigation = () => {
                         <div className="hidden sm:flex items-center gap-2 text-sm">
                             <span className="text-muted-foreground">/</span>
                             <motion.span
-                                className="text-foreground font-medium"
+                                className="text-foreground font-medium capitalize"
                                 initial={{opacity: 0, x: -10}}
                                 animate={{opacity: 1, x: 0}}
                                 transition={{delay: 0.2}}
