@@ -14,6 +14,7 @@ import {AudioProvider} from "@/contexts/audio-context";
 
 export const Route = createRootRoute({
     head: () => ({
+        title: "Aaron Will Djaba - Full Stack Developer",
         links: [
             {
                 rel: 'stylesheet',
