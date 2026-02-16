@@ -249,5 +249,139 @@
     .animate-pulse-glow {
         animation: pulse-glow 2s ease-in-out infinite;
     }
+
+    /* =========================================================
+       Expertise Page
+       ========================================================= */
+
+    .expertise-page {
+        @apply min-h-screen py-8 px-4 sm:py-12;
+    }
+
+    .expertise-container {
+        @apply max-w-4xl mx-auto;
+    }
+
+    .expertise-header {
+        @apply mb-10 text-center;
+    }
+
+    .expertise-title {
+        @apply text-4xl sm:text-5xl font-bold mb-3 tracking-tight;
+        color: var(--foreground);
+    }
+
+    .expertise-subtitle {
+        @apply text-lg;
+        color: var(--muted-foreground);
+    }
+
+    /* Stats Row */
+    .stats-row {
+        @apply flex items-center justify-center gap-4 sm:gap-8 mb-12;
+    }
+
+    .stat-item {
+        @apply flex flex-col items-center;
+    }
+
+    .stat-value {
+        @apply text-2xl sm:text-3xl font-bold;
+        color: var(--foreground);
+    }
+
+    .stat-label {
+        @apply text-sm;
+        color: var(--muted-foreground);
+    }
+
+    .stat-divider {
+        @apply w-px h-8;
+        background-color: var(--muted);
+    }
+
+    /* Categories */
+    .categories-list {
+        @apply space-y-8;
+    }
+
+    .expertise-category {
+        @apply bg-card rounded-2xl transition-all duration-300 p-6 sm:p-8;
+        box-shadow: var(--shadow-card);
+    }
+
+    .expertise-category:hover {
+        box-shadow: var(--shadow-card-hover);
+    }
+
+    .category-header {
+        @apply flex items-start gap-4 mb-6;
+    }
+
+    .category-icon {
+        @apply text-3xl flex-shrink-0;
+    }
+
+    .category-info {
+        @apply flex-1;
+    }
+
+    .category-title {
+        @apply text-xl font-semibold mb-1;
+        color: var(--foreground);
+    }
+
+    .category-desc {
+        @apply text-sm;
+        color: var(--muted-foreground);
+    }
+
+    .category-count {
+        @apply text-xs font-mono px-2 py-1 rounded-full;
+        background-color: var(--muted);
+        color: var(--muted-foreground);
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+        @apply flex flex-wrap gap-2;
+    }
+
+    /* Skill Chip - Solid muted tones */
+    .skill-chip {
+        @apply inline-flex items-center gap-1.5 px-3 py-2 rounded-lg;
+        background-color: var(--secondary);
+        transition: all 0.2s ease;
+    }
+
+    .skill-chip:hover {
+        background-color: var(--muted);
+        transform: translateY(-1px);
+    }
+
+    .skill-name {
+        @apply text-sm font-medium;
+        color: var(--foreground);
+    }
+
+    .skill-exp {
+        @apply text-xs font-mono;
+        color: var(--muted-foreground);
+    }
+
+    /* Dark mode adjustments */
+    .dark {
+        .skill-chip {
+            background-color: oklch(0.3 0.02 260);
+        }
+
+        .skill-chip:hover {
+            background-color: oklch(0.4 0.02 260);
+        }
+
+        .category-count {
+            background-color: oklch(0.35 0.02 260);
+        }
+    }
 }
 
