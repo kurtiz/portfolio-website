@@ -10,6 +10,7 @@ import {queryClient} from "@/query";
 import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {Toaster} from "sonner";
 import {PageNavigation} from "@/components/page-navigation";
+import {AudioProvider} from "@/contexts/audio-context";
 
 export const Route = createRootRoute({
     head: () => ({
@@ -31,10 +32,10 @@ export const Route = createRootRoute({
 
 function RootComponent() {
     return (
-        <>
+        <AudioProvider>
             <PageNavigation />
             <Outlet />
-        </>
+        </AudioProvider>
     );
 }
 

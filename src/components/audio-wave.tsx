@@ -1,53 +1,17 @@
 "use client"
 
-import {useEffect, useRef, useState} from "react"
-import {motion, useAnimation} from "framer-motion"
+import {motion} from "framer-motion"
+import {useAudio} from "@/contexts/audio-context"
 
 const BARS = [1, 2, 3, 4, 5]
 
 export default function AudioWaveform() {
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const controls = useAnimation();
-    const [playing, setPlaying] = useState(false);
-
-    // Initialize audio (client only)
-    useEffect(() => {
-        const audio = new Audio("/lofi.mp3")
-        audio.loop = true
-        audio.volume = 0.5
-        audioRef.current = audio
-
-        return () => {
-            audio.pause()
-            audioRef.current = null
-        }
-    }, [controls])
-
-    const toggle = () => {
-        const audio = audioRef.current
-        if (!audio) return
-
-        if (audio.paused) {
-            audio.play()
-            setPlaying(true)
-            controls.start("playing")
-        } else {
-            audio.pause()
-            setPlaying(false)
-            controls.start("idle")
-        }
-    }
+    const {isPlaying, toggle} = useAudio()
 
     return (
         <button
-            onLoad={() => {
-                setTimeout(() => {
-                    console.log("Auto play")
-                    toggle()
-                }, 1500);
-            }}
             onClick={toggle}
-            aria-label={playing ? "Pause audio" : "Play audio"}
+            aria-label={isPlaying ? "Pause audio" : "Play audio"}
             className="flex items-center gap-1 h-5 cursor-pointer"
         >
             {BARS.map((bar, i) => (
@@ -61,7 +25,7 @@ export default function AudioWaveform() {
                         },
                     }}
                     initial="idle"
-                    animate={controls}
+                    animate={isPlaying ? "playing" : "idle"}
                     transition={{
                         duration: 0.9,
                         repeat: Infinity,

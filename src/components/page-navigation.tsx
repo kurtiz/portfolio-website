@@ -3,6 +3,7 @@
 import {motion} from "framer-motion";
 import {useNavigate, useRouterState} from "@tanstack/react-router";
 import {ThemeToggle} from "@/components/theme-toggle";
+import AudioWaveform from "@/components/audio-wave";
 
 export const PageNavigation = () => {
     const navigate = useNavigate();
@@ -78,8 +79,9 @@ export const PageNavigation = () => {
                         </motion.div>
                     </div>
 
-                    {/* Right: Theme toggle */}
+                    {/* Right: Audio & Theme */}
                     <div className="flex items-center gap-4">
+                        <AudioWaveform/>
                         <ThemeToggle/>
                     </div>
                 </div>
