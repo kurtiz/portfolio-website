@@ -11,7 +11,6 @@ import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
 import {generateMetaTags, pageSEO, generateStructuredData} from "@/lib/seo";
 
 export const Route = createFileRoute('/')({
-    ssr: false,
     component: App,
     head: () => {
         const metaTags = generateMetaTags(pageSEO.home);

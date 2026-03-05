@@ -80,81 +80,71 @@ export function generateMetaTags(config: SEOConfig) {
     const pageUrl = url.startsWith('http') ? url : `${siteConfig.url}${url}`;
 
     return {
-        // Basic Meta Tags
+        // Basic Meta Tags - title should be at the top level
         title: fullTitle,
         meta: [
-            // Charset and viewport (usually in root)
-            {charSet: 'utf-8'},
-            {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-
             // Primary Meta Tags
-            {name: 'title', content: fullTitle},
-            {name: 'description', content: description},
-            {name: 'author', content: author},
-            ...(keywords.length > 0 ? [{name: 'keywords', content: keywords.join(', ')}] : []),
+            { name: 'title', content: fullTitle },
+            { name: 'description', content: description },
+            { name: 'author', content: author },
+            ...(keywords.length > 0 ? [{ name: 'keywords', content: keywords.join(', ') }] : []),
 
             // Theme Color
-            {name: 'theme-color', content: siteConfig.themeColor},
-            {name: 'msapplication-TileColor', content: siteConfig.themeColor},
+            { name: 'theme-color', content: siteConfig.themeColor },
+            { name: 'msapplication-TileColor', content: siteConfig.themeColor },
 
-            // Open Graph / Facebook
-            {property: 'og:type', content: type},
-            {property: 'og:url', content: pageUrl},
-            {property: 'og:title', content: fullTitle},
-            {property: 'og:description', content: description},
-            {property: 'og:image', content: imageUrl},
-            {property: 'og:image:width', content: '1200'},
-            {property: 'og:image:height', content: '630'},
-            {property: 'og:site_name', content: siteConfig.name},
-            {property: 'og:locale', content: siteConfig.locale},
+            // Open Graph / Facebook - required for social sharing (WhatsApp, Facebook, LinkedIn)
+            { property: 'og:type', content: type },
+            { property: 'og:url', content: pageUrl },
+            { property: 'og:title', content: fullTitle },
+            { property: 'og:description', content: description },
+            { property: 'og:image', content: imageUrl },
+            { property: 'og:image:width', content: '1200' },
+            { property: 'og:image:height', content: '630' },
+            { property: 'og:site_name', content: siteConfig.name },
+            { property: 'og:locale', content: siteConfig.locale },
 
             // Article specific (if type is article)
             ...(type === 'article' && publishedTime ? [
-                {property: 'article:published_time', content: publishedTime},
+                { property: 'article:published_time', content: publishedTime },
             ] : []),
             ...(type === 'article' && modifiedTime ? [
-                {property: 'article:modified_time', content: modifiedTime},
+                { property: 'article:modified_time', content: modifiedTime },
             ] : []),
             ...(type === 'article' && section ? [
-                {property: 'article:section', content: section},
+                { property: 'article:section', content: section },
             ] : []),
             ...(type === 'article' && tags.length > 0 ?
-                    tags.map(tag => ({property: 'article:tag', content: tag})) : []
+                    tags.map(tag => ({ property: 'article:tag', content: tag })) : []
             ),
 
             // Twitter Card
-            {name: 'twitter:card', content: 'summary_large_image'},
-            {name: 'twitter:url', content: pageUrl},
-            {name: 'twitter:title', content: fullTitle},
-            {name: 'twitter:description', content: description},
-            {name: 'twitter:image', content: imageUrl},
+            { name: 'twitter:card', content: 'summary_large_image' },
+            { name: 'twitter:url', content: pageUrl },
+            { name: 'twitter:title', content: fullTitle },
+            { name: 'twitter:description', content: description },
+            { name: 'twitter:image', content: imageUrl },
             ...(siteConfig.twitterHandle ? [
-                {name: 'twitter:creator', content: siteConfig.twitterHandle},
-                {name: 'twitter:site', content: siteConfig.twitterHandle},
+                { name: 'twitter:creator', content: siteConfig.twitterHandle },
+                { name: 'twitter:site', content: siteConfig.twitterHandle },
             ] : []),
 
-            // LinkedIn
-            {property: 'og:image:alt', content: fullTitle},
-
-            // WhatsApp (uses Open Graph)
-            // No specific tags needed, uses og:image, og:title, og:description
+            // LinkedIn and other platforms
+            { property: 'og:image:alt', content: fullTitle },
 
             // Additional SEO
-            {name: 'robots', content: 'index, follow'},
-            {name: 'googlebot', content: 'index, follow'},
-            {name: 'language', content: 'English'},
-            {name: 'revisit-after', content: '7 days'},
+            { name: 'robots', content: 'index, follow' },
+            { name: 'googlebot', content: 'index, follow' },
+            { name: 'language', content: 'English' },
+            { name: 'revisit-after', content: '7 days' },
         ],
         links: [
             // Canonical URL
-            {rel: 'canonical', href: pageUrl},
+            { rel: 'canonical', href: pageUrl },
 
             // Favicon
-            {rel: 'icon', href: '/favicon.ico'},
-            {rel: 'apple-touch-icon', href: '/apple-touch-icon.png'},
-
-            // Manifest
-            {rel: 'manifest', href: '/site.webmanifest'},
+            { rel: 'icon', href: '/logo.png' },
+            { rel: 'apple-touch-icon', href: '/logo.png' },
         ],
     };
 }
