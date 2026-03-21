@@ -2,18 +2,11 @@ import {createFileRoute} from '@tanstack/react-router';
 import {Header} from '@/components/header';
 import {motion} from 'framer-motion';
 import {MapPin, Mail, Github, Linkedin, Twitter, Award, Shield, Code, Cloud} from 'lucide-react';
-import {siteConfig} from '@/lib/seo';
+import {siteConfig, generateMetaTags, pageSEO} from '@/lib/seo';
 
 export const Route = createFileRoute('/about')({
     component: AboutPage,
-    head: () => {
-        return {
-            title: `About | ${siteConfig.author.name}`,
-            meta: [
-                {name: 'description', content: `Learn more about ${siteConfig.author.name} - Full-Stack Engineer and Cyber Security Analyst from Accra, Ghana.`},
-            ],
-        };
-    },
+    head: () => generateMetaTags(pageSEO.about),
 });
 
 const twitterHandle = siteConfig.author.twitter?.replace('@', '') || 'aaronwilldjaba';

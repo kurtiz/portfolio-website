@@ -14,8 +14,8 @@ import {AudioProvider} from "@/contexts/audio-context";
 
 export const Route = createRootRoute({
     head: () => ({
-        title: "Aaron Will Djaba - Full Stack Developer",
         meta: [
+            { title: "Aaron Will Djaba - Full Stack Developer" },
             { charSet: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { name: 'theme-color', content: '#FCF9EAFF' },

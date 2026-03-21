@@ -4,16 +4,24 @@ import { ProjectDetails } from '@/components/projects/project-details';
 import { motion } from 'framer-motion';
 import { getProjectById, getAdjacentProjects } from '@/data/projects';
 import { notFound } from '@tanstack/react-router';
+import { generateMetaTags } from '@/lib/seo';
 
 export const Route = createFileRoute('/project/$id')({
     component: ProjectDetailPage,
-    head: () => ({
-        meta: [
-            {
-                title: 'Project Details | Aaron Will Djaba',
-            },
-        ],
-    }),
+    head: ({ params }) => {
+        const project = getProjectById(params.id);
+        if (!project) {
+            return { title: 'Project Not Found | Aaron Will Djaba' };
+        }
+        return generateMetaTags({
+            title: project.title,
+            description: project.description,
+            url: `/project/${project.id}`,
+            image: project.image,
+            keywords: [...project.techStack, ...project.tags],
+            type: 'article',
+        });
+    },
 });
 
 function ProjectDetailPage() {

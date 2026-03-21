@@ -80,9 +80,9 @@ export function generateMetaTags(config: SEOConfig) {
     const pageUrl = url.startsWith('http') ? url : `${siteConfig.url}${url}`;
 
     return {
-        // Basic Meta Tags - title should be at the top level
-        title: fullTitle,
         meta: [
+            // Page Title (rendered as <title> tag)
+            { title: fullTitle },
             // Primary Meta Tags
             { name: 'title', content: fullTitle },
             { name: 'description', content: description },
@@ -192,6 +192,15 @@ export const pageSEO = {
         keywords: ['projects', 'portfolio', 'web apps', 'mobile apps', 'case studies'],
         url: '/projects',
         image: '/api/og?page=projects',
+    },
+
+    about: {
+        title: 'About',
+        description: 'Learn more about Aaron Will Djaba - Full-Stack Engineer and Cyber Security Analyst from Accra, Ghana.',
+        keywords: ['about', 'biography', 'profile', 'developer', 'cybersecurity', 'Aaron Djaba'],
+        url: '/about',
+        type: 'profile' as const,
+        image: '/api/og?page=about',
     },
 
     blog: {
