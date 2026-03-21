@@ -1,6 +1,6 @@
 import {createFileRoute, Link, notFound} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
-import {generateMetaTags, pageSEO} from '@/lib/seo';
+import {generateMetaTags, generateStructuredData, pageSEO} from '@/lib/seo';
 import {estimateReadingTime, renderMarkdown} from '@/lib/markdown';
 import {ArrowLeft, Calendar, Clock, Tag} from 'lucide-react';
 import {useEffect, useState} from 'react';
@@ -15,13 +15,34 @@ export const Route = createFileRoute('/blog_/$slug')({
         if (!loaderData?.post) return generateMetaTags(pageSEO.blog);
         // @ts-ignore
         const post = loaderData.post;
-        return generateMetaTags({
+        const meta = generateMetaTags({
             title: post.title,
             description: post.excerpt,
             keywords: post.tags,
             url: `/blog/${post._meta.path}`,
             type: 'article',
+            publishedTime: post.date,
+            tags: post.tags,
+            image: post.coverImage || undefined,
         });
+        const structuredData = generateStructuredData('article', {
+            title: post.title,
+            description: post.excerpt,
+            image: post.coverImage,
+            publishedTime: post.date,
+            modifiedTime: post.date,
+            keywords: post.tags,
+            url: `/blog/${post._meta.path}`,
+        });
+        return {
+            ...meta,
+            scripts: [
+                {
+                    type: 'application/ld+json' as const,
+                    children: JSON.stringify(structuredData),
+                },
+            ],
+        } as any;
     },
     loader: ({params}) => {
         const post = allPosts.find(

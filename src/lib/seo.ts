@@ -254,18 +254,33 @@ export function generateStructuredData(type: 'person' | 'website' | 'article', d
     }
 
     if (type === 'article' && data) {
+        const imageUrl = data.image
+            ? (data.image.startsWith('http') ? data.image : `${baseUrl}${data.image}`)
+            : `${baseUrl}${siteConfig.ogImage}`;
+
         return {
             '@context': 'https://schema.org',
             '@type': 'Article',
             headline: data.title,
             description: data.description,
-            image: data.image ? `${baseUrl}${data.image}` : `${baseUrl}${siteConfig.ogImage}`,
+            image: imageUrl,
             datePublished: data.publishedTime,
             dateModified: data.modifiedTime || data.publishedTime,
             author: {
                 '@type': 'Person',
                 name: siteConfig.author.name,
+                url: baseUrl,
             },
+            publisher: {
+                '@type': 'Person',
+                name: siteConfig.author.name,
+                url: baseUrl,
+            },
+            mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': data.url || baseUrl,
+            },
+            ...(data.keywords?.length ? {keywords: data.keywords} : {}),
         };
     }
 
