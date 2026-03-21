@@ -13,6 +13,7 @@ export interface Project {
         docs?: string;
     };
     featured?: boolean;
+    image?: string;
 }
 
 export const projectTypes: { value: ProjectType; label: string }[] = [
@@ -36,6 +37,7 @@ export const projects: Project[] = [
             live: 'https://bvault-js.vercel.app',
         },
         featured: true,
+        image: '/projects/bvault.jpeg',
     },
     {
         id: 'vedatrace',
@@ -49,6 +51,7 @@ export const projects: Project[] = [
             docs: 'https://docs.vedatrace.dev/',
         },
         featured: true,
+        image: '/projects/vedatrace-dashboard.jpeg',
     },
     {
         id: 'vedatrace-docs',
@@ -60,6 +63,7 @@ export const projects: Project[] = [
         links: {
             live: 'https://docs.vedatrace.dev/',
         },
+        image: '/projects/vedatrace-docs.jpeg',
     },
     {
         id: 'hono-cloudflare-starter',
@@ -71,6 +75,7 @@ export const projects: Project[] = [
         links: {
             github: 'https://github.com/kurtiz/hono-cloudflare-starter',
         },
+        image: '/projects/hono-cloudflare-starter.png',
     },
     {
         id: 'dhclc',
@@ -82,6 +87,7 @@ export const projects: Project[] = [
         links: {
             live: 'https://dhclc.org/',
         },
+        image: '/projects/dhclc.jpeg',
     },
     {
         id: 'ussd-simulator',
@@ -104,6 +110,7 @@ export const projects: Project[] = [
         links: {
             github: 'https://github.com/kurtiz/commit-feed',
         },
+        image: '/projects/commit-feed.gif',
     },
 ];
 

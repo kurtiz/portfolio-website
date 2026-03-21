@@ -10104,7 +10104,7 @@ declare namespace Rpc {
 declare namespace Cloudflare {
     // Type of `env`.
     //
-    // The specific project can extend `Env` by redeclaring it in project-specific files. Typescript
+    // The specific projects can extend `Env` by redeclaring it in projects-specific files. Typescript
     // will merge all declarations.
     //
     // You can use `wrangler types` to generate the `Env` type automatically.
@@ -10112,10 +10112,10 @@ declare namespace Cloudflare {
     }
     // Project-specific parameters used to inform types.
     //
-    // This interface is, again, intended to be declared in project-specific files, and then that
+    // This interface is, again, intended to be declared in projects-specific files, and then that
     // declaration will be merged with this one.
     //
-    // A project should have a declaration like this:
+    // A projects should have a declaration like this:
     //
     //     interface GlobalProps {
     //       // Declares the main module's exports. Used to populate Cloudflare.Exports aka the type
