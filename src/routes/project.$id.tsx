@@ -11,7 +11,13 @@ export const Route = createFileRoute('/project/$id')({
     head: ({ params }) => {
         const project = getProjectById(params.id);
         if (!project) {
-            return { title: 'Project Not Found | Aaron Will Djaba' };
+            return {
+                meta: [
+                    {
+                        title: 'Project Not Found | Aaron Will Djaba',
+                    },
+                ],
+            };
         }
         return generateMetaTags({
             title: project.title,
