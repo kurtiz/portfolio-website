@@ -7,11 +7,13 @@ import { notFound } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/project/$id')({
     component: ProjectDetailPage,
-    head: () => {
-        return {
-            title: 'Project Details | Aaron Will Djaba',
-        };
-    },
+    head: () => ({
+        meta: [
+            {
+                title: 'Project Details | Aaron Will Djaba',
+            },
+        ],
+    }),
 });
 
 function ProjectDetailPage() {
