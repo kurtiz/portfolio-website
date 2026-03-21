@@ -72,9 +72,9 @@ function App() {
                     initial="hidden"
                     animate="visible"
                 >
-                    {/* Blog Card - 1x1 */}
+                    {/* Work Experience - 1x1 */}
                     <motion.div variants={itemVariants} className="col-span-2 sm:col-span-2 md:col-span-1 row-span-1">
-                        <BlogCard/>
+                        <WorkExperienceCard/>
                     </motion.div>
 
                     {/* Featured Project - 2x2 */}
@@ -97,9 +97,9 @@ function App() {
                         <SocialCard/>
                     </motion.div>
 
-                    {/* Work Experience - 1x2 tall */}
+                    {/* Blog - 1x1 */}
                     <motion.div variants={itemVariants} className="sm:col-span-1 col-span-2 row-span-1">
-                        <WorkExperienceCard/>
+                        <BlogCard/>
                     </motion.div>
 
 

@@ -2,10 +2,10 @@ import {motion} from "framer-motion";
 import {useRef} from "react";
 import {AnimatedIconHandle} from "@/components/ui/types";
 import {Link} from "@tanstack/react-router";
-import {UserIcon} from "lucide-react";
+import {UserRoundIcon} from "@/components/animated-socials/user-icon";
 
 export const AboutCard = () => {
-    const cardRef = useRef<AnimatedIconHandle>(null);
+    const iconRef = useRef<AnimatedIconHandle>(null);
     return (
         <Link to="/about">
             <motion.div
@@ -13,13 +13,13 @@ export const AboutCard = () => {
                 whileHover={{scale: 1.02}}
                 transition={{duration: 0.2}}
                 onTap={() => {
-                    cardRef?.current?.startAnimation();
+                    iconRef?.current?.startAnimation();
                 }}
                 onHoverStart={() => {
-                    cardRef?.current?.startAnimation();
+                    iconRef?.current?.startAnimation();
                 }}
                 onHoverEnd={() => {
-                    cardRef?.current?.stopAnimation();
+                    iconRef?.current?.stopAnimation();
                 }}
             >
                 {/* Icon */}
@@ -34,7 +34,10 @@ export const AboutCard = () => {
                                 e.currentTarget.nextElementSibling?.classList.remove('hidden');
                             }}
                         />
-                        <UserIcon className="w-6 h-6 text-muted-foreground hidden" />
+                        <UserRoundIcon
+                            ref={iconRef}
+                            className="w-6 h-6 text-muted-foreground hidden"
+                        />
                     </div>
                 </div>
 
