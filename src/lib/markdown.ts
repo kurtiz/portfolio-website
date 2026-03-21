@@ -20,20 +20,19 @@ export async function renderMarkdown(content: string): Promise<string> {
             properties: {
                 className: ["heading-anchor"],
                 ariaLabel: "Link to this section",
+                style: "color: var(--accent); text-decoration: none; margin-left: 0.4em; font-weight: normal; opacity: 0; transition: opacity 0.2s;",
             },
             content: {
                 type: "element",
                 tagName: "span",
-                properties: {
-                    className: ["heading-anchor-symbol"],
-                    ariaHidden: "true",
-                },
+                properties: {ariaHidden: "true"},
                 children: [{type: "text", value: " #"}],
             },
         })
         .use(rehypePrettyCode, {
-            theme: "github-dark",
-            keepBackground: true,
+            theme: "github-dark-dimmed",
+            keepBackground: false,
+            defaultLang: "plaintext",
         })
         .use(rehypeStringify)
         .process(content);

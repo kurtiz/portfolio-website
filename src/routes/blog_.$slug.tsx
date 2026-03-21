@@ -11,7 +11,9 @@ type Post = typeof allPosts[0];
 export const Route = createFileRoute('/blog_/$slug')({
     component: BlogPostPage,
     head: ({loaderData}) => {
+        // @ts-ignore
         if (!loaderData?.post) return generateMetaTags(pageSEO.blog);
+        // @ts-ignore
         const post = loaderData.post;
         return generateMetaTags({
             title: post.title,
@@ -32,6 +34,7 @@ export const Route = createFileRoute('/blog_/$slug')({
 
 function BlogPostPage() {
     const data = Route.useLoaderData();
+    // @ts-ignore
     const post = data.post as Post;
     const [htmlContent, setHtmlContent] = useState<string>('');
     const readingTime = estimateReadingTime(post.content);
@@ -44,7 +47,7 @@ function BlogPostPage() {
     return (
         <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
             <motion.div
-                className="floating-container max-w-3xl mx-auto p-6 sm:p-10"
+                className="floating-container max-w-5xl sm:max-w-3xl md:max-w-5xl mx-auto p-6 sm:p-10"
                 initial={{opacity: 0, y: 30}}
                 animate={{opacity: 1, y: 0}}
                 transition={{duration: 0.6}}
@@ -129,18 +132,19 @@ function BlogPostPage() {
                     <div
                         className="prose prose-neutral dark:prose-invert max-w-none
                             prose-headings:font-bold prose-headings:tracking-tight
-                            prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+                            prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
                             prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
                             prose-h4:text-lg prose-h4:mt-6 prose-h4:mb-2
-                            prose-p:text-muted-foreground prose-p:leading-relaxed
+                            prose-p:text-muted-foreground prose-p:leading-7 prose-p:mb-4
                             prose-a:text-accent prose-a:no-underline hover:prose-a:underline
-                            prose-strong:text-foreground
-                            prose-code:text-accent prose-code:bg-accent/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
-                            prose-pre:bg-secondary prose-pre:border prose-pre:border-border prose-pre:rounded-xl
-                            prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:italic
-                            prose-li:text-muted-foreground
+                            prose-strong:text-foreground prose-strong:font-semibold
+                            prose-code:text-accent prose-code:bg-accent/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+                            prose-pre:rounded-xl prose-pre:bg-secondary prose-pre:border prose-pre:border-border prose-pre:overflow-hidden
+                            prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:bg-accent/5 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
+                            prose-li:text-muted-foreground prose-li:my-1
                             prose-img:rounded-xl prose-img:shadow-soft
-                            prose-hr:border-border
+                            prose-hr:border-border prose-hr:my-8
+                            prose-table:text-sm prose-th:bg-secondary prose-th:p-3 prose-td:p-3
                             "
                         dangerouslySetInnerHTML={{__html: htmlContent}}
                     />

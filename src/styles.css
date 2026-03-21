@@ -8,6 +8,7 @@
 @import "tw-animate-css";
 
 @plugin "tailwindcss-motion";
+@plugin "@tailwindcss/typography";
 
 
 @custom-variant dark (&:is(.dark *));
@@ -250,9 +251,67 @@
         animation: pulse-glow 2s ease-in-out infinite;
     }
 
-    /* =========================================================
-       Expertise Page
-       ========================================================= */
+/* =========================================================
+   Blog / Markdown prose code block fixes
+   ========================================================= */
+
+.prose pre,
+.prose code {
+    font-family: var(--font-mono);
+}
+
+/* rehypePrettyCode wraps code blocks in <figure> + <pre><code> */
+.prose figure[data-rehype-pretty-code-figure] {
+    @apply my-6;
+}
+
+.prose figure[data-rehype-pretty-code-figure] pre {
+    @apply p-4 overflow-x-auto bg-secondary border border-border rounded-xl;
+}
+
+.prose figure[data-rehype-pretty-code-figure] code {
+    @apply font-mono text-sm bg-transparent p-0 border-0 text-foreground;
+    counter-reset: line;
+}
+
+/* Line numbers */
+.prose figure[data-rehype-pretty-code-figure] code .line {
+    @apply block min-h-[1.5rem] px-1;
+}
+
+.prose figure[data-rehype-pretty-code-figure] code .line.highlighted {
+    @apply bg-accent/10 border-l-2 border-accent -ml-1;
+}
+
+/* Title bar for code blocks */
+.prose figure[data-rehype-pretty-code-figure] > [data-rehype-pretty-code-title] {
+    @apply font-mono text-xs text-muted-foreground px-4 py-2 bg-secondary/60 border-b border-border rounded-t-xl;
+}
+
+.prose figure[data-rehype-pretty-code-figure] > [data-rehype-pretty-code-title] + pre {
+    @apply rounded-t-none;
+}
+
+/* Heading anchors */
+.prose .heading-anchor {
+    color: var(--accent);
+    text-decoration: none;
+    margin-left: 0.3em;
+    font-weight: normal;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.prose h1:hover .heading-anchor,
+.prose h2:hover .heading-anchor,
+.prose h3:hover .heading-anchor,
+.prose h4:hover .heading-anchor {
+    opacity: 1;
+}
+
+/* =========================================================
+   Expertise Page
+   ========================================================= */
 
     .expertise-page {
         @apply min-h-screen py-8 px-4 sm:py-12;
