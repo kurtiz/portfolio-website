@@ -5,6 +5,7 @@ import {estimateReadingTime, renderMarkdown} from '@/lib/markdown';
 import {ArrowLeft, Calendar, Clock, Tag} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {allPosts} from 'content-collections';
+import {Lightbox} from '@/components/projects/lightbox';
 
 type Post = typeof allPosts[0];
 
@@ -58,6 +59,7 @@ function BlogPostPage() {
     // @ts-ignore
     const post = data.post as Post;
     const [htmlContent, setHtmlContent] = useState<string>('');
+    const [lightboxOpen, setLightboxOpen] = useState(false);
     const readingTime = estimateReadingTime(post.content);
 
     useEffect(() => {
@@ -96,11 +98,14 @@ function BlogPostPage() {
                 >
                     {/* Cover Image */}
                     {post.coverImage && (
-                        <div className="w-full h-56 rounded-xl bg-secondary mb-6 overflow-hidden">
+                        <div
+                            className="w-full h-56 rounded-xl bg-secondary mb-6 overflow-hidden cursor-pointer group/cover"
+                            onClick={() => setLightboxOpen(true)}
+                        >
                             <img
                                 src={post.coverImage}
                                 alt={post.title}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover group-hover/cover:scale-105 transition-transform duration-300"
                                 onError={(e) => {
                                     const parent = e.currentTarget.parentElement;
                                     if (parent) parent.style.display = 'none';
@@ -181,6 +186,16 @@ function BlogPostPage() {
                         </Link>
                     </div>
                 </motion.article>
+
+                {/* Lightbox */}
+                {post.coverImage && (
+                    <Lightbox
+                        src={post.coverImage}
+                        alt={post.title}
+                        isOpen={lightboxOpen}
+                        onClose={() => setLightboxOpen(false)}
+                    />
+                )}
 
                 <motion.footer
                     className="mt-10 pt-6 border-t border-border text-center"
