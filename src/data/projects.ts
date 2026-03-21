@@ -57,7 +57,7 @@ export const projects: Project[] = [
             live: 'https://bvault-js.vercel.app',
         },
         featured: true,
-        image: '/projects/bvault.jpeg',
+        image: 'https://assets.iamaaronwilldjaba.me/projects/bvault.jpeg',
     },
     {
         id: 'vedatrace',
@@ -92,7 +92,7 @@ Built for modern developers who want simplicity without sacrificing power. It de
             docs: 'https://docs.vedatrace.dev/',
         },
         featured: true,
-        image: '/projects/vedatrace-dashboard.jpeg',
+        image: 'https://assets.iamaaronwilldjaba.me/projects/vedatrace-dashboard.jpeg',
     },
     {
         id: 'vedatrace-docs',
@@ -123,7 +123,7 @@ Built for modern developers who want simplicity without sacrificing power. It de
         links: {
             live: 'https://docs.vedatrace.dev/',
         },
-        image: '/projects/vedatrace-docs.jpeg',
+        image: 'https://assets.iamaaronwilldjaba.me/projects/vedatrace-docs.jpeg',
     },
     {
         id: 'hono-cloudflare-starter',
@@ -133,7 +133,8 @@ Built for modern developers who want simplicity without sacrificing power. It de
 
 ## Features
 
-### Authentication
+Authentication
+
 - Email/password authentication
 - OAuth providers (Google, GitHub, LinkedIn)
 - Email verification
@@ -142,20 +143,23 @@ Built for modern developers who want simplicity without sacrificing power. It de
 - Organizations/teams support
 - Admin panel
 
-### Database
+Database
+
 - Type-safe PostgreSQL with Drizzle ORM
 - Auto-generated migrations
 - Relations and types
 - Connection pooling ready
 
-### API
+API
+
 - Modern REST API with OpenAPI docs
 - Automatic Swagger documentation
 - Request validation with Zod
 - Health check endpoints
 - Rate limiting
 
-### Developer Experience
+Developer Experience
+
 - TypeScript throughout
 - Hot reload development
 - Powerful CLI scaffolding tool
@@ -167,7 +171,7 @@ Built for modern developers who want simplicity without sacrificing power. It de
         links: {
             github: 'https://github.com/kurtiz/hono-cloudflare-starter',
         },
-        image: '/projects/hono-cloudflare-starter.png',
+        image: 'https://assets.iamaaronwilldjaba.me/projects/hono-cloudflare-starter.png',
     },
     {
         id: 'dhclc',
@@ -188,7 +192,7 @@ Built for modern developers who want simplicity without sacrificing power. It de
         links: {
             live: 'https://dhclc.org/',
         },
-        image: '/projects/dhclc.jpeg',
+        image: 'https://assets.iamaaronwilldjaba.me/projects/dhclc.jpeg',
     },
     {
         id: 'ussd-simulator',
@@ -198,24 +202,27 @@ Built for modern developers who want simplicity without sacrificing power. It de
 
 ## Features
 
-### Core Functionality
+Core Functionality
+
 - Interactive Phone Dialer with authentic keypad interface
 - Real-time Session Management with message history
 - HTTP API Integration for connecting to USSD gateways
 - Session Persistence using Local IndexedDB storage
 
-### User Interface
+User Interface
+
 - Responsive Design for desktop, tablet, and mobile
 - Dark Theme Support with shadcn/ui components
 - Visual Feedback with loading states and error handling
 - Intuitive Navigation for session switching and history
 
-### Configuration Options
+Configuration Options
+
 - Custom Endpoints for your USSD gateway URL
 - Session Parameters for phone numbers and network codes
 - Quick Presets for development and production environments
 - Auto-generation of session IDs`,
-        type: 'cli-tool',
+        type: 'web-app',
         techStack: ['React', 'TypeScript', 'Tailwind CSS'],
         tags: ['Developer Tools', 'Telecom', 'IndexedDB'],
         links: {
@@ -252,7 +259,7 @@ Perfect for open-source maintainers, indie hackers, or dev teams who want to sha
         links: {
             github: 'https://github.com/kurtiz/commit-feed',
         },
-        image: '/projects/commit-feed.gif',
+        image: 'https://assets.iamaaronwilldjaba.me/projects/commit-feed.gif',
     },
 ];
 
