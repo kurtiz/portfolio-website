@@ -51,7 +51,7 @@ export const siteConfig: SiteConfig = {
         linkedin: "https://www.linkedin.com/in/aaron-will-djaba-424b7a184",
         github: "kurtiz",
     },
-    ogImage: "/og-image.png",
+    ogImage: "https://assets.iamaaronwilldjaba.me/blog/portfolio.png",
     twitterHandle: "@aaronwilldjaba",
     locale: "en_US",
     themeColor: "#FCF9EAFF",
@@ -82,69 +82,69 @@ export function generateMetaTags(config: SEOConfig) {
     return {
         meta: [
             // Page Title (rendered as <title> tag)
-            { title: fullTitle },
+            {title: fullTitle},
             // Primary Meta Tags
-            { name: 'title', content: fullTitle },
-            { name: 'description', content: description },
-            { name: 'author', content: author },
-            ...(keywords.length > 0 ? [{ name: 'keywords', content: keywords.join(', ') }] : []),
+            {name: 'title', content: fullTitle},
+            {name: 'description', content: description},
+            {name: 'author', content: author},
+            ...(keywords.length > 0 ? [{name: 'keywords', content: keywords.join(', ')}] : []),
 
             // Theme Color
-            { name: 'theme-color', content: siteConfig.themeColor },
-            { name: 'msapplication-TileColor', content: siteConfig.themeColor },
+            {name: 'theme-color', content: siteConfig.themeColor},
+            {name: 'msapplication-TileColor', content: siteConfig.themeColor},
 
             // Open Graph / Facebook - required for social sharing (WhatsApp, Facebook, LinkedIn)
-            { property: 'og:type', content: type },
-            { property: 'og:url', content: pageUrl },
-            { property: 'og:title', content: fullTitle },
-            { property: 'og:description', content: description },
-            { property: 'og:image', content: imageUrl },
-            { property: 'og:image:width', content: '1200' },
-            { property: 'og:image:height', content: '630' },
-            { property: 'og:site_name', content: siteConfig.name },
-            { property: 'og:locale', content: siteConfig.locale },
+            {property: 'og:type', content: type},
+            {property: 'og:url', content: pageUrl},
+            {property: 'og:title', content: fullTitle},
+            {property: 'og:description', content: description},
+            {property: 'og:image', content: imageUrl},
+            {property: 'og:image:width', content: '1200'},
+            {property: 'og:image:height', content: '630'},
+            {property: 'og:site_name', content: siteConfig.name},
+            {property: 'og:locale', content: siteConfig.locale},
 
             // Article specific (if type is article)
             ...(type === 'article' && publishedTime ? [
-                { property: 'article:published_time', content: publishedTime },
+                {property: 'article:published_time', content: publishedTime},
             ] : []),
             ...(type === 'article' && modifiedTime ? [
-                { property: 'article:modified_time', content: modifiedTime },
+                {property: 'article:modified_time', content: modifiedTime},
             ] : []),
             ...(type === 'article' && section ? [
-                { property: 'article:section', content: section },
+                {property: 'article:section', content: section},
             ] : []),
             ...(type === 'article' && tags.length > 0 ?
-                    tags.map(tag => ({ property: 'article:tag', content: tag })) : []
+                    tags.map(tag => ({property: 'article:tag', content: tag})) : []
             ),
 
             // Twitter Card
-            { name: 'twitter:card', content: 'summary_large_image' },
-            { name: 'twitter:url', content: pageUrl },
-            { name: 'twitter:title', content: fullTitle },
-            { name: 'twitter:description', content: description },
-            { name: 'twitter:image', content: imageUrl },
+            {name: 'twitter:card', content: 'summary_large_image'},
+            {name: 'twitter:url', content: pageUrl},
+            {name: 'twitter:title', content: fullTitle},
+            {name: 'twitter:description', content: description},
+            {name: 'twitter:image', content: imageUrl},
             ...(siteConfig.twitterHandle ? [
-                { name: 'twitter:creator', content: siteConfig.twitterHandle },
-                { name: 'twitter:site', content: siteConfig.twitterHandle },
+                {name: 'twitter:creator', content: siteConfig.twitterHandle},
+                {name: 'twitter:site', content: siteConfig.twitterHandle},
             ] : []),
 
             // LinkedIn and other platforms
-            { property: 'og:image:alt', content: fullTitle },
+            {property: 'og:image:alt', content: fullTitle},
 
             // Additional SEO
-            { name: 'robots', content: 'index, follow' },
-            { name: 'googlebot', content: 'index, follow' },
-            { name: 'language', content: 'English' },
-            { name: 'revisit-after', content: '7 days' },
+            {name: 'robots', content: 'index, follow'},
+            {name: 'googlebot', content: 'index, follow'},
+            {name: 'language', content: 'English'},
+            {name: 'revisit-after', content: '7 days'},
         ],
         links: [
             // Canonical URL
-            { rel: 'canonical', href: pageUrl },
+            {rel: 'canonical', href: pageUrl},
 
             // Favicon
-            { rel: 'icon', href: '/logo.png' },
-            { rel: 'apple-touch-icon', href: '/logo.png' },
+            {rel: 'icon', href: '/logo.png'},
+            {rel: 'apple-touch-icon', href: '/logo.png'},
         ],
     };
 }
@@ -158,7 +158,6 @@ export const pageSEO = {
         description: siteConfig.description,
         keywords: ['full-stack developer', 'web developer', 'react developer', 'node.js', 'portfolio', 'Aaron Djaba'],
         url: '/',
-        image: '/api/og?page=home',
     },
 
     workExperience: {
@@ -167,7 +166,7 @@ export const pageSEO = {
         keywords: ['work experience', 'career', 'professional history', 'software engineer', 'developer jobs'],
         url: '/work-experience',
         type: 'profile' as const,
-        image: '/api/og?page=work-experience',
+
     },
 
     expertise: {
@@ -175,7 +174,7 @@ export const pageSEO = {
         description: 'Skills and technologies I work with. From frontend development with React to backend systems with Node.js, explore my technical expertise.',
         keywords: ['skills', 'expertise', 'technologies', 'react', 'node.js', 'typescript', 'web development'],
         url: '/expertise',
-        image: '/api/og?page=expertise',
+
     },
 
     terminal: {
@@ -183,7 +182,7 @@ export const pageSEO = {
         description: 'Explore my portfolio through an interactive terminal interface. Navigate my projects, skills, and experience using command-line commands.',
         keywords: ['terminal', 'cli', 'interactive', 'command line', 'developer tools'],
         url: '/terminal',
-        image: '/api/og?page=terminal',
+
     },
 
     projects: {
@@ -191,7 +190,7 @@ export const pageSEO = {
         description: 'A showcase of my recent projects and work. From web applications to mobile apps, see what I\'ve built.',
         keywords: ['projects', 'portfolio', 'web apps', 'mobile apps', 'case studies'],
         url: '/projects',
-        image: '/api/og?page=projects',
+
     },
 
     about: {
@@ -200,7 +199,7 @@ export const pageSEO = {
         keywords: ['about', 'biography', 'profile', 'developer', 'cybersecurity', 'Aaron Djaba'],
         url: '/about',
         type: 'profile' as const,
-        image: '/api/og?page=about',
+
     },
 
     blog: {
@@ -209,7 +208,7 @@ export const pageSEO = {
         keywords: ['blog', 'articles', 'tutorials', 'web development', 'programming'],
         url: '/blog',
         type: 'website' as const,
-        image: '/api/og?page=blog',
+
     },
 };
 

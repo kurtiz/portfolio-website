@@ -3,8 +3,9 @@ title: "How I Built My Portfolio Website"
 date: "2026-03-21"
 tags: ["portfolio", "tanstack", "web development", "cloudflare", "neumorphism"]
 excerpt: "From PHP to Neumorphism to TanStack Start. Four iterations of building my developer portfolio and what each one taught me."
-coverImage: "/blog/portfolio.png"
+coverImage: "https://assets.iamaaronwilldjaba.me/blog/portfolio.png"
 published: true
+sortOrder: 0
 ---
 
 ## The Beginning

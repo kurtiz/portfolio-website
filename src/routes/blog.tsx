@@ -50,7 +50,12 @@ const itemVariants = {
 function BlogPage() {
     const penIconRef = useRef<AnimatedIconHandle>(null);
 
-    const posts = allPosts.filter((p) => p.published);
+    const posts = allPosts
+        .filter((p) => p.published)
+        .sort((a, b) => {
+            if (a.sortOrder !== b.sortOrder) return b.sortOrder - a.sortOrder;
+            return b.date.localeCompare(a.date);
+        });
 
     return (
         <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
