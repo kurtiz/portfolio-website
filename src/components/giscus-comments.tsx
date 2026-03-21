@@ -30,8 +30,13 @@ export function GiscusComments({
     const containerRef = useRef<HTMLDivElement>(null);
     const {theme} = useTheme();
 
-    const giscusTheme =
-        theme === "dark" ? "github-dark" : "github-light";
+    // Resolve the actual theme (handle "system" by checking document class)
+    const resolvedTheme =
+        theme === "system"
+            ? (typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light")
+            : theme;
 
     useEffect(() => {
         const container = containerRef.current;
@@ -39,6 +44,9 @@ export function GiscusComments({
 
         // Clear previous giscus iframe if theme changed
         container.innerHTML = "";
+
+        const origin = typeof window !== "undefined" ? window.location.origin : "";
+        const themeUrl = `${origin}/giscus-${resolvedTheme}.css`;
 
         const script = document.createElement("script");
         script.src = "https://giscus.app/client.js";
@@ -51,7 +59,7 @@ export function GiscusComments({
         script.setAttribute("data-reactions-enabled", reactionsEnabled ? "1" : "0");
         script.setAttribute("data-emit-metadata", emitMetadata ? "1" : "0");
         script.setAttribute("data-input-position", inputPosition);
-        script.setAttribute("data-theme", giscusTheme);
+        script.setAttribute("data-theme", themeUrl);
         script.setAttribute("data-lang", lang);
         script.crossOrigin = "anonymous";
         script.async = true;
@@ -61,7 +69,7 @@ export function GiscusComments({
         return () => {
             container.innerHTML = "";
         };
-    }, [repo, repoId, category, categoryId, mapping, reactionsEnabled, emitMetadata, inputPosition, lang, giscusTheme]);
+    }, [repo, repoId, category, categoryId, mapping, reactionsEnabled, emitMetadata, inputPosition, lang, resolvedTheme]);
 
     return (
         <div className="mt-10 pt-8 border-t border-border">

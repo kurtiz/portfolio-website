@@ -1,8 +1,7 @@
 import {createFileRoute} from '@tanstack/react-router';
-import {Header} from '@/components/header';
 import {motion} from 'framer-motion';
-import {MapPin, Mail, Github, Linkedin, Twitter, Award, Shield, Code, Cloud} from 'lucide-react';
-import {siteConfig, generateMetaTags, pageSEO} from '@/lib/seo';
+import {Award, Cloud, Code, Github, Linkedin, Mail, MapPin, Shield, Twitter} from 'lucide-react';
+import {generateMetaTags, pageSEO, siteConfig} from '@/lib/seo';
 
 export const Route = createFileRoute('/about')({
     component: AboutPage,

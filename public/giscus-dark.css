@@ -1,0 +1,154 @@
+/*!
+ * Custom dark theme for portfolio site
+ * Based on GitHub Dark Dimmed, colors from site's OKLCH tokens
+ */
+main {
+  /* Syntax highlighting */
+  --color-prettylights-syntax-comment: #888890;
+  --color-prettylights-syntax-constant: #d97040;
+  --color-prettylights-syntax-entity: #8bb8e8;
+  --color-prettylights-syntax-storage-modifier-import: #f8f4ec;
+  --color-prettylights-syntax-entity-tag: #7ac890;
+  --color-prettylights-syntax-keyword: #e88050;
+  --color-prettylights-syntax-string: #90c8a0;
+  --color-prettylights-syntax-variable: #d97040;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #d05040;
+  --color-prettylights-syntax-invalid-illegal-text: #f8f4ec;
+  --color-prettylights-syntax-invalid-illegal-bg: #8b2222;
+  --color-prettylights-syntax-carriage-return-text: #f8f4ec;
+  --color-prettylights-syntax-carriage-return-bg: #902020;
+  --color-prettylights-syntax-string-regexp: #7ac890;
+  --color-prettylights-syntax-markup-list: #c8a82c;
+  --color-prettylights-syntax-markup-heading: #6090d0;
+  --color-prettylights-syntax-markup-italic: #f8f4ec;
+  --color-prettylights-syntax-markup-bold: #f8f4ec;
+  --color-prettylights-syntax-markup-deleted-text: #ffc8c4;
+  --color-prettylights-syntax-markup-deleted-bg: #6b1515;
+  --color-prettylights-syntax-markup-inserted-text: #b0e8b0;
+  --color-prettylights-syntax-markup-inserted-bg: #1a4425;
+  --color-prettylights-syntax-markup-changed-text: #ffe0b0;
+  --color-prettylights-syntax-markup-changed-bg: #682d0f;
+  --color-prettylights-syntax-markup-ignored-text: #f8f4ec;
+  --color-prettylights-syntax-markup-ignored-bg: #255ab2;
+  --color-prettylights-syntax-meta-diff-range: #8bb8e8;
+  --color-prettylights-syntax-brackethighlighter-angle: #888890;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #606070;
+  --color-prettylights-syntax-constant-other-reference-link: #90c8a0;
+
+  /* Buttons */
+  --color-btn-text: #f8f4ec;
+  --color-btn-bg: #3d3d50;
+  --color-btn-border: #4848604a;
+  --color-btn-shadow: 0 0 #0000;
+  --color-btn-inset-shadow: 0 0 #0000;
+  --color-btn-hover-bg: #484860;
+  --color-btn-hover-border: #888890;
+  --color-btn-active-bg: #424258;
+  --color-btn-active-border: #707080;
+  --color-btn-selected-bg: #383848;
+  --color-btn-primary-text: #faf8f0;
+  --color-btn-primary-bg: #d06830;
+  --color-btn-primary-border: #4848604a;
+  --color-btn-primary-shadow: 0 0 #0000;
+  --color-btn-primary-inset-shadow: 0 0 #0000;
+  --color-btn-primary-hover-bg: #d97840;
+  --color-btn-primary-hover-border: #4848604a;
+  --color-btn-primary-selected-bg: #d06830;
+  --color-btn-primary-selected-shadow: 0 0 #0000;
+  --color-btn-primary-disabled-text: #f8f4ec80;
+  --color-btn-primary-disabled-bg: #d0683099;
+  --color-btn-primary-disabled-border: #4848604a;
+
+  /* Action list */
+  --color-action-list-item-default-hover-bg: #b0b0a015;
+
+  /* Segmented control */
+  --color-segmented-control-bg: #7070804a;
+  --color-segmented-control-button-bg: #2a2a38;
+  --color-segmented-control-button-selected-border: #707080;
+
+  /* Foreground */
+  --color-fg-default: #f8f4ec;
+  --color-fg-muted: #b0b0a0;
+  --color-fg-subtle: #888890;
+
+  /* Canvas */
+  --color-canvas-default: #2a2a38;
+  --color-canvas-overlay: #222230;
+  --color-canvas-inset: #222230;
+  --color-canvas-subtle: #333340;
+
+  /* Borders */
+  --color-border-default: #484860;
+  --color-border-muted: #3d3d50;
+
+  /* Neutrals */
+  --color-neutral-muted: #70708066;
+
+  /* Accent */
+  --color-accent-fg: #d97040;
+  --color-accent-emphasis: #c06030;
+  --color-accent-muted: #d9704066;
+  --color-accent-subtle: #d970401a;
+
+  /* Success */
+  --color-success-fg: #7ac890;
+  --color-attention-fg: #c8a82c;
+  --color-attention-muted: #c8a82c66;
+  --color-attention-subtle: #c8a82c26;
+
+  /* Danger */
+  --color-danger-fg: #d05040;
+  --color-danger-muted: #d0504066;
+  --color-danger-subtle: #d050401a;
+
+  /* Shadows */
+  --color-primer-shadow-inset: 0 0 #0000;
+
+  /* Scale */
+  --color-scale-gray-7: #3d3d50;
+  --color-scale-blue-8: #1a3a6a;
+
+  /* Social reactions */
+  --color-social-reaction-bg-hover: var(--color-scale-gray-7);
+  --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-8);
+}
+
+/* Pagination loader */
+main .pagination-loader-container {
+  background-image: url(https://github.com/images/modules/pulls/progressive-disclosure-line-dark.svg);
+}
+
+/* Custom CSS */
+.gsc-reactions-count {
+  display: none;
+}
+
+.gsc-timeline {
+  flex-direction: column-reverse;
+}
+
+.gsc-header {
+  padding-bottom: 1rem;
+}
+
+.gsc-comments > .gsc-header {
+  order: 1;
+}
+
+.gsc-comments > .gsc-comment-box {
+  margin-bottom: 1rem;
+  order: 2;
+}
+
+.gsc-comments > .gsc-timeline {
+  order: 3;
+}
+
+.gsc-homepage-bg {
+  background-color: #222230;
+}
+
+main .gsc-loading-image {
+  background-image: url(https://github.githubassets.com/images/mona-loading-dimmed.gif);
+}

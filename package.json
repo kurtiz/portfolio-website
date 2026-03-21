@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && cp public/_headers dist/client/_headers",
     "serve": "vite preview",
     "test": "vitest run",
     "deploy": "bun run build && wrangler deploy",

@@ -12,6 +12,10 @@
 	"main": "@tanstack/react-start/server-entry",
 	"observability": {
 		"enabled": true
+	},
+	"assets": {
+		"directory": "./dist/client",
+		"binding": "ASSETS"
 	}
 	/**
 	 * Smart Placement
