@@ -39,15 +39,14 @@ function ProjectDetailPage() {
     const {prev, next} = getAdjacentProjects(id);
 
     return (
-        <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
+        <div className="min-h-screen bg-canvas py-5 px-4 sm:py-6">
             <motion.div
-                className="floating-container max-w-5xl mx-auto p-6 sm:p-10"
+                className="floating-container max-w-5xl sm:max-w-3xl md:max-w-5xl mx-auto p-6 sm:p-10"
                 initial={{opacity: 0, y: 30}}
                 animate={{opacity: 1, y: 0}}
                 transition={{duration: 0.6}}
             >
                 <motion.div
-                    className="mt-8"
                     initial={{opacity: 0, y: 20}}
                     animate={{opacity: 1, y: 0}}
                     transition={{delay: 0.2, duration: 0.5}}
