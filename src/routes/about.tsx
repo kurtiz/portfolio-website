@@ -63,8 +63,6 @@ function AboutPage() {
                 animate={{opacity: 1, y: 0}}
                 transition={{duration: 0.6}}
             >
-                <Header/>
-
                 <motion.div
                     className="mt-8"
                     initial={{opacity: 0, y: 20}}

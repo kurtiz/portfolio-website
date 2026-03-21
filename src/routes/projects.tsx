@@ -1,8 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Header } from '@/components/header';
-import { ProjectsGrid } from '@/components/projects/projects-grid';
-import { generateMetaTags, pageSEO } from '@/lib/seo';
-import { motion } from 'framer-motion';
+import {createFileRoute} from '@tanstack/react-router';
+import {ProjectsGrid} from '@/components/projects/projects-grid';
+import {generateMetaTags, pageSEO} from '@/lib/seo';
+import {motion} from 'framer-motion';
 
 export const Route = createFileRoute('/projects')({
     component: ProjectsPage,
@@ -18,8 +17,6 @@ function ProjectsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                <Header />
-
                 <motion.div
                     className="mt-8"
                     initial={{ opacity: 0, y: 20 }}
