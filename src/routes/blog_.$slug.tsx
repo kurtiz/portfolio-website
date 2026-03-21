@@ -2,10 +2,11 @@ import {createFileRoute, Link, notFound} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
 import {generateMetaTags, generateStructuredData, pageSEO} from '@/lib/seo';
 import {estimateReadingTime, renderMarkdown} from '@/lib/markdown';
-import {ArrowLeft, Calendar, Clock, Tag} from 'lucide-react';
+import {ArrowLeft, Calendar, Clock, Maximize2, Tag} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {allPosts} from 'content-collections';
 import {Lightbox} from '@/components/projects/lightbox';
+import {GiscusComments} from '@/components/giscus-comments';
 
 type Post = typeof allPosts[0];
 
@@ -99,7 +100,7 @@ function BlogPostPage() {
                     {/* Cover Image */}
                     {post.coverImage && (
                         <div
-                            className="w-full h-56 rounded-xl bg-secondary mb-6 overflow-hidden cursor-pointer group/cover"
+                            className="w-full h-56 rounded-xl bg-secondary mb-6 overflow-hidden cursor-pointer group/cover relative"
                             onClick={() => setLightboxOpen(true)}
                         >
                             <img
@@ -111,6 +112,9 @@ function BlogPostPage() {
                                     if (parent) parent.style.display = 'none';
                                 }}
                             />
+                            <div className="absolute bottom-3 right-3 w-8 h-8 bg-black/60 backdrop-blur-sm rounded-lg flex items-center justify-center opacity-0 group-hover/cover:opacity-100 transition-opacity duration-200">
+                                <Maximize2 className="w-4 h-4 text-white"/>
+                            </div>
                         </div>
                     )}
 
@@ -196,6 +200,19 @@ function BlogPostPage() {
                         onClose={() => setLightboxOpen(false)}
                     />
                 )}
+
+                {/* Comments */}
+                <GiscusComments
+                    repo="kurtiz/portfolio-website"
+                    repoId="R_kgDOQ00e1A"
+                    categoryId="DIC_kwDOQ00e1M4C4-EU"
+                    category="Announcements"
+                    mapping="pathname"
+                    reactionsEnabled
+                    emitMetadata={false}
+                    inputPosition="bottom"
+                    lang="en"
+                />
 
                 <motion.footer
                     className="mt-10 pt-6 border-t border-border text-center"
