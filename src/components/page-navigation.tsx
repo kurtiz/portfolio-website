@@ -70,7 +70,7 @@ export const PageNavigation = () => {
                             animate={{opacity: 1, scale: 1}}
                             transition={{delay: 0.1}}
                         >
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-success flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-accent to-success flex items-center justify-center">
                                 <span className="text-white font-bold text-sm">AD</span>
                             </div>
                             <span className="font-mono text-sm text-muted-foreground">
@@ -81,7 +81,7 @@ export const PageNavigation = () => {
 
                     {/* Right: Audio & Theme */}
                     <div className="flex items-center gap-4">
-                        <AudioWaveform/>
+                        <AudioWaveform shade/>
                         <ThemeToggle/>
                     </div>
                 </div>

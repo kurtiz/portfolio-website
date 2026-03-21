@@ -2,10 +2,11 @@
 
 import {motion} from "framer-motion"
 import {useAudio} from "@/contexts/audio-context"
+import {cn} from "@/lib/utils.ts";
 
 const BARS = [1, 2, 3, 4, 5]
 
-export default function AudioWaveform() {
+export default function AudioWaveform({shade=false}:{shade?:boolean}) {
     const {isPlaying, toggle} = useAudio()
 
     return (
@@ -17,7 +18,7 @@ export default function AudioWaveform() {
             {BARS.map((bar, i) => (
                 <motion.div
                     key={bar}
-                    className="w-1 rounded-full bg-primary-foreground"
+                    className={cn("w-1 rounded-full", shade ? "bg-primary":"bg-secondary")}
                     variants={{
                         idle: {height: 4},
                         playing: {
