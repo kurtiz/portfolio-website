@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { Link } from '@tanstack/react-router';
 import { projects, type ProjectType, allTechStack } from '@/data/projects';
 import { FilterBar } from './filter-bar';
 import { SearchInput } from './search-input';
@@ -82,13 +83,27 @@ export const ProjectsGrid = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <AnimatePresence mode="popLayout">
                     {featuredProjects.map((project) => (
-                        <ProjectCard key={project.id} project={project} />
+                        <Link
+                            key={project.id}
+                            to="/projects/$projectId"
+                            params={{ projectId: project.id }}
+                            className="block"
+                        >
+                            <ProjectCard project={project} />
+                        </Link>
                     ))}
                 </AnimatePresence>
 
                 <AnimatePresence mode="popLayout">
                     {otherProjects.map((project) => (
-                        <ProjectCard key={project.id} project={project} />
+                        <Link
+                            key={project.id}
+                            to="/projects/$projectId"
+                            params={{ projectId: project.id }}
+                            className="block"
+                        >
+                            <ProjectCard project={project} />
+                        </Link>
                     ))}
                 </AnimatePresence>
 
