@@ -22,23 +22,24 @@ export const AboutCard = () => {
                     iconRef?.current?.stopAnimation();
                 }}
             >
-                {/* Icon */}
-                <div className="flex items-start justify-between">
-                    <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-                        <img
-                            src="/images/profile.jpg"
-                            alt="Aaron Will Djaba"
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                                e.currentTarget.style.display = 'none';
-                                e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                            }}
-                        />
-                        <UserRoundIcon
-                            ref={iconRef}
-                            className="w-6 h-6 text-muted-foreground hidden"
-                        />
-                    </div>
+                {/* Icon / Visual */}
+                <div className="flex-1 flex items-center justify-center">
+                    <motion.div
+                        className="relative"
+                        whileHover={{y: -8}}
+                        transition={{duration: 0.3, ease: "easeOut"}}
+                    >
+                        <div
+                            className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-soft group-hover:shadow-elevated transition-shadow">
+                            <UserRoundIcon
+                                ref={iconRef}
+                                className="w-7 h-7 text-foreground"
+                            />
+                        </div>
+                        {/* 3D shadow effect */}
+                        <div
+                            className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-2 bg-muted/50 rounded-full blur-sm"/>
+                    </motion.div>
                 </div>
 
                 {/* Text */}

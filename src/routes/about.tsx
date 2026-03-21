@@ -167,7 +167,7 @@ function AboutPage() {
                                     'Node.js',
                                     'Cyber Security',
                                     'Penetration Testing',
-                                    'Cloudflare Workers',
+                                    'Cloudflare',
                                     'AWS',
                                     'DevOps',
                                     'Mobile Development',
