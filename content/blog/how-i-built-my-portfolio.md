@@ -3,7 +3,7 @@ title: "How I Built My Portfolio Website"
 date: "2026-03-21"
 tags: ["portfolio", "tanstack", "web development", "cloudflare"]
 excerpt: "A deep dive into building a modern portfolio website with TanStack Start, Tailwind CSS, and deploying to Cloudflare Workers."
-coverImage: "/images/blog/portfolio.jpg"
+coverImage: "/blog/portfolio.png"
 published: true
 ---
 

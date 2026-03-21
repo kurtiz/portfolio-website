@@ -5,6 +5,7 @@ import PenIcon from '@/components/ui/pen-icon.tsx';
 import {useRef} from 'react';
 import {AnimatedIconHandle} from '@/components/ui/types';
 import {Calendar, ArrowRight} from 'lucide-react';
+import {allPosts} from 'content-collections';
 
 export const Route = createFileRoute('/blog')({
     component: BlogPage,
@@ -37,22 +38,7 @@ const itemVariants = {
 function BlogPage() {
     const penIconRef = useRef<AnimatedIconHandle>(null);
 
-    let posts: Array<{
-        title: string;
-        date: string;
-        excerpt: string;
-        tags: string[];
-        coverImage?: string;
-        published: boolean;
-        _meta: {path: string};
-    }> = [];
-
-    try {
-        const {allPosts} = require('content-collections');
-        posts = allPosts.filter((p: any) => p.published);
-    } catch {
-        // content-collections not yet generated
-    }
+    const posts = allPosts.filter((p) => p.published);
 
     return (
         <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">

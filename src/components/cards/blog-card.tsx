@@ -3,17 +3,12 @@ import PenIcon from "@/components/ui/pen-icon.tsx";
 import {useRef} from "react";
 import {AnimatedIconHandle} from "@/components/ui/types.ts";
 import {Link} from "@tanstack/react-router";
+import {allPosts} from "content-collections";
 
 export const BlogCard = () => {
     const penIconRef = useRef<AnimatedIconHandle>(null);
 
-    let postCount = 0;
-    try {
-        const {allPosts} = require("content-collections");
-        postCount = allPosts.filter((p: any) => p.published).length;
-    } catch {
-        // content-collections not yet generated
-    }
+    const postCount = allPosts.filter((p) => p.published).length;
 
     return (
         <Link to="/blog">

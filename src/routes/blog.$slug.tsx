@@ -1,14 +1,16 @@
 import {createFileRoute, Link, notFound} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
 import {generateMetaTags, pageSEO} from '@/lib/seo';
-import {renderMarkdown, estimateReadingTime} from '@/lib/markdown';
-import {Calendar, Clock, ArrowLeft, Tag} from 'lucide-react';
+import {estimateReadingTime, renderMarkdown} from '@/lib/markdown';
+import {ArrowLeft, Calendar, Clock, Tag} from 'lucide-react';
 import {useEffect, useState} from 'react';
+import {allPosts} from 'content-collections';
+import {Post} from "@/types/post.ts";
 
 export const Route = createFileRoute('/blog/$slug')({
     component: BlogPostPage,
-    head: ({loaderData}) => {
-        const post = loaderData?.post;
+    head: ({loaderData}:{loaderData: Post}) => {
+        const post = loaderData.post;
         if (!post) return generateMetaTags(pageSEO.blog);
         return generateMetaTags({
             title: post.title,
@@ -19,21 +21,13 @@ export const Route = createFileRoute('/blog/$slug')({
         });
     },
     loader: ({params}) => {
-        let allPosts: Array<any> = [];
-        try {
-            const collections = require('content-collections');
-            allPosts = collections.allPosts;
-        } catch {
-            throw notFound();
-        }
-
         const post = allPosts.find(
-            (p: any) => p._meta.path === params.slug && p.published
+            (p) => p._meta.path === params.slug && p.published
         );
 
         if (!post) throw notFound();
 
-        return {post};
+        return {post} as Post;
     },
 });
 
