@@ -5,13 +5,14 @@ import {estimateReadingTime, renderMarkdown} from '@/lib/markdown';
 import {ArrowLeft, Calendar, Clock, Tag} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {allPosts} from 'content-collections';
-import {Post} from "@/types/post.ts";
 
-export const Route = createFileRoute('/blog/$slug')({
+type Post = typeof allPosts[0];
+
+export const Route = createFileRoute('/blog_/$slug')({
     component: BlogPostPage,
-    head: ({loaderData}:{loaderData: Post}) => {
+    head: ({loaderData}) => {
+        if (!loaderData?.post) return generateMetaTags(pageSEO.blog);
         const post = loaderData.post;
-        if (!post) return generateMetaTags(pageSEO.blog);
         return generateMetaTags({
             title: post.title,
             description: post.excerpt,
@@ -24,21 +25,21 @@ export const Route = createFileRoute('/blog/$slug')({
         const post = allPosts.find(
             (p) => p._meta.path === params.slug && p.published
         );
-
         if (!post) throw notFound();
-
-        return {post} as Post;
+        return {post};
     },
 });
 
 function BlogPostPage() {
-    const {post} = Route.useLoaderData();
+    const data = Route.useLoaderData();
+    const post = data.post as Post;
     const [htmlContent, setHtmlContent] = useState<string>('');
     const readingTime = estimateReadingTime(post.content);
 
     useEffect(() => {
+        setHtmlContent('');
         renderMarkdown(post.content).then(setHtmlContent);
-    }, [post.content]);
+    }, [post.content, post._meta.path]);
 
     return (
         <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
