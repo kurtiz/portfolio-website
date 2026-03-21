@@ -320,37 +320,47 @@ export const WorkExperienceTimeline = () => {
                 </div>
 
                 {/* Stats */}
-                <motion.div
-                    className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4"
-                    initial={{opacity: 0, y: 20}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{delay: 0.5}}
-                >
-                    <div className="card-neumorphic p-6 text-center">
-                        <p className="text-3xl font-bold text-accent">
-                            {workExperiences.length}
-                        </p>
-                        <p className="text-sm text-muted-foreground mt-1">
-                            Total Positions
-                        </p>
-                    </div>
-                    <div className="card-neumorphic p-6 text-center">
-                        <p className="text-3xl font-bold text-success">
-                            {getCurrentPositions().length}
-                        </p>
-                        <p className="text-sm text-muted-foreground mt-1">
-                            Current Roles
-                        </p>
-                    </div>
-                    <div className="card-neumorphic p-6 text-center">
-                        <p className="text-3xl font-bold text-foreground">
-                            {getTotalYearsOfExperience()}+
-                        </p>
-                        <p className="text-sm text-muted-foreground mt-1">
-                            Years Experience
-                        </p>
-                    </div>
-                </motion.div>
+                <div className="stats-row mt-12">
+                    <motion.div
+                        className="stat-item"
+                        initial={{opacity: 0, scale: 0.95}}
+                        animate={{opacity: 1, scale: 1}}
+                        transition={{delay: 0.3}}
+                    >
+                        <span className="stat-value">{workExperiences.length}</span>
+                        <span className="stat-label">Total Positions</span>
+                    </motion.div>
+                    <motion.div
+                        className="stat-divider"
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        transition={{delay: 0.4}}
+                    />
+                    <motion.div
+                        className="stat-item"
+                        initial={{opacity: 0, scale: 0.95}}
+                        animate={{opacity: 1, scale: 1}}
+                        transition={{delay: 0.4}}
+                    >
+                        <span className="stat-value">{getCurrentPositions().length}</span>
+                        <span className="stat-label">Current Roles</span>
+                    </motion.div>
+                    <motion.div
+                        className="stat-divider"
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        transition={{delay: 0.5}}
+                    />
+                    <motion.div
+                        className="stat-item"
+                        initial={{opacity: 0, scale: 0.95}}
+                        animate={{opacity: 1, scale: 1}}
+                        transition={{delay: 0.5}}
+                    >
+                        <span className="stat-value">{getTotalYearsOfExperience()}+</span>
+                        <span className="stat-label">Years Experience</span>
+                    </motion.div>
+                </div>
             </motion.div>
         </div>
     );

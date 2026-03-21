@@ -2,10 +2,12 @@ import {motion} from "framer-motion";
 import {FolderOpenIcon} from "@/components/folder-open-icon.tsx";
 import {useRef} from "react";
 import {AnimatedIconHandle} from "@/components/ui/types.ts";
+import { Link } from "@tanstack/react-router";
 
 export const ProjectsCard = () => {
     const folderIconRef = useRef<AnimatedIconHandle>(null);
     return (
+        <Link to="/projects">
         <motion.div
             className="card-neumorphic p-6 h-full flex flex-col justify-between cursor-pointer group"
             whileHover={{scale: 1.02}}
@@ -46,5 +48,6 @@ export const ProjectsCard = () => {
                 </p>
             </div>
         </motion.div>
+        </Link>
     );
 };
