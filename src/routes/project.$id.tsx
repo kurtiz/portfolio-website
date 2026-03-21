@@ -27,7 +27,7 @@ function ProjectDetailPage() {
     return (
         <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
             <motion.div
-                className="floating-container max-w-3xl mx-auto p-6 sm:p-10"
+                className="floating-container max-w-5xl mx-auto p-6 sm:p-10"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
