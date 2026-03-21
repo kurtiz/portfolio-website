@@ -85,8 +85,8 @@ export const ProjectsGrid = () => {
                     {featuredProjects.map((project) => (
                         <Link
                             key={project.id}
-                            to="/projects/$projectId"
-                            params={{ projectId: project.id }}
+                            to="/project/$id"
+                            params={{ id: project.id }}
                             className="block"
                         >
                             <ProjectCard project={project} />
@@ -98,8 +98,8 @@ export const ProjectsGrid = () => {
                     {otherProjects.map((project) => (
                         <Link
                             key={project.id}
-                            to="/projects/$projectId"
-                            params={{ projectId: project.id }}
+                            to="/project/$id"
+                            params={{ id: project.id }}
                             className="block"
                         >
                             <ProjectCard project={project} />

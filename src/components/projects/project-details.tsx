@@ -202,8 +202,8 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
                 <div className="flex items-center justify-between border-t border-border pt-6">
                     {prevProject ? (
                         <Link
-                            to="/projects/$projectId"
-                            params={{ projectId: prevProject.id }}
+                            to="/project/$id"
+                            params={{ id: prevProject.id }}
                             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
                         >
                             <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
@@ -218,8 +218,8 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
 
                     {nextProject && (
                         <Link
-                            to="/projects/$projectId"
-                            params={{ projectId: nextProject.id }}
+                            to="/project/$id"
+                            params={{ id: nextProject.id }}
                             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
                         >
                             <div className="text-right">

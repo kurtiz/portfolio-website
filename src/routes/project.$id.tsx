@@ -2,28 +2,27 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Header } from '@/components/header';
 import { ProjectDetails } from '@/components/projects/project-details';
 import { motion } from 'framer-motion';
-import { projects, getProjectById, getAdjacentProjects } from '@/data/projects';
+import { getProjectById, getAdjacentProjects } from '@/data/projects';
 import { notFound } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/projects/$projectId')({
+export const Route = createFileRoute('/project/$id')({
     component: ProjectDetailPage,
     head: () => {
-        const project = projects[0];
         return {
-            title: `${project?.title || 'Project'} | Aaron Will Djaba`,
+            title: 'Project Details | Aaron Will Djaba',
         };
     },
 });
 
 function ProjectDetailPage() {
-    const { projectId } = Route.useParams();
-    const project = getProjectById(projectId);
+    const { id } = Route.useParams();
+    const project = getProjectById(id);
 
     if (!project) {
         throw notFound();
     }
 
-    const { prev, next } = getAdjacentProjects(projectId);
+    const { prev, next } = getAdjacentProjects(id);
 
     return (
         <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
