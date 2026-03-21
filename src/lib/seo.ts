@@ -42,7 +42,7 @@ export interface SiteConfig {
  */
 export const siteConfig: SiteConfig = {
     name: "Aaron Will Djaba",
-    description: "Full-Stack Developer and Open Source Contributor building digital experiences with modern web technologies. Specializing in React, Node.js, and cloud solutions.",
+    description: "Full-Stack Software Engineer and Security Analyst building and securing full-stack applications. Co-Founder at OSSAfrica - contributing to open source ecosystems in Africa.",
     url: "https://iamaaronwilldjaba.me",
     author: {
         name: "Aaron Will Djaba",
@@ -196,7 +196,7 @@ export const pageSEO = {
 
     about: {
         title: 'About',
-        description: 'Learn more about Aaron Will Djaba - Full-Stack Engineer and Cyber Security Analyst from Accra, Ghana.',
+        description: 'Learn more about Aaron Will Djaba - Full-Stack Software Engineer and Security Analyst from Accra, Ghana.',
         keywords: ['about', 'biography', 'profile', 'developer', 'cybersecurity', 'Aaron Djaba'],
         url: '/about',
         type: 'profile' as const,
@@ -226,10 +226,10 @@ export function generateStructuredData(type: 'person' | 'website' | 'article', d
             name: siteConfig.author.name,
             url: baseUrl,
             image: `${baseUrl}${siteConfig.ogImage}`,
-            jobTitle: 'Full-Stack Developer',
+            jobTitle: 'Full-Stack Software Engineer',
             worksFor: {
                 '@type': 'Organization',
-                name: 'Tech Corp', // Update with current company
+                name: 'OSSAfrica',
             },
             sameAs: [
                 siteConfig.author.twitter ? `https://twitter.com/${siteConfig.author.twitter.replace('@', '')}` : '',

@@ -186,7 +186,7 @@ export const TerminalCard = () => {
                           onClick={() => navigate({to: "/terminal"})}/>
                 </div>
                 <div className="flex-1 text-center text-xs text-muted-foreground">
-                    terminal — zsh
+                    terminal - zsh
                 </div>
             </div>
 

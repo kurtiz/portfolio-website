@@ -29,7 +29,7 @@ function ProjectsPage() {
                     <div className="mb-6">
                         <h1 className="text-2xl font-bold">Projects</h1>
                         <p className="font-mono text-sm text-muted-foreground mt-1">
-                            A collection of my work — personal projects, open source, and client projects.
+                            A collection of my work - personal projects, open source, and client projects.
                         </p>
                     </div>
 
@@ -43,7 +43,7 @@ function ProjectsPage() {
                     transition={{ delay: 0.5 }}
                 >
                     <p className="font-mono text-xs text-muted-foreground">
-                        © {new Date().getFullYear()} Aaron Will Djaba — built with care
+                        © {new Date().getFullYear()} Aaron Will Djaba - built with care
                     </p>
                 </motion.footer>
             </motion.div>

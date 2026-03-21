@@ -73,9 +73,9 @@ function AboutPage() {
                 >
                     {/* Profile Section */}
                     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-10">
-                        <div className="w-32 h-32 rounded-full bg-muted overflow-hidden shrink-0">
+                        <div className="w-32 rounded-xl bg-muted overflow-hidden shrink-0">
                             <img
-                                src="/images/profile.jpg"
+                                src="/profile.jpg"
                                 alt={siteConfig.author.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
@@ -93,15 +93,15 @@ function AboutPage() {
                         <div className="text-center sm:text-left">
                             <h1 className="text-3xl font-bold">{siteConfig.author.name}</h1>
                             <p className="font-mono text-sm text-muted-foreground mt-2">
-                                Full-Stack Engineer & Cyber Security Analyst
+                                Full-Stack Software Engineer & Security Analyst
                             </p>
                             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-3 font-mono text-xs text-muted-foreground">
                                 <span className="flex items-center gap-1">
                                     <MapPin className="w-3 h-3"/>
                                     Accra, Ghana
                                 </span>
-                                <span>•</span>
-                                <span>GCTU Graduate 2024</span>
+                                {/*<span>•</span>*/}
+                                {/*<span>GCTU Graduate 2024</span>*/}
                             </div>
                         </div>
                     </div>
@@ -112,19 +112,11 @@ function AboutPage() {
                             <h2 className="text-lg font-semibold mb-3">About Me</h2>
                             <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
                                 <p>
-                                    I bridge the gap between robust software engineering and proactive security.
-                                    I build high-performance, secure-by-design applications and am passionate about
-                                    fostering the next generation of technical talent in Africa.
-                                </p>
-                                <p>
-                                    As a Security Software Engineer at AmaliTech Cyber Security, I specialize in
-                                    vulnerability assessment and penetration testing (VAPT), applying a
-                                    &quot;Red Team&quot; mindset to ensure production code is hardened against modern exploits.
-                                </p>
-                                <p>
-                                    My expertise spans full-stack development with React, TypeScript, and Node.js,
-                                    secure authentication systems, mobile app development, and building scalable
-                                    cloud-native applications on platforms like Cloudflare Workers.
+                                    I build and secure full-stack applications - from polished frontends to
+                                    robust backends. At OSSAfrica, I build and maintain open source projects
+                                    that help developers ship secure, reliable software. I'm passionate about
+                                    open source, application security, and nurturing the next generation of
+                                    technical talent in Africa.
                                 </p>
                             </div>
                         </div>
@@ -136,21 +128,21 @@ function AboutPage() {
                                 <li className="flex items-start gap-2">
                                     <span className="text-accent">→</span>
                                     <span>
-                                        <strong className="text-foreground">VedaTrace</strong> — A simplified,
+                                        <strong className="text-foreground">VedaTrace</strong> - A simplified,
                                         developer-first observability tool for log management and error tracking.
                                     </span>
                                 </li>
                                 <li className="flex items-start gap-2">
                                     <span className="text-accent">→</span>
                                     <span>
-                                        <strong className="text-foreground">bVault.js</strong> — A lightweight,
+                                        <strong className="text-foreground">bVault.js</strong> - A lightweight,
                                         secure JavaScript utility for handling sensitive data storage.
                                     </span>
                                 </li>
                                 <li className="flex items-start gap-2">
                                     <span className="text-accent">→</span>
                                     <span>
-                                        <strong className="text-foreground">OSSAfrica</strong> — Co-Founder and
+                                        <strong className="text-foreground">OSSAfrica</strong> - Co-Founder and
                                         SIG Lead of a growing global community focused on Open Source and
                                         Security in Africa.
                                     </span>
@@ -266,7 +258,7 @@ function AboutPage() {
                     transition={{delay: 0.5}}
                 >
                     <p className="font-mono text-xs text-muted-foreground">
-                        © {new Date().getFullYear()} {siteConfig.author.name} — built with care
+                        © {new Date().getFullYear()} {siteConfig.author.name} - built with care
                     </p>
                 </motion.footer>
             </motion.div>

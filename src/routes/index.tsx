@@ -121,7 +121,7 @@ function App() {
                     transition={{delay: 1}}
                 >
                     <p className="font-mono text-xs text-muted-foreground">
-                        © {date.getFullYear()} Aaron Will Djaba — built with care
+                        © {date.getFullYear()} Aaron Will Djaba - built with care
                     </p>
                 </motion.footer>
             </motion.div>

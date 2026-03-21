@@ -172,7 +172,7 @@ Built for modern developers who want simplicity without sacrificing power. It de
     {
         id: 'dhclc',
         title: 'DHCLC Website',
-        description: 'Website for Divine Heals Counselling Centre — a professional online presence for counseling and mental health services.',
+        description: 'Website for Divine Heals Counselling Centre - a professional online presence for counseling and mental health services.',
         longDescription: `A professional website for Divine Heals Counselling Centre - providing accessible counseling and mental health services.
 
 ## Features

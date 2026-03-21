@@ -70,7 +70,7 @@ function ProjectDetailPage() {
                     transition={{ delay: 0.5 }}
                 >
                     <p className="font-mono text-xs text-muted-foreground">
-                        © {new Date().getFullYear()} Aaron Will Djaba — built with care
+                        © {new Date().getFullYear()} Aaron Will Djaba - built with care
                     </p>
                 </motion.footer>
             </motion.div>

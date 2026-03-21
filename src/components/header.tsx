@@ -20,8 +20,8 @@ export const Header = () => {
                     animate={{opacity: 1, y: 0}}
                     transition={{duration: 0.5, delay: 0.1}}
                 >
-                    I'm a Full Stack Web/Mobile Developer and Cybersecurity Analyst crafting
-                    secure, beautiful digital experiences.
+                    I build and secure full-stack applications - from polished frontends to
+                    robust backends. I also contribute to and help grow open source ecosystems in Africa.
                 </motion.p>
             </div>
 

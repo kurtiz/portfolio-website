@@ -189,7 +189,7 @@ export const FullTerminal = () => {
 
                     <div className="flex-1 text-center">
             <span className="text-xs text-muted-foreground font-medium">
-              terminal — zsh
+              terminal - zsh
             </span>
                     </div>
 

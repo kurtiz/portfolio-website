@@ -48,7 +48,7 @@ export const AboutCard = () => {
                         About Me
                     </h3>
                     <p className="font-mono text-xs text-muted-foreground mt-1">
-                        Full-Stack Engineer & Security Analyst
+                        Full-Stack Software Engineer & Security Analyst
                     </p>
                 </div>
             </motion.div>
