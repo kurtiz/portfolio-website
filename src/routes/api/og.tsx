@@ -40,6 +40,12 @@ const ogConfigs: Record<string, {
         page: 'Portfolio',
         icon: '🚀',
     },
+    blog: {
+        title: 'Blog',
+        description: 'Thoughts, tutorials, and insights on web development and open source.',
+        page: 'Blog',
+        icon: '✍️',
+    },
 };
 
 /**
