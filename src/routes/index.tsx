@@ -8,6 +8,7 @@ import {SocialCard} from "@/components/cards/social-card.tsx";
 import {ProjectsCard} from "@/components/cards/projects-card.tsx";
 import {ExpertiseCard} from "@/components/cards/expertise-card.tsx";
 import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
+import {AboutCard} from "@/components/cards/about-card.tsx";
 import {generateMetaTags, pageSEO, generateStructuredData} from "@/lib/seo";
 
 export const Route = createFileRoute('/')({
@@ -107,14 +108,9 @@ function App() {
                         <TerminalCard/>
                     </motion.div>
 
-                    {/* Empty decorative card */}
-                    <motion.div
-                        variants={itemVariants}
-                        className="col-span-1 row-span-1 card-inset flex items-center justify-center"
-                    >
-                        <span className="font-mono text-xs text-muted-foreground">
-                          more coming soon...
-                        </span>
+                    {/* About Card - 1x1 */}
+                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
+                        <AboutCard/>
                     </motion.div>
                 </motion.div>
 
