@@ -83,6 +83,7 @@ export const workExperiences: WorkExperience[] = [
             {
                 position: "Cyber Security Analyst",
                 startDate: "Sep 2025",
+                endDate: "Feb 2026",
                 description:
                     "Performing security monitoring, incident response, and operational security analysis to support enterprise systems.",
                 technologies: [

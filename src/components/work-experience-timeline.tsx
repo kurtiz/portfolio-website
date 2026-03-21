@@ -1,5 +1,3 @@
-"use client";
-
 import {motion} from "framer-motion";
 import {useState} from "react";
 import {
@@ -25,7 +23,7 @@ const RoleItem = ({role, index, isLast}: { role: Role; index: number; isLast: bo
         >
             {/* Sub-timeline line */}
             {!isLast && (
-                <div className="absolute left-[7px] top-4 bottom-0 w-[1px] bg-gradient-to-b from-accent/50 to-transparent"/>
+                <div className="absolute left-1.75 top-4 bottom-0 w-px bg-linear-to-b from-accent/50 to-transparent"/>
             )}
 
             {/* Sub-timeline dot */}
@@ -113,7 +111,7 @@ const TimelineItem = ({
         >
             {/* Timeline line */}
             <div
-                className="absolute left-[5px] top-6 bottom-0 w-[2px] bg-gradient-to-b from-border to-transparent last:hidden"/>
+                className="absolute left-1.25 top-6 bottom-0 w-0.5 bg-linear-to-b from-border to-transparent last:hidden"/>
 
             {/* Timeline dot */}
             <div className="absolute left-0 top-2 flex items-center justify-center">
@@ -204,11 +202,11 @@ const TimelineItem = ({
                         // Show roles sub-timeline
                         <div className="mt-4">
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="h-px flex-1 bg-gradient-to-r from-accent/50 to-transparent"/>
+                                <div className="h-px flex-1 bg-linear-to-r from-accent/50 to-transparent"/>
                                 <p className="text-xs font-semibold text-accent uppercase tracking-wider">
                                     Career Progression
                                 </p>
-                                <div className="h-px flex-1 bg-gradient-to-l from-accent/50 to-transparent"/>
+                                <div className="h-px flex-1 bg-linear-to-l from-accent/50 to-transparent"/>
                             </div>
                             <div className="bg-secondary/20 rounded-lg p-4 border border-border/50">
                                 {experience?.roles?.map((role, i) => (
