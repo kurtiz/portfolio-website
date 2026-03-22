@@ -195,6 +195,37 @@ Developer Experience
         image: 'https://assets.iamaaronwilldjaba.me/projects/dhclc.jpeg',
     },
     {
+        id: 'dcdo',
+        title: 'DCDO Website',
+        description: 'Official website for Dangme Community Development Organisation - a community NGO focused on education, economic growth, healthcare, cultural heritage, and environmental sustainability.',
+        longDescription: `A modern, responsive website built for the Dangme Community Development Organisation (DCDO), a community-based NGO dedicated to empowering resilience and prosperity in the Dangme region.
+
+## About DCDO
+
+DCDO focuses on five key impact areas:
+- Education - Unlocking potential through access to quality learning
+- Economic Growth - Creating opportunities for sustainable livelihoods
+- Healthcare - Ensuring well-being for all generations
+- Cultural Heritage - Preserving roots while building the future
+- Environment - Protecting land for future leaders
+
+## What I Built
+
+- Landing page with impact area highlights and gallery
+- About page with organisation history and mission
+- Gallery page showcasing community events and projects
+- Contact and donation pages with form integrations
+- Mobile-first responsive design with smooth animations
+- SEO-optimized with structured data for local search`,
+        type: 'client',
+        techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+        tags: ['Client', 'NGO', 'Community', 'Web Design', 'Non-Profit'],
+        links: {
+            live: 'https://dcdo-website.vercel.app/',
+        },
+        image: 'https://assets.iamaaronwilldjaba.me/projects/dcdo.avif',
+    },
+    {
         id: 'ussd-simulator',
         title: 'USSD Simulator',
         description: 'A modern, browser-based USSD simulator to test and debug USSD applications with an intuitive phone dialer interface.',
