@@ -24,7 +24,7 @@ export const GithubContributionsCard = () => {
                     showMonthLabels={true}
                     showDayLabels={true}
                     showThemeSwitcher={false}
-                    className="min-w-max bg-background"
+                    className="w-full"
                 />
             </div>
         </div>
