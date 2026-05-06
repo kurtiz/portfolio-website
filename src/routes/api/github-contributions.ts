@@ -10,6 +10,8 @@ export const Route = createFileRoute('/api/github-contributions')({
                         const username = url.searchParams.get('username')?.trim();
                         const year = parseInt(url.searchParams.get('year') || '', 10);
 
+                        console.log("token: ", process.env.GITHUB_TOKEN);
+
                         if (!username) {
                             return new Response(JSON.stringify({error: 'Missing username'}), {
                                 status: 400,
@@ -47,20 +49,42 @@ export const Route = createFileRoute('/api/github-contributions')({
             `;
 
                         try {
+                            const token = process.env.GITHUB_TOKEN;
+                            console.log('[DEBUG] Token present:', !!token);
+
                             const ghRes = await fetch('https://api.github.com/graphql', {
                                 method: 'POST',
                                 headers: {
-                                    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+                                    Authorization: `Bearer ${token}`,
                                     'Content-Type': 'application/json',
+                                    'User-Agent': 'PersonalPortfolio/1.0',
                                 },
                                 body: JSON.stringify({query, variables: {username, from, to}}),
                             });
 
-                            const json = await ghRes.json();
+                            const status = ghRes.status;
+                            console.log('[DEBUG] GitHub response status:', status);
+                            const rawText = await ghRes.text();
+                            console.log('[DEBUG] GitHub raw response:', rawText.substring(0, 800));
 
-                            if (!ghRes.ok || json.errors) {
+                            // Try to parse as JSON - if it fails, we know it's HTML error
+                            let json;
+                            try {
+                                json = JSON.parse(rawText);
+                            } catch (parseErr) {
+                                console.log('[DEBUG] JSON parse failed - response is HTML');
+                                return new Response(JSON.stringify({
+                                    error: 'GitHub API returned non-JSON response',
+                                    status: status,
+                                    rawResponse: rawText.substring(0, 500)
+                                }), {status: 502, headers: {'Content-Type': 'application/json'}});
+                            }
+
+                            console.log('[DEBUG] Parsed JSON:', JSON.stringify(json).substring(0, 200));
+
+                            if (!status || status >= 400 || json.errors) {
                                 return new Response(
-                                    JSON.stringify({error: json.errors?.[0]?.message ?? 'GitHub API error'}),
+                                    JSON.stringify({error: json.errors?.[0]?.message ?? 'GitHub API error', status}),
                                     {status: 500, headers: {'Content-Type': 'application/json'}}
                                 );
                             }
@@ -107,6 +131,7 @@ export const Route = createFileRoute('/api/github-contributions')({
                                 }
                             );
                         } catch (err) {
+                            console.log({err})
                             return new Response(JSON.stringify({error: String(err)}), {
                                 status: 500,
                                 headers: {'Content-Type': 'application/json'},
