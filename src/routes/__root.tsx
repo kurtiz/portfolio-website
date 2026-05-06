@@ -76,6 +76,7 @@ function RootDocument({children}: { children: React.ReactNode }) {
                 />
                 <Toaster richColors/>
                 <Scripts/>
+                <script defer src="https://cloud.umami.is/script.js" data-website-id="4042cf19-f91a-41dd-af74-8bf063d1211d"></script>
                 </body>
                 </html>
             </ThemeProvider>

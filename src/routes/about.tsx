@@ -2,6 +2,7 @@ import {createFileRoute} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
 import {Award, Cloud, Code, Github, Linkedin, Mail, MapPin, Shield, Twitter} from 'lucide-react';
 import {generateMetaTags, pageSEO, siteConfig} from '@/lib/seo';
+import {GithubContributionsCard} from '@/components/cards/github-contributions-card';
 
 export const Route = createFileRoute('/about')({
     component: AboutPage,
@@ -209,7 +210,7 @@ function AboutPage() {
                     </div>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                         <div className="card-inset p-4 text-center">
                             <p className="text-2xl font-bold">87</p>
                             <p className="font-mono text-xs text-muted-foreground">Repositories</p>
@@ -226,6 +227,11 @@ function AboutPage() {
                             <p className="text-2xl font-bold">80</p>
                             <p className="font-mono text-xs text-muted-foreground">Followers</p>
                         </div>
+                    </div>
+
+                    {/* GitHub Contributions */}
+                    <div className="mb-10">
+                        <GithubContributionsCard />
                     </div>
 
                     {/* Connect */}
