@@ -155,6 +155,7 @@ function AboutPage() {
                                 {[
                                     'React & TypeScript',
                                     'Node.js',
+                                    'Go',
                                     'Cyber Security',
                                     'Penetration Testing',
                                     'Cloudflare',

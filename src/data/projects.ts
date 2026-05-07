@@ -18,14 +18,62 @@ export interface Project {
 }
 
 export const projectTypes: { value: ProjectType; label: string }[] = [
-    { value: 'web-app', label: 'Web Apps' },
-    { value: 'cli-tool', label: 'CLI Tools' },
-    { value: 'library', label: 'Libraries' },
-    { value: 'client', label: 'Client Projects' },
-    { value: 'docs', label: 'Documentation' },
+    {value: 'web-app', label: 'Web Apps'},
+    {value: 'cli-tool', label: 'CLI Tools'},
+    {value: 'library', label: 'Libraries'},
+    {value: 'client', label: 'Client Projects'},
+    {value: 'docs', label: 'Documentation'},
 ];
 
 export const projects: Project[] = [
+    {
+        id: 'skillguard',
+        title: 'SkillGuard',
+        description: 'A security scanner for AI agent "skills" defined in Markdown. Evaluates skill definitions for security risks, malicious intents, and supply chain vulnerabilities.',
+        longDescription: `SkillGuard is a security scanner for AI agent "skills" defined in Markdown. It evaluates skill definitions for security risks, malicious intents, and supply chain vulnerabilities, providing transparency to developers and end-users.
+
+## Why SkillGuard?
+
+AI Agents are only as safe as the skills they are given. As the ecosystem of AI agents grows, so does the risk of malicious skills, prompt injection, supply chain attacks, and excessive permissions. SkillGuard provides the first line of defense by analyzing skill definitions before they're loaded into an agent.
+
+## Features
+
+- **YAML frontmatter parsing** - Extracts skill metadata from Markdown files
+- **Multi-category security scoring** - Weighted scoring with exponential decay
+- **Risk detection** - Shell command execution, credential exposure, prompt injection, obfuscated code, HTTP/Git dependencies, hidden characters
+- **CI/CD integration** - Threshold-based exit codes for automated pipelines
+- **Multiple output formats** - Colored CLI output and JSON reports
+- **Configurable** - Custom thresholds, paths, and trusted domains
+
+## Security Scoring
+
+SkillGuard uses a multi-category scoring system with weighted averages:
+- Security (3.0x weight) - Shell access, file access, credentials, obfuscated code
+- Supply Chain (2.0x weight) - External scripts, git/http dependencies
+- Transparency (1.5x weight) - Metadata completeness, prompt injection risks
+- Quality (1.5x weight) - Tool access patterns
+- Maintenance (1.0x weight) - Telemetry, protestware detection
+
+## Install
+
+# Binary\n
+brew install ossafrica/skillguard
+
+# Docker\n
+docker pull ghcr.io/ossafrica/skillguard:latest
+
+# Build from source\n
+go build -o skillguard .
+`,
+        type: 'cli-tool',
+        techStack: ['Go', 'Cobra'],
+        tags: ['Security', 'AI Agents', 'Supply Chain', 'CLI'],
+        links: {
+            github: 'https://github.com/OSSAfrica/skillguard',
+        },
+        featured: true,
+        image: 'https://assets.iamaaronwilldjaba.me/projects/skillguard.gif',
+    },
     {
         id: 'bvault-js',
         title: 'bVault.js',
@@ -228,6 +276,7 @@ DCDO focuses on five key impact areas:
     {
         id: 'ussd-simulator',
         title: 'USSD Simulator',
+        image: 'https://assets.iamaaronwilldjaba.me/projects/ussd-simulator.jpeg',
         description: 'A modern, browser-based USSD simulator to test and debug USSD applications with an intuitive phone dialer interface.',
         longDescription: `A modern, browser-based USSD (Unstructured Supplementary Service Data) simulator built with React, TypeScript, and Tailwind CSS. Test and debug your USSD applications with an intuitive phone dialer interface and comprehensive session management.
 

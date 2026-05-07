@@ -41,6 +41,7 @@ export const expertise: SkillCategory[] = [
         icon: "⚙️",
         color: "from-green-500 to-emerald-500",
         skills: [
+            { name: "Go", yearsOfExperience: 1 },
             { name: "Node.js", yearsOfExperience: 5 },
             { name: "Express.js", yearsOfExperience: 4 },
             { name: "Hono", yearsOfExperience: 1 },
