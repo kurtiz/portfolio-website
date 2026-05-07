@@ -82,7 +82,7 @@ export const Route = createFileRoute('/api/github-activity')({
                                         }
                                     }
                                 } catch {
-                                    continue;
+
                                 }
                             }
 
@@ -117,7 +117,7 @@ export const Route = createFileRoute('/api/github-activity')({
                                 {activity: activity.slice(0, 50)},
                                 {
                                     headers: {
-                                        'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=1800',
+                                        'Cache-Control': 'public, s-maxage=1600, stale-while-revalidate=3600',
                                     },
                                 }
                             );
