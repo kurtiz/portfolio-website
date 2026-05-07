@@ -1,8 +1,15 @@
 import {createFileRoute} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
 import {useEffect, useState} from 'react';
-import {GitCommit, GitPullRequest, GitPullRequestDot, ExternalLink, Loader2} from 'lucide-react';
-import {generateMetaTags, pageSEO, siteConfig} from '@/lib/seo';
+import {
+    ExternalLink,
+    GitCommit,
+    GitPullRequest,
+    GitPullRequestArrow,
+    GitPullRequestCreateArrow,
+    Loader2
+} from 'lucide-react';
+import {generateMetaTags, pageSEO} from '@/lib/seo';
 
 export const Route = createFileRoute('/activity')({
     component: ActivityPage,
@@ -39,7 +46,7 @@ function ActivityPage() {
                 if (!res.ok) {
                     throw new Error('Failed to fetch activity');
                 }
-                const data = await res.json();
+                const data = await res.json() as { activity: ActivityItem[] };
                 setActivity(data.activity || []);
             } catch (err) {
                 setError('Failed to load activity');
@@ -48,6 +55,7 @@ function ActivityPage() {
                 setLoading(false);
             }
         }
+
         fetchActivity();
     }, []);
 
@@ -102,7 +110,7 @@ function ActivityPage() {
         return date.toLocaleDateString();
     };
 
-    const filters: {value: FilterType; label: string; count: number}[] = [
+    const filters: { value: FilterType; label: string; count: number }[] = [
         {value: 'all', label: 'All', count: activity.length},
         {
             value: 'commit',
@@ -160,7 +168,7 @@ function ActivityPage() {
 
                     {loading && (
                         <div className="flex items-center justify-center py-20">
-                            <Loader2 className="w-8 h-8 animate-spin text-accent" />
+                            <Loader2 className="w-8 h-8 animate-spin text-accent"/>
                         </div>
                     )}
 
@@ -193,15 +201,15 @@ function ActivityPage() {
                                         <div className="flex items-start gap-4">
                                             <div className="shrink-0 mt-1">
                                                 {item.type === 'commit' && (
-                                                    <GitCommit className="w-5 h-5 text-accent" />
+                                                    <GitCommit className="w-5 h-5 text-accent"/>
                                                 )}
                                                 {item.type === 'pullRequest' && (
                                                     item.state === 'MERGED' ? (
-                                                        <GitPullRequestDot className="w-5 h-5 text-purple-500" />
+                                                        <GitPullRequestArrow className="w-5 h-5 text-purple-500"/>
                                                     ) : item.state === 'OPEN' ? (
-                                                        <GitPullRequest className="w-5 h-5 text-green-500" />
+                                                        <GitPullRequestCreateArrow className="w-5 h-5 text-green-500"/>
                                                     ) : (
-                                                        <GitPullRequest className="w-5 h-5 text-muted-foreground" />
+                                                        <GitPullRequest className="w-5 h-5 text-muted-foreground"/>
                                                     )
                                                 )}
                                             </div>
@@ -220,7 +228,8 @@ function ActivityPage() {
                                                         {item.repo}
                                                     </span>
                                                     {item.repoOwner !== GITHUB_USERNAME && (
-                                                        <span className="text-xs font-mono px-2 py-0.5 rounded bg-orange-500/20 text-orange-400">
+                                                        <span
+                                                            className="text-xs font-mono px-2 py-0.5 rounded bg-orange-500/20 text-orange-400">
                                                             External
                                                         </span>
                                                     )}
@@ -228,7 +237,8 @@ function ActivityPage() {
                                                 <p className="mt-1 text-sm truncate group-hover:text-accent transition-colors">
                                                     {item.title}
                                                 </p>
-                                                <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground font-mono">
+                                                <div
+                                                    className="flex items-center gap-4 mt-2 text-xs text-muted-foreground font-mono">
                                                     <span>{formatTimeAgo(item.date)}</span>
                                                     {item.additions !== undefined && (
                                                         <>
@@ -242,8 +252,8 @@ function ActivityPage() {
                                                                 item.state === 'MERGED'
                                                                     ? 'text-purple-400'
                                                                     : item.state === 'OPEN'
-                                                                    ? 'text-green-400'
-                                                                    : 'text-muted-foreground'
+                                                                        ? 'text-green-400'
+                                                                        : 'text-muted-foreground'
                                                             }`}
                                                         >
                                                             {item.state.toLowerCase()}
@@ -251,7 +261,8 @@ function ActivityPage() {
                                                     )}
                                                 </div>
                                             </div>
-                                            <ExternalLink className="w-4 h-4 text-muted-foreground shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <ExternalLink
+                                                className="w-4 h-4 text-muted-foreground shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"/>
                                         </div>
                                     </a>
                                 ))}

@@ -2,7 +2,7 @@ import {createFileRoute} from '@tanstack/react-router';
 
 interface ActivityItem {
     id: string;
-    type: 'commit' | 'pullRequest' | 'issue';
+    type: 'commit' | 'pullRequest';
     title: string;
     repo: string;
     repoOwner: string;
@@ -21,7 +21,6 @@ export const Route = createFileRoute('/api/github-activity')({
                     handler: async ({request}) => {
                         const url = new URL(request.url);
                         const username = url.searchParams.get('username')?.trim();
-                        const limit = parseInt(url.searchParams.get('limit') || '30', 10);
 
                         if (!username) {
                             return Response.json({error: 'Missing username'}, {status: 400});
@@ -35,163 +34,87 @@ export const Route = createFileRoute('/api/github-activity')({
                         try {
                             const headers = {
                                 Authorization: `Bearer ${token}`,
-                                'Content-Type': 'application/json',
+                                Accept: 'application/vnd.github.v3+json',
                                 'User-Agent': 'PersonalPortfolio/1.0',
                             };
 
-                            const query = `
-                                query($username: String!) {
-                                    user(login: $username) {
-                                        repositories(first: 50, orderBy: {field: UPDATED_AT, direction: DESC}, ownerAffiliations: OWNER) {
-                                            nodes {
-                                                name
-                                                owner.login
-                                                defaultBranchRef {
-                                                    target {
-                                                        ... on Commit {
-                                                            history(first: 20) {
-                                                                nodes {
-                                                                    oid
-                                                                    message
-                                                                    committedDate
-                                                                    additions
-                                                                    deletions
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        contributedRepositories(first: 30, orderBy: {field: UPDATED_AT, direction: DESC}) {
-                                            nodes {
-                                                name
-                                                owner.login
-                                                defaultBranchRef {
-                                                    target {
-                                                        ... on Commit {
-                                                            history(first: 10) {
-                                                                nodes {
-                                                                    oid
-                                                                    message
-                                                                    committedDate
-                                                                    additions
-                                                                    deletions
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        pullRequests(first: 20, orderBy: {field: CREATED_AT, direction: DESC}) {
-                                            nodes {
-                                                id
-                                                title
-                                                url
-                                                state
-                                                createdAt
-                                                repository {
-                                                    name
-                                                    owner.login
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            `;
-
-                            const response = await fetch('https://api.github.com/graphql', {
-                                method: 'POST',
-                                headers,
-                                body: JSON.stringify({query, variables: {username}}),
-                            });
-
-                            if (!response.ok) {
-                                return Response.json(
-                                    {error: `GitHub API error: ${response.status}`},
-                                    {status: 502}
-                                );
-                            }
-
-                            const data = await response.json();
-
-                            if (data.errors) {
-                                return Response.json(
-                                    {error: data.errors[0]?.message || 'GraphQL error'},
-                                    {status: 500}
-                                );
-                            }
-
-                            const user = data.data?.user;
-                            if (!user) {
-                                return Response.json({error: 'User not found'}, {status: 404});
-                            }
+                            const now = new Date();
+                            const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                            const since = thirtyDaysAgo.toISOString().split('T')[0];
 
                             const activity: ActivityItem[] = [];
 
-                            const now = new Date();
-                            const sixtyDaysAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
+                            const userRes = await fetch(`https://api.github.com/users/${username}`, {headers});
+                            if (!userRes.ok) {
+                                return Response.json({error: 'User not found'}, {status: 404});
+                            }
 
-                            user.repositories.nodes.forEach((repo: any) => {
-                                const commits = repo.defaultBranchRef?.target?.history?.nodes || [];
-                                commits.forEach((commit: any) => {
-                                    const commitDate = new Date(commit.committedDate);
-                                    if (commitDate > sixtyDaysAgo) {
-                                        activity.push({
-                                            id: commit.oid,
-                                            type: 'commit',
-                                            title: commit.message.split('\n')[0],
-                                            repo: `${repo.owner.login}/${repo.name}`,
-                                            repoOwner: repo.owner.login,
-                                            url: `https://github.com/${repo.owner.login}/${repo.name}/commit/${commit.oid}`,
-                                            date: commit.committedDate,
-                                            additions: commit.additions,
-                                            deletions: commit.deletions,
-                                        });
+                            const reposRes = await fetch(
+                                `https://api.github.com/users/${username}/repos?per_page=50&sort=updated`,
+                                {headers}
+                            );
+                            const repos = await reposRes.json();
+
+                            if (!Array.isArray(repos)) {
+                                return Response.json({error: 'Failed to fetch repositories'}, {status: 500});
+                            }
+
+                            for (const repo of repos.slice(0, 20)) {
+                                try {
+                                    const commitsRes = await fetch(
+                                        `https://api.github.com/repos/${repo.owner.login}/${repo.name}/commits?since=${since}&per_page=10`,
+                                        {headers}
+                                    );
+                                    if (commitsRes.ok) {
+                                        const commits = await commitsRes.json();
+                                        if (Array.isArray(commits)) {
+                                            commits.forEach((commit: any) => {
+                                                activity.push({
+                                                    id: commit.sha,
+                                                    type: 'commit',
+                                                    title: commit.commit.message.split('\n')[0],
+                                                    repo: `${repo.owner.login}/${repo.name}`,
+                                                    repoOwner: repo.owner.login,
+                                                    url: commit.html_url,
+                                                    date: commit.commit.author.date,
+                                                });
+                                            });
+                                        }
                                     }
-                                });
-                            });
+                                } catch {
+                                    continue;
+                                }
+                            }
 
-                            user.contributedRepositories.nodes.forEach((repo: any) => {
-                                const commits = repo.defaultBranchRef?.target?.history?.nodes || [];
-                                commits.forEach((commit: any) => {
-                                    const commitDate = new Date(commit.committedDate);
-                                    if (commitDate > sixtyDaysAgo) {
-                                        activity.push({
-                                            id: commit.oid,
-                                            type: 'commit',
-                                            title: commit.message.split('\n')[0],
-                                            repo: `${repo.owner.login}/${repo.name}`,
-                                            repoOwner: repo.owner.login,
-                                            url: `https://github.com/${repo.owner.login}/${repo.name}/commit/${commit.oid}`,
-                                            date: commit.committedDate,
-                                            additions: commit.additions,
-                                            deletions: commit.deletions,
-                                        });
-                                    }
-                                });
-                            });
-
-                            user.pullRequests.nodes.forEach((pr: any) => {
-                                activity.push({
-                                    id: pr.id,
-                                    type: 'pullRequest',
-                                    title: pr.title,
-                                    repo: `${pr.repository.owner.login}/${pr.repository.name}`,
-                                    repoOwner: pr.repository.owner.login,
-                                    url: pr.url,
-                                    date: pr.createdAt,
-                                    state: pr.state,
-                                });
-                            });
+                            const eventsRes = await fetch(
+                                `https://api.github.com/users/${username}/events?per_page=50`,
+                                {headers}
+                            );
+                            if (eventsRes.ok) {
+                                const events = await eventsRes.json();
+                                if (Array.isArray(events)) {
+                                    events.forEach((event: any) => {
+                                        if (event.type === 'PullRequestEvent') {
+                                            activity.push({
+                                                id: String(event.payload.pull_request.id),
+                                                type: 'pullRequest',
+                                                title: event.payload.pull_request.title,
+                                                repo: event.repo.name,
+                                                repoOwner: event.repo.name.split('/')[0],
+                                                url: event.payload.pull_request.html_url,
+                                                date: event.created_at,
+                                                state: event.payload.pull_request.merged_at ? 'MERGED' : 
+                                                       event.payload.pull_request.state === 'open' ? 'OPEN' : 'CLOSED',
+                                            });
+                                        }
+                                    });
+                                }
+                            }
 
                             activity.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-                            const limitedActivity = activity.slice(0, limit);
-
                             return Response.json(
-                                {activity: limitedActivity},
+                                {activity: activity.slice(0, 50)},
                                 {
                                     headers: {
                                         'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=1800',
