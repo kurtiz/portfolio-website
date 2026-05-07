@@ -98,23 +98,23 @@ function App() {
                         <SocialCard/>
                     </motion.div>
 
-                    {/* Blog - 1x1 */}
-                    <motion.div variants={itemVariants} className="sm:col-span-1 col-span-2 row-span-1">
+                    {/* Blog - 2 cols on desktop */}
+                    <motion.div variants={itemVariants} className="col-span-2 md:col-span-2 row-span-1">
                         <BlogCard/>
                     </motion.div>
 
-                    {/* Receipt Log - 2x1 wide */}
-                    <motion.div variants={itemVariants} className="col-span-2 row-span-1">
-                        <TerminalCard/>
-                    </motion.div>
-
-                    {/* About Card - 1x1 */}
-                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
+                    {/* About Card - 2 cols on desktop */}
+                    <motion.div variants={itemVariants} className="col-span-2 md:col-span-2 row-span-1">
                         <AboutCard/>
                     </motion.div>
 
-                    {/* Activity - 1x1 - beside about on mobile, below on desktop */}
-                    <motion.div variants={itemVariants} className="col-span-1 sm:col-span-1 row-span-1">
+                    {/* Terminal - 3 cols on desktop */}
+                    <motion.div variants={itemVariants} className="col-span-2 md:col-span-3 row-span-1">
+                        <TerminalCard/>
+                    </motion.div>
+
+                    {/* Activity - 1 col */}
+                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
                         <ActivityCard/>
                     </motion.div>
                 </motion.div>
