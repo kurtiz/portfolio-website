@@ -9,6 +9,7 @@ import {ProjectsCard} from "@/components/cards/projects-card.tsx";
 import {ExpertiseCard} from "@/components/cards/expertise-card.tsx";
 import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
 import {AboutCard} from "@/components/cards/about-card.tsx";
+import {ActivityCard} from "@/components/cards/activity-card.tsx";
 import {generateMetaTags, pageSEO, generateStructuredData} from "@/lib/seo";
 
 export const Route = createFileRoute('/')({
@@ -100,6 +101,11 @@ function App() {
                     {/* Blog - 1x1 */}
                     <motion.div variants={itemVariants} className="sm:col-span-1 col-span-2 row-span-1">
                         <BlogCard/>
+                    </motion.div>
+
+                    {/* Activity - 1x1 */}
+                    <motion.div variants={itemVariants} className="col-span-1 row-span-1">
+                        <ActivityCard/>
                     </motion.div>
 
 

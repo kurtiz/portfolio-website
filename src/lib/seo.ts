@@ -210,6 +210,15 @@ export const pageSEO = {
         type: 'website' as const,
 
     },
+
+    activity: {
+        title: 'Activity',
+        description: 'Recent GitHub activity - commits and pull requests across all repositories including external contributions.',
+        keywords: ['github', 'commits', 'pull requests', 'open source', 'contributions'],
+        url: '/activity',
+        type: 'profile' as const,
+
+    },
 };
 
 /**

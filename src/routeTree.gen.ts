@@ -14,6 +14,7 @@ import { Route as TerminalRouteImport } from './routes/terminal'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ExpertiseRouteImport } from './routes/expertise'
 import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectIdRouteImport } from './routes/project.$id'
@@ -21,6 +22,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog_.$slug'
 import { Route as ApiOgRouteImport } from './routes/api/og'
 import { Route as ApiGithubStatsRouteImport } from './routes/api/github-stats'
 import { Route as ApiGithubContributionsRouteImport } from './routes/api/github-contributions'
+import { Route as ApiGithubActivityRouteImport } from './routes/api/github-activity'
 
 const WorkExperienceRoute = WorkExperienceRouteImport.update({
   id: '/work-experience',
@@ -45,6 +47,11 @@ const ExpertiseRoute = ExpertiseRouteImport.update({
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivityRoute = ActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -82,15 +89,22 @@ const ApiGithubContributionsRoute = ApiGithubContributionsRouteImport.update({
   path: '/api/github-contributions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGithubActivityRoute = ApiGithubActivityRouteImport.update({
+  id: '/api/github-activity',
+  path: '/api/github-activity',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activity': typeof ActivityRoute
   '/blog': typeof BlogRoute
   '/expertise': typeof ExpertiseRoute
   '/projects': typeof ProjectsRoute
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
+  '/api/github-activity': typeof ApiGithubActivityRoute
   '/api/github-contributions': typeof ApiGithubContributionsRoute
   '/api/github-stats': typeof ApiGithubStatsRoute
   '/api/og': typeof ApiOgRoute
@@ -100,11 +114,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activity': typeof ActivityRoute
   '/blog': typeof BlogRoute
   '/expertise': typeof ExpertiseRoute
   '/projects': typeof ProjectsRoute
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
+  '/api/github-activity': typeof ApiGithubActivityRoute
   '/api/github-contributions': typeof ApiGithubContributionsRoute
   '/api/github-stats': typeof ApiGithubStatsRoute
   '/api/og': typeof ApiOgRoute
@@ -115,11 +131,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activity': typeof ActivityRoute
   '/blog': typeof BlogRoute
   '/expertise': typeof ExpertiseRoute
   '/projects': typeof ProjectsRoute
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
+  '/api/github-activity': typeof ApiGithubActivityRoute
   '/api/github-contributions': typeof ApiGithubContributionsRoute
   '/api/github-stats': typeof ApiGithubStatsRoute
   '/api/og': typeof ApiOgRoute
@@ -131,11 +149,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/activity'
     | '/blog'
     | '/expertise'
     | '/projects'
     | '/terminal'
     | '/work-experience'
+    | '/api/github-activity'
     | '/api/github-contributions'
     | '/api/github-stats'
     | '/api/og'
@@ -145,11 +165,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/activity'
     | '/blog'
     | '/expertise'
     | '/projects'
     | '/terminal'
     | '/work-experience'
+    | '/api/github-activity'
     | '/api/github-contributions'
     | '/api/github-stats'
     | '/api/og'
@@ -159,11 +181,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/activity'
     | '/blog'
     | '/expertise'
     | '/projects'
     | '/terminal'
     | '/work-experience'
+    | '/api/github-activity'
     | '/api/github-contributions'
     | '/api/github-stats'
     | '/api/og'
@@ -174,11 +198,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ActivityRoute: typeof ActivityRoute
   BlogRoute: typeof BlogRoute
   ExpertiseRoute: typeof ExpertiseRoute
   ProjectsRoute: typeof ProjectsRoute
   TerminalRoute: typeof TerminalRoute
   WorkExperienceRoute: typeof WorkExperienceRoute
+  ApiGithubActivityRoute: typeof ApiGithubActivityRoute
   ApiGithubContributionsRoute: typeof ApiGithubContributionsRoute
   ApiGithubStatsRoute: typeof ApiGithubStatsRoute
   ApiOgRoute: typeof ApiOgRoute
@@ -221,6 +247,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activity': {
+      id: '/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof ActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -272,17 +305,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGithubContributionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/github-activity': {
+      id: '/api/github-activity'
+      path: '/api/github-activity'
+      fullPath: '/api/github-activity'
+      preLoaderRoute: typeof ApiGithubActivityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ActivityRoute: ActivityRoute,
   BlogRoute: BlogRoute,
   ExpertiseRoute: ExpertiseRoute,
   ProjectsRoute: ProjectsRoute,
   TerminalRoute: TerminalRoute,
   WorkExperienceRoute: WorkExperienceRoute,
+  ApiGithubActivityRoute: ApiGithubActivityRoute,
   ApiGithubContributionsRoute: ApiGithubContributionsRoute,
   ApiGithubStatsRoute: ApiGithubStatsRoute,
   ApiOgRoute: ApiOgRoute,
