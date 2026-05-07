@@ -1,8 +1,18 @@
 import {createFileRoute} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
+import {useEffect, useState} from 'react';
 import {Award, Cloud, Code, Github, Linkedin, Mail, MapPin, Shield, Twitter} from 'lucide-react';
 import {generateMetaTags, pageSEO, siteConfig} from '@/lib/seo';
 import {GithubContributionsCard} from '@/components/cards/github-contributions-card';
+
+interface GitHubStats {
+    repos: number;
+    stars: number;
+    followers: number;
+    contributions: number;
+}
+
+const GITHUB_USERNAME = 'kurtiz';
 
 export const Route = createFileRoute('/about')({
     component: AboutPage,
@@ -55,6 +65,33 @@ const certifications = [
 ];
 
 function AboutPage() {
+    const [githubStats, setGitHubStats] = useState<GitHubStats | null>(null);
+    const [statsLoading, setStatsLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchGitHubStats() {
+            try {
+                const res = await fetch(`/api/github-stats?username=${GITHUB_USERNAME}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setGitHubStats(data as GitHubStats);
+                }
+            } catch (err) {
+                console.error('Failed to fetch GitHub stats:', err);
+            } finally {
+                setStatsLoading(false);
+            }
+        }
+        fetchGitHubStats();
+    }, []);
+
+    const formatNumber = (num: number): string => {
+        if (num >= 1000) {
+            return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K+';
+        }
+        return num.toString();
+    };
+
     return (
         <div className="min-h-screen bg-canvas py-8 px-4 sm:py-12">
             <motion.div
@@ -213,19 +250,43 @@ function AboutPage() {
                     {/* Stats */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                         <div className="card-inset p-4 text-center">
-                            <p className="text-2xl font-bold">87</p>
+                            <p className="text-2xl font-bold">
+                                {statsLoading ? (
+                                    <span className="animate-pulse bg-muted rounded h-8 w-12 inline-block" />
+                                ) : (
+                                    formatNumber(githubStats?.repos ?? 0)
+                                )}
+                            </p>
                             <p className="font-mono text-xs text-muted-foreground">Repositories</p>
                         </div>
                         <div className="card-inset p-4 text-center">
-                            <p className="text-2xl font-bold">206</p>
+                            <p className="text-2xl font-bold">
+                                {statsLoading ? (
+                                    <span className="animate-pulse bg-muted rounded h-8 w-12 inline-block" />
+                                ) : (
+                                    formatNumber(githubStats?.stars ?? 0)
+                                )}
+                            </p>
                             <p className="font-mono text-xs text-muted-foreground">Stars</p>
                         </div>
                         <div className="card-inset p-4 text-center">
-                            <p className="text-2xl font-bold">1.2K+</p>
-                            <p className="font-mono text-xs text-muted-foreground">LinkedIn</p>
+                            <p className="text-2xl font-bold">
+                                {statsLoading ? (
+                                    <span className="animate-pulse bg-muted rounded h-8 w-12 inline-block" />
+                                ) : (
+                                    formatNumber(githubStats?.contributions ?? 0)
+                                )}
+                            </p>
+                            <p className="font-mono text-xs text-muted-foreground">Contributions</p>
                         </div>
                         <div className="card-inset p-4 text-center">
-                            <p className="text-2xl font-bold">80</p>
+                            <p className="text-2xl font-bold">
+                                {statsLoading ? (
+                                    <span className="animate-pulse bg-muted rounded h-8 w-12 inline-block" />
+                                ) : (
+                                    formatNumber(githubStats?.followers ?? 0)
+                                )}
+                            </p>
                             <p className="font-mono text-xs text-muted-foreground">Followers</p>
                         </div>
                     </div>

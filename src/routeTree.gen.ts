@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectIdRouteImport } from './routes/project.$id'
 import { Route as BlogSlugRouteImport } from './routes/blog_.$slug'
 import { Route as ApiOgRouteImport } from './routes/api/og'
+import { Route as ApiGithubStatsRouteImport } from './routes/api/github-stats'
 import { Route as ApiGithubContributionsRouteImport } from './routes/api/github-contributions'
 
 const WorkExperienceRoute = WorkExperienceRouteImport.update({
@@ -71,6 +72,11 @@ const ApiOgRoute = ApiOgRouteImport.update({
   path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGithubStatsRoute = ApiGithubStatsRouteImport.update({
+  id: '/api/github-stats',
+  path: '/api/github-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiGithubContributionsRoute = ApiGithubContributionsRouteImport.update({
   id: '/api/github-contributions',
   path: '/api/github-contributions',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
   '/api/github-contributions': typeof ApiGithubContributionsRoute
+  '/api/github-stats': typeof ApiGithubStatsRoute
   '/api/og': typeof ApiOgRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/project/$id': typeof ProjectIdRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
   '/api/github-contributions': typeof ApiGithubContributionsRoute
+  '/api/github-stats': typeof ApiGithubStatsRoute
   '/api/og': typeof ApiOgRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/project/$id': typeof ProjectIdRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/terminal': typeof TerminalRoute
   '/work-experience': typeof WorkExperienceRoute
   '/api/github-contributions': typeof ApiGithubContributionsRoute
+  '/api/github-stats': typeof ApiGithubStatsRoute
   '/api/og': typeof ApiOgRoute
   '/blog_/$slug': typeof BlogSlugRoute
   '/project/$id': typeof ProjectIdRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/terminal'
     | '/work-experience'
     | '/api/github-contributions'
+    | '/api/github-stats'
     | '/api/og'
     | '/blog/$slug'
     | '/project/$id'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/terminal'
     | '/work-experience'
     | '/api/github-contributions'
+    | '/api/github-stats'
     | '/api/og'
     | '/blog/$slug'
     | '/project/$id'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/terminal'
     | '/work-experience'
     | '/api/github-contributions'
+    | '/api/github-stats'
     | '/api/og'
     | '/blog_/$slug'
     | '/project/$id'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   TerminalRoute: typeof TerminalRoute
   WorkExperienceRoute: typeof WorkExperienceRoute
   ApiGithubContributionsRoute: typeof ApiGithubContributionsRoute
+  ApiGithubStatsRoute: typeof ApiGithubStatsRoute
   ApiOgRoute: typeof ApiOgRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ProjectIdRoute: typeof ProjectIdRoute
@@ -245,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiOgRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/github-stats': {
+      id: '/api/github-stats'
+      path: '/api/github-stats'
+      fullPath: '/api/github-stats'
+      preLoaderRoute: typeof ApiGithubStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/github-contributions': {
       id: '/api/github-contributions'
       path: '/api/github-contributions'
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   TerminalRoute: TerminalRoute,
   WorkExperienceRoute: WorkExperienceRoute,
   ApiGithubContributionsRoute: ApiGithubContributionsRoute,
+  ApiGithubStatsRoute: ApiGithubStatsRoute,
   ApiOgRoute: ApiOgRoute,
   BlogSlugRoute: BlogSlugRoute,
   ProjectIdRoute: ProjectIdRoute,
