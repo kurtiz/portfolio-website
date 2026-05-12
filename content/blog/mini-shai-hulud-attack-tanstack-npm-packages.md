@@ -5,7 +5,6 @@ excerpt: "A deep dive into the sophisticated 'Mini Shai-Hulud' supply-chain camp
 tags: [ "Cybersecurity", "NPM", "Supply Chain", "AppSec", "Open Source Security" ]
 coverImage: "https://assets.iamaaronwilldjaba.me/blog/tanstack-attack.png"
 published: true
-sortOrder: 1
 ---
 
 ![Mini Shai-Hulud Supply Chain Attack](https://assets.iamaaronwilldjaba.me/blog/tanstack-attack.png)

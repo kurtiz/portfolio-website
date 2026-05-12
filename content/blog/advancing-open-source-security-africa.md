@@ -5,7 +5,6 @@ tags: ["open source", "cybersecurity", "ossafrica", "openssf", "speaking"]
 excerpt: "Join me on March 27th as I speak alongside industry leaders at OSSAfrica's first virtual event about the future of open-source security and how our community can get involved."
 coverImage: "https://assets.iamaaronwilldjaba.me/blog/advancing-open-source.jpeg"
 published: true
-sortOrder: 10
 ---
 
 I am incredibly excited to announce that I will be speaking at the inaugural OSSAfrica virtual event, **"Advancing Open Source Security in Africa: OpenSSF and OSSAfrica."** Open source is the backbone of modern technology, but securing it requires a coordinated, global effort. As the Security Lead for OSSAfrica, I am deeply passionate about ensuring our local developer communities are not just consuming open-source tools, but actively participating in securing and shaping them.
