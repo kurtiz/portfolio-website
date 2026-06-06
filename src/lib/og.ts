@@ -2,15 +2,18 @@ import { type SEOConfig, generateMetaTags } from './seo';
 
 interface OgPageInfo {
   label: string;
+  image?: string;
 }
 
+const profileImage = 'https://assets.iamaaronwilldjaba.me/profile.jpg';
+
 const pageOgMap: Record<string, OgPageInfo> = {
-  home: { label: 'Portfolio' },
+  home: { label: 'Portfolio', image: profileImage },
   'work-experience': { label: 'Career' },
   expertise: { label: 'Skills' },
   terminal: { label: 'Terminal' },
   projects: { label: 'Portfolio' },
-  about: { label: 'About' },
+  about: { label: 'About', image: profileImage },
   activity: { label: 'Activity' },
 };
 
@@ -34,6 +37,6 @@ export function generatePageMetaTags(pageKey: string, seo: SEOConfig) {
   if (!ogInfo) {
     return generateMetaTags(seo);
   }
-  const image = getOgImageUrl(seo.title, seo.description, ogInfo);
+  const image = getOgImageUrl(seo.title, seo.description, ogInfo, ogInfo.image);
   return generateMetaTags({ ...seo, image });
 }

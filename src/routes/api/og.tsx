@@ -1,5 +1,38 @@
 import {createFileRoute} from '@tanstack/react-router';
 
+const imageCache = new Map<string, string>();
+
+let avatarPromise: Promise<string | null> | null = null;
+function getAvatarDataUri(): Promise<string | null> {
+  if (!avatarPromise) {
+    avatarPromise = fetchImageAsDataUri('https://assets.iamaaronwilldjaba.me/profile.jpg');
+  }
+  return avatarPromise;
+}
+
+async function fetchImageAsDataUri(url: string): Promise<string | null> {
+  const cached = imageCache.get(url);
+  if (cached) return cached;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return null;
+    const contentType = response.headers.get('content-type') || 'image/jpeg';
+    const buffer = await response.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    for (let i = 0; i < bytes.length; i += 8192) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+    }
+    const base64 = btoa(binary);
+    const dataUri = `data:${contentType};base64,${base64}`;
+    imageCache.set(url, dataUri);
+    return dataUri;
+  } catch {
+    return null;
+  }
+}
+
 function truncate(text: string, maxLen: number, lineLen: number): [string, string?] {
   if (!text) return ['', undefined];
   if (text.length <= maxLen) {
@@ -23,16 +56,26 @@ function escapeXml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function generateOgSvg(title: string, description: string, page: string, image?: string): string {
-  const [titleLine1, titleLine2] = truncate(title, 80, 40);
-  const [descLine1, descLine2] = truncate(description, 140, 70);
-
+function generateOgSvg(title: string, description: string, page: string, image?: string, avatar?: string): string {
   const hasImage = !!image;
+  const titleMaxLen = hasImage ? 50 : 80;
+  const titleLineLen = hasImage ? 25 : 40;
+  const descMaxLen = hasImage ? 110 : 140;
+  const descLineLen = hasImage ? 55 : 70;
+  const [titleLine1, titleLine2] = truncate(title, titleMaxLen, titleLineLen);
+  const [descLine1, descLine2] = truncate(description, descMaxLen, descLineLen);
+
   const titleSize = hasImage ? 34 : 42;
 
   const textX = 128;
-  let textY = 200;
+  const textY = 200;
   const avatarCY = 140;
+
+  const avatarSvg = avatar
+    ? `<clipPath id="avatarClip"><circle cx="152" cy="${avatarCY}" r="20"/></clipPath>
+  <image x="132" y="${avatarCY - 20}" width="40" height="40" clip-path="url(#avatarClip)" href="${escapeXml(avatar)}" preserveAspectRatio="xMidYMid slice"/>`
+    : `<circle cx="152" cy="${avatarCY}" r="20" fill="#e88d67"/>
+  <text x="152" y="${avatarCY + 6}" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="900" font-family="Inter, Helvetica Neue, sans-serif">AD</text>`;
 
   return `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -47,8 +90,7 @@ function generateOgSvg(title: string, description: string, page: string, image?:
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect x="80" y="80" width="1040" height="470" rx="32" fill="#faf9f7" filter="url(#shadow)"/>
   <rect x="80" y="80" width="8" height="470" rx="4" fill="#e88d67"/>
-  <circle cx="152" cy="${avatarCY}" r="20" fill="#e88d67"/>
-  <text x="152" y="${avatarCY + 6}" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="900" font-family="Inter, Helvetica Neue, sans-serif">AD</text>
+  ${avatarSvg}
   <text x="184" y="${avatarCY - 2}" fill="#2d2d35" font-size="15" font-weight="600" font-family="Inter, Helvetica Neue, sans-serif">Aaron Will Djaba</text>
   <text x="184" y="${avatarCY + 12}" fill="#8a8a8f" font-size="12" font-family="Inter, Helvetica Neue, sans-serif">iamaaronwilldjaba.me</text>
   <text x="${textX}" y="${textY - 20}" fill="#e88d67" font-size="12" font-weight="600" letter-spacing="2" font-family="Inter, Helvetica Neue, sans-serif">${escapeXml(page.toUpperCase())}</text>
@@ -81,9 +123,12 @@ export const Route = createFileRoute('/api/og')({
               const title = url.searchParams.get('title') || 'Aaron Will Djaba';
               const description = url.searchParams.get('description') || 'Full-Stack Developer and Open Source contributor';
               const page = url.searchParams.get('page') || 'Portfolio';
-              const image = url.searchParams.get('image') || undefined;
+              const imageParam = url.searchParams.get('image') || undefined;
 
-              const svg = generateOgSvg(title, description, page, image);
+              const image = imageParam ? await fetchImageAsDataUri(imageParam) : undefined;
+              const avatar = await getAvatarDataUri();
+
+              const svg = generateOgSvg(title, description, page, image!, avatar ?? undefined);
 
               return new Response(svg, {
                 headers: {
