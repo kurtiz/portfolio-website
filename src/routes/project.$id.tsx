@@ -28,7 +28,7 @@ export const Route = createFileRoute('/project/$id')({
             image: getOgImageUrl(
                 project.title,
                 ogDescription,
-                {label: 'Projects', icon: '🚀'},
+                {label: 'Projects'},
                 project.image,
             ),
             keywords: [...project.techStack, ...project.tags],

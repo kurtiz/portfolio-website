@@ -2,11 +2,10 @@ interface OgImageProps {
   title: string;
   description: string;
   page: string;
-  icon: string;
   image?: string;
 }
 
-export function OgImage({title, description, page, icon, image}: OgImageProps) {
+export function OgImage({title, description, page, image}: OgImageProps) {
   return (
     <div
       style={{

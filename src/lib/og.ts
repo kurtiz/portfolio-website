@@ -2,17 +2,16 @@ import { type SEOConfig, generateMetaTags } from './seo';
 
 interface OgPageInfo {
   label: string;
-  icon: string;
 }
 
 const pageOgMap: Record<string, OgPageInfo> = {
-  home: { label: 'Portfolio', icon: '👨‍💻' },
-  'work-experience': { label: 'Career', icon: '💼' },
-  expertise: { label: 'Skills', icon: '🎯' },
-  terminal: { label: 'Terminal', icon: '⌨️' },
-  projects: { label: 'Portfolio', icon: '🚀' },
-  about: { label: 'About', icon: '👤' },
-  activity: { label: 'Activity', icon: '📊' },
+  home: { label: 'Portfolio' },
+  'work-experience': { label: 'Career' },
+  expertise: { label: 'Skills' },
+  terminal: { label: 'Terminal' },
+  projects: { label: 'Portfolio' },
+  about: { label: 'About' },
+  activity: { label: 'Activity' },
 };
 
 export function getOgImageUrl(
@@ -25,7 +24,6 @@ export function getOgImageUrl(
     title,
     description,
     page: pageInfo.label,
-    icon: pageInfo.icon,
   });
   if (image) params.set('image', image);
   return `/api/og?${params.toString()}`;

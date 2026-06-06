@@ -47,11 +47,11 @@
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
+    "satori": "^0.26.0",
     "shiki": "^4.0.2",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.4",
-    "takumi-js": "^1.7.0",
     "unified": "^11.0.5",
     "vite-tsconfig-paths": "^6.1.1",
     "zod": "^4.4.3"
