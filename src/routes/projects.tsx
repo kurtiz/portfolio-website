@@ -1,11 +1,12 @@
 import {createFileRoute} from '@tanstack/react-router';
 import {ProjectsGrid} from '@/components/projects/projects-grid';
-import {generateMetaTags, pageSEO} from '@/lib/seo';
+import {pageSEO} from '@/lib/seo';
+import {generatePageMetaTags} from '@/lib/og';
 import {motion} from 'framer-motion';
 
 export const Route = createFileRoute('/projects')({
     component: ProjectsPage,
-    head: () => generateMetaTags(pageSEO.projects),
+    head: () => generatePageMetaTags('projects', pageSEO.projects),
 });
 
 function ProjectsPage() {

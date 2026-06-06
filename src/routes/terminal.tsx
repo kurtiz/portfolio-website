@@ -1,10 +1,11 @@
 import {createFileRoute} from "@tanstack/react-router";
 import {FullTerminal} from "@/components/full-terminal";
-import {generateMetaTags, pageSEO} from "@/lib/seo";
+import {pageSEO} from "@/lib/seo";
+import {generatePageMetaTags} from "@/lib/og";
 
 export const Route = createFileRoute("/terminal")({
     component: TerminalPage,
-    head: () => generateMetaTags(pageSEO.terminal),
+    head: () => generatePageMetaTags('terminal', pageSEO.terminal),
 });
 
 function TerminalPage() {

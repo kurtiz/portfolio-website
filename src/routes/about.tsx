@@ -2,7 +2,8 @@ import {createFileRoute} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
 import {useEffect, useState} from 'react';
 import {Award, Cloud, Code, Github, Linkedin, Mail, MapPin, Shield, Twitter} from 'lucide-react';
-import {generateMetaTags, pageSEO, siteConfig} from '@/lib/seo';
+import {pageSEO, siteConfig} from '@/lib/seo';
+import {generatePageMetaTags} from '@/lib/og';
 import {GithubContributionsCard} from '@/components/cards/github-contributions-card';
 
 interface GitHubStats {
@@ -16,7 +17,7 @@ const GITHUB_USERNAME = 'kurtiz';
 
 export const Route = createFileRoute('/about')({
     component: AboutPage,
-    head: () => generateMetaTags(pageSEO.about),
+    head: () => generatePageMetaTags('about', pageSEO.about),
 });
 
 const twitterHandle = siteConfig.author.twitter?.replace('@', '') || 'aaronwilldjaba';

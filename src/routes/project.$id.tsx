@@ -3,6 +3,7 @@ import {ProjectDetails} from '@/components/projects/project-details';
 import {motion} from 'framer-motion';
 import {getAdjacentProjects, getProjectById} from '@/data/projects';
 import {generateMetaTags} from '@/lib/seo';
+import {getOgImageUrl} from '@/lib/og';
 
 export const Route = createFileRoute('/project/$id')({
     component: ProjectDetailPage,
@@ -17,11 +18,19 @@ export const Route = createFileRoute('/project/$id')({
                 ],
             };
         }
+        const ogDescription = project.description.length > 120
+            ? project.description.slice(0, 117) + '...'
+            : project.description;
         return generateMetaTags({
             title: project.title,
             description: project.description,
             url: `/project/${project.id}`,
-            image: project.image,
+            image: getOgImageUrl(
+                project.title,
+                ogDescription,
+                {label: 'Projects', icon: '🚀'},
+                project.image,
+            ),
             keywords: [...project.techStack, ...project.tags],
             type: 'article',
         });

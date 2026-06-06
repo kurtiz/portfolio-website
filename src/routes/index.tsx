@@ -10,12 +10,13 @@ import {ExpertiseCard} from "@/components/cards/expertise-card.tsx";
 import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
 import {AboutCard} from "@/components/cards/about-card.tsx";
 import {ActivityCard} from "@/components/cards/activity-card.tsx";
-import {generateMetaTags, pageSEO, generateStructuredData} from "@/lib/seo";
+import {pageSEO, generateStructuredData} from "@/lib/seo";
+import {generatePageMetaTags} from "@/lib/og";
 
 export const Route = createFileRoute('/')({
     component: App,
     head: () => {
-        const metaTags = generateMetaTags(pageSEO.home);
+        const metaTags = generatePageMetaTags('home', pageSEO.home);
         const structuredData = generateStructuredData('person');
         
         return {

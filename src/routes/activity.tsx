@@ -9,11 +9,12 @@ import {
     GitPullRequestCreateArrow,
     Loader2
 } from 'lucide-react';
-import {generateMetaTags, pageSEO} from '@/lib/seo';
+import {pageSEO} from '@/lib/seo';
+import {generatePageMetaTags} from '@/lib/og';
 
 export const Route = createFileRoute('/activity')({
     component: ActivityPage,
-    head: () => generateMetaTags(pageSEO.activity),
+    head: () => generatePageMetaTags('activity', pageSEO.activity),
 });
 
 interface ActivityItem {
