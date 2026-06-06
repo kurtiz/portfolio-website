@@ -27,6 +27,37 @@ export const projectTypes: { value: ProjectType; label: string }[] = [
 
 export const projects: Project[] = [
     {
+        id: 'our-pos',
+        title: 'OurPOS',
+        description: 'A complete Point of Sale (POS) system with inventory management, customer tracking, multi-POS support, AI assistant, and audit logging.',
+        longDescription: `A full-featured Point of Sale system built with TanStack Start and Cloudflare Workers. Supports multi-POS environments, barcode scanning (keyboard wedge + camera), credit sales, saved/paused sales, multi-tax (direct/compound), and atomic stock decrement with idempotency protection.
+
+## Features
+
+- **Point of Sale** - Local-first product grid with real-time stock, barcode scanner, shopping cart with tax breakdown, checkout with 8 payment methods, and post-checkout receipt (print/PDF)
+- **Multi-POS Support** - Cross-tab stock sync with 30s polling and atomic SQL-level overselling prevention
+- **Dashboard** - Real-time sales stats, 7-day chart, recent orders, low stock alerts
+- **Sales History & Receipts** - Paginated history with search, print, PDF download
+- **Stock Management** - Inventory table, low stock alerts, stock movements with audit trail
+- **Inventory Transfers** - Multi-location transfer workflow with status tracking
+- **Products** - Full CRUD with variant management, product types (physical/service/digital), and stock movements
+- **Services & Appointments** - Staff management, appointment scheduling with calendar, one-click order from appointment
+- **Customer Management** - CRM with credit limits and purchase history
+- **Settings** - Store config, feature flags, tax setup, notifications, integrations
+- **Audit Log** - Full immutable audit trail with JSON diff, device info, IP tracking
+- **AI Assistant (Pixi)** - Conversational AI with import capability (CSV/Excel to products), Text2SQL analytics, product substitution, and natural language cart staging
+- **Authentication** - Better Auth with email/password, Google OAuth, email verification, password reset, 2FA
+- **Multi-Tenant** - Organization-based stores with per-store settings`,
+        type: 'web-app',
+        techStack: ['TanStack Start', 'React', 'TypeScript', 'Better Auth', 'Drizzle', 'Tailwind CSS', 'Cloudflare D1', 'Cloudflare R2', 'Cloudflare Workers AI'],
+        tags: ['POS', 'SaaS', 'Inventory', 'AI', 'Multi-Tenant', 'Cloudflare'],
+        links: {
+            live: 'https://pos.247technologies.org',
+        },
+        featured: true,
+        image: 'https://assets.iamaaronwilldjaba.me/projects/our-pos.png',
+    },
+    {
         id: 'skillguard',
         title: 'SkillGuard',
         description: 'A security scanner for AI agent "skills" defined in Markdown. Evaluates skill definitions for security risks, malicious intents, and supply chain vulnerabilities.',

@@ -25,12 +25,32 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
         setLightboxOpen(true);
     };
 
+    const formatInlineMarkdown = (text: string): React.ReactNode[] => {
+        const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g);
+        return parts.map((part, i) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+                return <strong key={i}>{part.slice(2, -2)}</strong>;
+            }
+            if (part.startsWith('`') && part.endsWith('`')) {
+                return <code key={i} className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">{part.slice(1, -1)}</code>;
+            }
+            return part;
+        });
+    };
+
     const formatDescription = (text: string) => {
         return text.split('\n\n').map((paragraph, index) => {
+            if (paragraph.startsWith('### ')) {
+                return (
+                    <h4 key={index} className="font-semibold text-base mt-5 mb-2 text-muted-foreground">
+                        {formatInlineMarkdown(paragraph.replace('### ', ''))}
+                    </h4>
+                );
+            }
             if (paragraph.startsWith('## ')) {
                 return (
                     <h3 key={index} className="font-semibold text-lg mt-6 mb-3 first:mt-0">
-                        {paragraph.replace('## ', '')}
+                        {formatInlineMarkdown(paragraph.replace('## ', ''))}
                     </h3>
                 );
             }
@@ -40,7 +60,7 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
                     <ul key={index} className="list-disc list-inside space-y-1 my-3">
                         {items.map((item, i) => (
                             <li key={i} className="text-muted-foreground">
-                                {item.replace('- ', '')}
+                                {formatInlineMarkdown(item.replace('- ', ''))}
                             </li>
                         ))}
                     </ul>
@@ -58,7 +78,7 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
                                         <tr key={rowIndex}>
                                             {cells.map((cell, cellIndex) => (
                                                 <td key={cellIndex} className="px-4 py-2 border-b border-border">
-                                                    {cell.trim()}
+                                                    {formatInlineMarkdown(cell.trim())}
                                                 </td>
                                             ))}
                                         </tr>
@@ -71,7 +91,7 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
             }
             return (
                 <p key={index} className="text-muted-foreground my-3">
-                    {paragraph}
+                    {formatInlineMarkdown(paragraph)}
                 </p>
             );
         });
