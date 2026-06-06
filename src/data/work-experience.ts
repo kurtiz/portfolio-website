@@ -34,15 +34,6 @@ export interface WorkExperience {
  */
 export const workExperiences: WorkExperience[] = [
     {
-        company: "OpenSSF",
-        position: "Special Interest Group Lead",
-        startDate: "Dec 2025",
-        location: "Remote",
-        type: "Part-time",
-        description: "Leading a Special Interest Group focused on open-source security initiatives, collaboration, and community-driven standards within the OpenSSF ecosystem.",
-        technologies: ["Open Source Security", "Governance", "Community Leadership"],
-    },
-    {
         company: "Open Source & Security Africa (OSSAfrica)",
         position: "Co-Founder & Security Lead",
         startDate: "Oct 2025",
@@ -72,6 +63,16 @@ export const workExperiences: WorkExperience[] = [
                 ],
             },
         ],
+    },
+    {
+        company: "OpenSSF",
+        position: "Special Interest Group Lead",
+        startDate: "Dec 2025",
+        endDate: "May 2026",
+        location: "Remote",
+        type: "Part-time",
+        description: "Leading a Special Interest Group focused on open-source security initiatives, collaboration, and community-driven standards within the OpenSSF ecosystem.",
+        technologies: ["Open Source Security", "Governance", "Community Leadership"],
     },
     {
         company: "AmaliTech",
@@ -187,7 +188,7 @@ export const getTotalYearsOfExperience = (): number => {
  */
 export const getCurrentPositions = (): WorkExperience[] => {
     return workExperiences.filter(exp => !exp.endDate);
-};
+}
 
 /**
  * Get all unique technologies used across all positions
