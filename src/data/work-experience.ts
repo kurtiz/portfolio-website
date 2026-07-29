@@ -177,7 +177,7 @@ export const getTotalYearsOfExperience = (): number => {
     if (workExperiences.length === 0) return 0;
 
     const oldestExperience = workExperiences[workExperiences.length - 1];
-    const startYear = new Date(oldestExperience.startDate).getFullYear();
+    const startYear = parseInt(oldestExperience.startDate.split(' ').pop()!, 10);
     const currentYear = new Date().getFullYear();
 
     return currentYear - startYear;

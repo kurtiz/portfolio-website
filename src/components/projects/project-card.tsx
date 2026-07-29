@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, ExternalLink, BookOpen } from 'lucide-react';
+import { GithubLogoIcon, ArrowSquareOutIcon, BookOpenIcon } from '@phosphor-icons/react';
 
 interface ProjectCardProps {
     project: {
@@ -94,7 +94,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                                 aria-label="View on GitHub"
                             >
-                                <Github className="w-4 h-4" />
+                                <GithubLogoIcon weight="duotone" className="w-4 h-4" />
                             </a>
                         )}
                         {project.links.live && (
@@ -105,7 +105,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                                 aria-label="View live site"
                             >
-                                <ExternalLink className="w-4 h-4" />
+                                <ArrowSquareOutIcon weight="duotone" className="w-4 h-4" />
                             </a>
                         )}
                         {project.links.docs && (
@@ -116,7 +116,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                                 aria-label="View documentation"
                             >
-                                <BookOpen className="w-4 h-4" />
+                                <BookOpenIcon weight="duotone" className="w-4 h-4" />
                             </a>
                         )}
                     </div>

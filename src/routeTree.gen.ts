@@ -9,49 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WorkExperienceRouteImport } from './routes/work-experience'
-import { Route as TerminalRouteImport } from './routes/terminal'
-import { Route as ProjectsRouteImport } from './routes/projects'
-import { Route as ExpertiseRouteImport } from './routes/expertise'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as ActivityRouteImport } from './routes/activity'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProjectIdRouteImport } from './routes/project.$id'
-import { Route as BlogSlugRouteImport } from './routes/blog_.$slug'
-import { Route as ApiOgRouteImport } from './routes/api/og'
-import { Route as ApiGithubStatsRouteImport } from './routes/api/github-stats'
-import { Route as ApiGithubContributionsRouteImport } from './routes/api/github-contributions'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ActivityRouteImport } from './routes/activity'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ExpertiseRouteImport } from './routes/expertise'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as TerminalRouteImport } from './routes/terminal'
+import { Route as WorkExperienceRouteImport } from './routes/work-experience'
 import { Route as ApiGithubActivityRouteImport } from './routes/api/github-activity'
+import { Route as ApiGithubContributionsRouteImport } from './routes/api/github-contributions'
+import { Route as ApiGithubStatsRouteImport } from './routes/api/github-stats'
+import { Route as ApiOgRouteImport } from './routes/api/og'
+import { Route as BlogSlugRouteImport } from './routes/blog_.$slug'
+import { Route as ProjectIdRouteImport } from './routes/project.$id'
 
-const WorkExperienceRoute = WorkExperienceRouteImport.update({
-  id: '/work-experience',
-  path: '/work-experience',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TerminalRoute = TerminalRouteImport.update({
-  id: '/terminal',
-  path: '/terminal',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsRoute = ProjectsRouteImport.update({
-  id: '/projects',
-  path: '/projects',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExpertiseRoute = ExpertiseRouteImport.update({
-  id: '/expertise',
-  path: '/expertise',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ActivityRoute = ActivityRouteImport.update({
-  id: '/activity',
-  path: '/activity',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -59,29 +34,39 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ActivityRoute = ActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectIdRoute = ProjectIdRouteImport.update({
-  id: '/project/$id',
-  path: '/project/$id',
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog_/$slug',
-  path: '/blog/$slug',
+const ExpertiseRoute = ExpertiseRouteImport.update({
+  id: '/expertise',
+  path: '/expertise',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiOgRoute = ApiOgRouteImport.update({
-  id: '/api/og',
-  path: '/api/og',
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiGithubStatsRoute = ApiGithubStatsRouteImport.update({
-  id: '/api/github-stats',
-  path: '/api/github-stats',
+const TerminalRoute = TerminalRouteImport.update({
+  id: '/terminal',
+  path: '/terminal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkExperienceRoute = WorkExperienceRouteImport.update({
+  id: '/work-experience',
+  path: '/work-experience',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiGithubActivityRoute = ApiGithubActivityRouteImport.update({
+  id: '/api/github-activity',
+  path: '/api/github-activity',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiGithubContributionsRoute = ApiGithubContributionsRouteImport.update({
@@ -89,9 +74,24 @@ const ApiGithubContributionsRoute = ApiGithubContributionsRouteImport.update({
   path: '/api/github-contributions',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiGithubActivityRoute = ApiGithubActivityRouteImport.update({
-  id: '/api/github-activity',
-  path: '/api/github-activity',
+const ApiGithubStatsRoute = ApiGithubStatsRouteImport.update({
+  id: '/api/github-stats',
+  path: '/api/github-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOgRoute = ApiOgRouteImport.update({
+  id: '/api/og',
+  path: '/api/og',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog_/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectIdRoute = ProjectIdRouteImport.update({
+  id: '/project/$id',
+  path: '/project/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -214,46 +214,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/work-experience': {
-      id: '/work-experience'
-      path: '/work-experience'
-      fullPath: '/work-experience'
-      preLoaderRoute: typeof WorkExperienceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terminal': {
-      id: '/terminal'
-      path: '/terminal'
-      fullPath: '/terminal'
-      preLoaderRoute: typeof TerminalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects': {
-      id: '/projects'
-      path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/expertise': {
-      id: '/expertise'
-      path: '/expertise'
-      fullPath: '/expertise'
-      preLoaderRoute: typeof ExpertiseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/activity': {
-      id: '/activity'
-      path: '/activity'
-      fullPath: '/activity'
-      preLoaderRoute: typeof ActivityRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -263,39 +228,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/activity': {
+      id: '/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof ActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/project/$id': {
-      id: '/project/$id'
-      path: '/project/$id'
-      fullPath: '/project/$id'
-      preLoaderRoute: typeof ProjectIdRouteImport
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog_/$slug': {
-      id: '/blog_/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
+    '/expertise': {
+      id: '/expertise'
+      path: '/expertise'
+      fullPath: '/expertise'
+      preLoaderRoute: typeof ExpertiseRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/og': {
-      id: '/api/og'
-      path: '/api/og'
-      fullPath: '/api/og'
-      preLoaderRoute: typeof ApiOgRouteImport
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/github-stats': {
-      id: '/api/github-stats'
-      path: '/api/github-stats'
-      fullPath: '/api/github-stats'
-      preLoaderRoute: typeof ApiGithubStatsRouteImport
+    '/terminal': {
+      id: '/terminal'
+      path: '/terminal'
+      fullPath: '/terminal'
+      preLoaderRoute: typeof TerminalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work-experience': {
+      id: '/work-experience'
+      path: '/work-experience'
+      fullPath: '/work-experience'
+      preLoaderRoute: typeof WorkExperienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/github-activity': {
+      id: '/api/github-activity'
+      path: '/api/github-activity'
+      fullPath: '/api/github-activity'
+      preLoaderRoute: typeof ApiGithubActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/github-contributions': {
@@ -305,11 +284,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGithubContributionsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/github-activity': {
-      id: '/api/github-activity'
-      path: '/api/github-activity'
-      fullPath: '/api/github-activity'
-      preLoaderRoute: typeof ApiGithubActivityRouteImport
+    '/api/github-stats': {
+      id: '/api/github-stats'
+      path: '/api/github-stats'
+      fullPath: '/api/github-stats'
+      preLoaderRoute: typeof ApiGithubStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/og': {
+      id: '/api/og'
+      path: '/api/og'
+      fullPath: '/api/og'
+      preLoaderRoute: typeof ApiOgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog_/$slug': {
+      id: '/blog_/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project/$id': {
+      id: '/project/$id'
+      path: '/project/$id'
+      fullPath: '/project/$id'
+      preLoaderRoute: typeof ProjectIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }

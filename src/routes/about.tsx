@@ -1,7 +1,8 @@
 import {createFileRoute} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
 import {useEffect, useState} from 'react';
-import {Award, Cloud, Code, Github, Linkedin, Mail, MapPin, Shield, Twitter} from 'lucide-react';
+import {Award, Cloud, Code, MapPin, Shield} from 'lucide-react';
+import {GithubLogoIcon, XLogoIcon, LinkedinLogoIcon, MailboxIcon} from "@phosphor-icons/react";
 import {pageSEO, siteConfig} from '@/lib/seo';
 import {generatePageMetaTags} from '@/lib/og';
 import {GithubContributionsCard} from '@/components/cards/github-contributions-card';
@@ -23,10 +24,10 @@ export const Route = createFileRoute('/about')({
 const twitterHandle = siteConfig.author.twitter?.replace('@', '') || 'aaronwilldjaba';
 
 const socialLinks = [
-    {icon: Github, href: `https://github.com/${siteConfig.author.github}`, label: 'GitHub'},
-    {icon: Linkedin, href: siteConfig.author.linkedin, label: 'LinkedIn'},
-    {icon: Twitter, href: `https://twitter.com/${twitterHandle}`, label: 'Twitter'},
-    {icon: Mail, href: `mailto:${siteConfig.author.email}`, label: 'Email'},
+    {icon: GithubLogoIcon, href: `https://github.com/${siteConfig.author.github}`, label: 'GitHub'},
+    {icon: LinkedinLogoIcon, href: siteConfig.author.linkedin, label: 'LinkedIn'},
+    {icon: XLogoIcon, href: `https://twitter.com/${twitterHandle}`, label: 'Twitter'},
+    {icon: MailboxIcon, href: `mailto:${siteConfig.author.email}`, label: 'Email'},
 ];
 
 const certifications = [
@@ -309,7 +310,7 @@ function AboutPage() {
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-2 font-mono text-sm bg-secondary hover:bg-secondary/80 px-4 py-2.5 rounded-lg transition-colors"
                                 >
-                                    <Icon className="w-4 h-4"/>
+                                    <Icon weight="duotone" className="w-4 h-4"/>
                                     {label}
                                 </a>
                             ))}

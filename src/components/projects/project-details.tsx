@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from '@tanstack/react-router';
-import { ArrowLeft, Github, ExternalLink, BookOpen, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { GithubLogoIcon, ArrowSquareOutIcon, BookOpenIcon } from '@phosphor-icons/react';
 import type { Project } from '@/data/projects';
 import { projectTypes } from '@/data/projects';
 import { Lightbox } from './lightbox';
@@ -191,7 +192,7 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 font-mono text-sm bg-secondary hover:bg-secondary/80 px-4 py-2.5 rounded-lg transition-colors"
                         >
-                            <Github className="w-4 h-4" />
+                            <GithubLogoIcon weight="duotone" className="w-4 h-4" />
                             View on GitHub
                         </a>
                     )}
@@ -202,7 +203,7 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 font-mono text-sm bg-accent text-accent-foreground hover:bg-accent/90 px-4 py-2.5 rounded-lg transition-colors"
                         >
-                            <ExternalLink className="w-4 h-4" />
+                            <ArrowSquareOutIcon weight="duotone" className="w-4 h-4" />
                             View Live
                         </a>
                     )}
@@ -213,7 +214,7 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 font-mono text-sm bg-secondary hover:bg-secondary/80 px-4 py-2.5 rounded-lg transition-colors"
                         >
-                            <BookOpen className="w-4 h-4" />
+                            <BookOpenIcon weight="duotone" className="w-4 h-4" />
                             Documentation
                         </a>
                     )}
