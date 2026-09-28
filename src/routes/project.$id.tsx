@@ -3,34 +3,20 @@ import {ProjectDetails} from '@/components/projects/project-details';
 import {motion} from 'framer-motion';
 import {getAdjacentProjects, getProjectById} from '@/data/projects';
 import {generateMetaTags} from '@/lib/seo';
-import {getOgImageUrl} from '@/lib/og';
+import {missingPageMetaTags, projectOgImage} from '@/lib/og';
 
 export const Route = createFileRoute('/project/$id')({
     component: ProjectDetailPage,
     head: ({params}) => {
         const project = getProjectById(params.id);
         if (!project) {
-            return {
-                meta: [
-                    {
-                        title: 'Project Not Found | Aaron Will Djaba',
-                    },
-                ],
-            };
+            return missingPageMetaTags('Project Not Found');
         }
-        const ogDescription = project.description.length > 120
-            ? project.description.slice(0, 117) + '...'
-            : project.description;
         return generateMetaTags({
             title: project.title,
             description: project.description,
             url: `/project/${project.id}`,
-            image: getOgImageUrl(
-                project.title,
-                ogDescription,
-                {label: 'Projects'},
-                project.image,
-            ),
+            image: projectOgImage(project.id),
             keywords: [...project.techStack, ...project.tags],
             type: 'article',
         });

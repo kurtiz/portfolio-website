@@ -10,7 +10,7 @@ import {ExpertiseCard} from "@/components/cards/expertise-card.tsx";
 import {WorkExperienceCard} from "@/components/cards/work-experience-card.tsx";
 import {AboutCard} from "@/components/cards/about-card.tsx";
 import {ActivityCard} from "@/components/cards/activity-card.tsx";
-import {pageSEO, generateStructuredData} from "@/lib/seo";
+import {pageSEO, generateStructuredData, jsonLdScript} from "@/lib/seo";
 import {generatePageMetaTags} from "@/lib/og";
 
 export const Route = createFileRoute('/')({
@@ -21,12 +21,7 @@ export const Route = createFileRoute('/')({
         
         return {
             ...metaTags,
-            scripts: structuredData ? [
-                {
-                    type: 'application/ld+json',
-                    children: JSON.stringify(structuredData),
-                },
-            ] : [],
+            scripts: structuredData ? [jsonLdScript(structuredData)] : [],
         };
     },
 });

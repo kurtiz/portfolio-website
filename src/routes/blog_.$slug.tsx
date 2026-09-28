@@ -1,12 +1,13 @@
 import {createFileRoute, Link, notFound} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
-import {generateMetaTags, generateStructuredData, pageSEO} from '@/lib/seo';
+import {generateMetaTags, generateStructuredData, jsonLdScript} from '@/lib/seo';
 import {estimateReadingTime, renderMarkdown} from '@/lib/markdown';
 import {ArrowLeft, Calendar, Clock, Maximize2, Tag} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {allPosts} from 'content-collections';
 import {Lightbox} from '@/components/projects/lightbox';
 import {GiscusComments} from '@/components/giscus-comments';
+import {blogOgImage, missingPageMetaTags} from '@/lib/og';
 
 type Post = typeof allPosts[0];
 
@@ -14,7 +15,7 @@ export const Route = createFileRoute('/blog_/$slug')({
     component: BlogPostPage,
     head: ({loaderData}) => {
         // @ts-ignore
-        if (!loaderData?.post) return generateMetaTags(pageSEO.blog);
+        if (!loaderData?.post) return missingPageMetaTags('Article Not Found');
         // @ts-ignore
         const post = loaderData.post;
         const meta = generateMetaTags({
@@ -25,12 +26,12 @@ export const Route = createFileRoute('/blog_/$slug')({
             type: 'article',
             publishedTime: post.date,
             tags: post.tags,
-            image: post.coverImage || undefined,
+            image: blogOgImage(post._meta.path),
         });
         const structuredData = generateStructuredData('article', {
             title: post.title,
             description: post.excerpt,
-            image: post.coverImage,
+            image: blogOgImage(post._meta.path),
             publishedTime: post.date,
             modifiedTime: post.date,
             keywords: post.tags,
@@ -38,12 +39,7 @@ export const Route = createFileRoute('/blog_/$slug')({
         });
         return {
             ...meta,
-            scripts: [
-                {
-                    type: 'application/ld+json' as const,
-                    children: JSON.stringify(structuredData),
-                },
-            ],
+            scripts: [jsonLdScript(structuredData)],
         } as any;
     },
     loader: ({params}) => {

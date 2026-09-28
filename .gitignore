@@ -20,3 +20,4 @@ TODO.md
 .blackboxcli/
 shell_tool_*.log
 .content-collections/
+public/og/

@@ -11,15 +11,17 @@ import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {Toaster} from "sonner";
 import {PageNavigation} from "@/components/page-navigation";
 import {AudioProvider} from "@/contexts/audio-context";
+import {defaultSocialMeta} from "@/lib/og";
 
 export const Route = createRootRoute({
-    head: () => ({
+    head: ({matches}) => ({
         meta: [
             { title: "Aaron Will Djaba - Full Stack Developer" },
             { charSet: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { name: 'theme-color', content: '#FCF9EAFF' },
             { name: 'msapplication-TileColor', content: '#FCF9EAFF' },
+            ...defaultSocialMeta(matches.at(-1)?.pathname),
         ],
         links: [
             {

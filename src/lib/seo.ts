@@ -31,9 +31,18 @@ export interface SiteConfig {
         github?: string;
     };
     ogImage: string; // Default Open Graph image
+    profileImage: string;
     twitterHandle?: string;
     locale?: string;
     themeColor?: string;
+}
+
+/** Keep authored text from ending a JSON-LD script element. */
+export function jsonLdScript(data: unknown) {
+    return {
+        type: 'application/ld+json' as const,
+        children: JSON.stringify(data).replace(/</g, '\\u003c'),
+    };
 }
 
 /**
@@ -51,7 +60,8 @@ export const siteConfig: SiteConfig = {
         linkedin: "https://www.linkedin.com/in/aaron-will-djaba-424b7a184",
         github: "kurtiz",
     },
-    ogImage: "https://assets.iamaaronwilldjaba.me/blog/portfolio.png",
+    ogImage: "/og/default.png",
+    profileImage: "https://assets.iamaaronwilldjaba.me/profile.jpg",
     twitterHandle: "@aaronwilldjaba",
     locale: "en_US",
     themeColor: "#FCF9EAFF",
@@ -76,8 +86,8 @@ export function generateMetaTags(config: SEOConfig) {
     } = config;
 
     const fullTitle = title === siteConfig.name ? title : `${title} | ${siteConfig.name}`;
-    const imageUrl = image.startsWith('http') ? image : `${siteConfig.url}${image}`;
-    const pageUrl = url.startsWith('http') ? url : `${siteConfig.url}${url}`;
+    const imageUrl = new URL(image, siteConfig.url).toString();
+    const pageUrl = new URL(url, siteConfig.url).toString();
 
     return {
         meta: [
@@ -99,6 +109,7 @@ export function generateMetaTags(config: SEOConfig) {
             {property: 'og:title', content: fullTitle},
             {property: 'og:description', content: description},
             {property: 'og:image', content: imageUrl},
+            {property: 'og:image:type', content: 'image/png'},
             {property: 'og:image:width', content: '1200'},
             {property: 'og:image:height', content: '630'},
             {property: 'og:site_name', content: siteConfig.name},
@@ -124,6 +135,7 @@ export function generateMetaTags(config: SEOConfig) {
             {name: 'twitter:title', content: fullTitle},
             {name: 'twitter:description', content: description},
             {name: 'twitter:image', content: imageUrl},
+            {name: 'twitter:image:alt', content: fullTitle},
             ...(siteConfig.twitterHandle ? [
                 {name: 'twitter:creator', content: siteConfig.twitterHandle},
                 {name: 'twitter:site', content: siteConfig.twitterHandle},
@@ -233,7 +245,7 @@ export function generateStructuredData(type: 'person' | 'website' | 'article', d
             '@type': 'Person',
             name: siteConfig.author.name,
             url: baseUrl,
-            image: `${baseUrl}${siteConfig.ogImage}`,
+            image: siteConfig.profileImage,
             jobTitle: 'Full-Stack Software Engineer',
             worksFor: {
                 '@type': 'Organization',
@@ -241,7 +253,7 @@ export function generateStructuredData(type: 'person' | 'website' | 'article', d
             },
             sameAs: [
                 siteConfig.author.twitter ? `https://twitter.com/${siteConfig.author.twitter.replace('@', '')}` : '',
-                siteConfig.author.linkedin ? `https://linkedin.com/in/${siteConfig.author.linkedin}` : '',
+                siteConfig.author.linkedin || '',
                 siteConfig.author.github ? `https://github.com/${siteConfig.author.github}` : '',
             ].filter(Boolean),
         };
@@ -262,9 +274,7 @@ export function generateStructuredData(type: 'person' | 'website' | 'article', d
     }
 
     if (type === 'article' && data) {
-        const imageUrl = data.image
-            ? (data.image.startsWith('http') ? data.image : `${baseUrl}${data.image}`)
-            : `${baseUrl}${siteConfig.ogImage}`;
+        const imageUrl = new URL(data.image || siteConfig.ogImage, baseUrl).toString();
 
         return {
             '@context': 'https://schema.org',
@@ -286,7 +296,7 @@ export function generateStructuredData(type: 'person' | 'website' | 'article', d
             },
             mainEntityOfPage: {
                 '@type': 'WebPage',
-                '@id': data.url || baseUrl,
+                '@id': new URL(data.url || '/', baseUrl).toString(),
             },
             ...(data.keywords?.length ? {keywords: data.keywords} : {}),
         };

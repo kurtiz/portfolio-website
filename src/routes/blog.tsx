@@ -1,25 +1,21 @@
 import {createFileRoute, Link} from '@tanstack/react-router';
 import {motion} from 'framer-motion';
-import {generateMetaTags, generateStructuredData, pageSEO} from '@/lib/seo';
+import {generateStructuredData, jsonLdScript, pageSEO} from '@/lib/seo';
 import PenIcon from '@/components/ui/pen-icon.tsx';
 import {useRef} from 'react';
 import {AnimatedIconHandle} from '@/components/ui/types';
 import {Calendar, ArrowRight} from 'lucide-react';
 import {allPosts} from 'content-collections';
+import {generatePageMetaTags} from '@/lib/og';
 
 export const Route = createFileRoute('/blog')({
     component: BlogPage,
     head: () => {
-        const meta = generateMetaTags(pageSEO.blog);
+        const meta = generatePageMetaTags('blog', pageSEO.blog);
         const structuredData = generateStructuredData('website');
         return {
             ...meta,
-            scripts: [
-                {
-                    type: 'application/ld+json' as const,
-                    children: JSON.stringify(structuredData),
-                },
-            ],
+            scripts: [jsonLdScript(structuredData)],
         } as any;
     },
 });
