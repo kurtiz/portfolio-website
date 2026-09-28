@@ -113,7 +113,24 @@ export const ProjectDetails = ({ project, prevProject, nextProject }: ProjectDet
                     Back to Projects
                 </Link>
 
-                {project.image && (
+                {project.video ? (
+                    <figure className="mb-8 -mx-5 sm:-mx-10 lg:-mx-20">
+                        <video
+                            controls
+                            playsInline
+                            preload="none"
+                            poster={project.image}
+                            aria-label={`${project.title} demo video`}
+                            className="w-full aspect-video rounded-xl bg-black"
+                        >
+                            <source src={project.video} type="video/mp4" />
+                            Your browser does not support video playback.
+                        </video>
+                        <figcaption className="mt-2 text-center font-mono text-xs text-muted-foreground">
+                            Forge demo · 30 seconds · silent
+                        </figcaption>
+                    </figure>
+                ) : project.image && (
                     <div className="relative mb-8 -mx-5 sm:-mx-10 lg:-mx-20">
                         <div
                             className="relative overflow-hidden rounded-xl cursor-pointer group"

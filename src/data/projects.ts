@@ -15,6 +15,7 @@ export interface Project {
     };
     featured?: boolean;
     image?: string;
+    video?: string;
 }
 
 export const projectTypes: { value: ProjectType; label: string }[] = [
@@ -52,6 +53,8 @@ Built with TanStack Start, Cloudflare Workers, Durable Objects, D1, R2, Workers 
             live: 'https://forge.papiliocurtis.workers.dev/',
         },
         featured: true,
+        image: '/projects/forge.webp',
+        video: '/projects/forge-demo.mp4',
     },
     {
         id: 'wakaboard',
