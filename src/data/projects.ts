@@ -1,4 +1,4 @@
-export type ProjectType = 'web-app' | 'cli-tool' | 'library' | 'client' | 'docs';
+export type ProjectType = 'web-app' | 'mobile-app' | 'cli-tool' | 'library' | 'client' | 'docs';
 
 export interface Project {
     id: string;
@@ -19,6 +19,7 @@ export interface Project {
 
 export const projectTypes: { value: ProjectType; label: string }[] = [
     {value: 'web-app', label: 'Web Apps'},
+    {value: 'mobile-app', label: 'Mobile Apps'},
     {value: 'cli-tool', label: 'CLI Tools'},
     {value: 'library', label: 'Libraries'},
     {value: 'client', label: 'Client Projects'},
@@ -26,6 +27,51 @@ export const projectTypes: { value: ProjectType; label: string }[] = [
 ];
 
 export const projects: Project[] = [
+    {
+        id: 'forge',
+        title: 'Forge',
+        description: 'An evidence-first verifier for web apps that explores deployed sites, reproduces failures, and shows what happened with browser traces and artifacts.',
+        longDescription: `Forge verifies deployed web applications from the outside. Give it a URL and it discovers user journeys, runs them, reproduces failures, and reports findings backed by evidence. A later run can verify whether a fix worked.
+
+## Features
+
+- Browser-based journey discovery and execution, with an HTTP fallback
+- Failure classification and reproducibility checks before reporting confirmed bugs
+- Screenshots, console and network evidence, recordings, and agent traces
+- Live run progress, saved projects, and evidence-backed findings in the web console
+- CLI and REST API for verification from a terminal or CI pipeline
+- GitHub pull request checks for preview deployments
+- Scheduled monitoring with notifications when a site's status changes
+
+Built with TanStack Start, Cloudflare Workers, Durable Objects, D1, R2, Workers AI, and Solari browsers.`,
+        type: 'web-app',
+        techStack: ['TanStack Start', 'TypeScript', 'Cloudflare Workers', 'Durable Objects', 'Cloudflare D1', 'Cloudflare R2', 'Workers AI'],
+        tags: ['Testing', 'AI Agents', 'Developer Tools', 'Cloudflare'],
+        links: {
+            github: 'https://github.com/kurtiz/forge',
+            live: 'https://forge.papiliocurtis.workers.dev/',
+        },
+        featured: true,
+    },
+    {
+        id: 'wakaboard',
+        title: 'WakaBoard',
+        description: 'An open source iOS and Android WakaTime companion for coding activity, daily goals, insights, and leaderboards.',
+        longDescription: `WakaBoard is a mobile companion for WakaTime, built with Expo and React Native. It turns coding activity into a dashboard and lets users connect with WakaTime sign-in or an API key. The app is in active development.
+
+## Features
+
+- Sync coding summaries with project, language, and editor breakdowns
+- Set a daily coding goal and review previously downloaded activity offline
+- Browse leaderboards and member profiles while connected
+- Manage appearance and sync preferences, sign out, and clear downloaded activity
+- Cloudflare Worker for WakaTime OAuth and API requests; local SQLite cache for activity`,
+        type: 'mobile-app',
+        techStack: ['Expo', 'React Native', 'TypeScript', 'Cloudflare Workers', 'Cloudflare D1', 'SQLite'],
+        tags: ['Mobile', 'WakaTime', 'Developer Tools', 'Open Source'],
+        links: {},
+        featured: true,
+    },
     {
         id: 'our-pos',
         title: 'OurPOS',
@@ -44,7 +90,7 @@ export const projects: Project[] = [
 - **Services & Appointments** - Staff management, appointment scheduling with calendar, one-click order from appointment
 - **Customer Management** - CRM with credit limits and purchase history
 - **Settings** - Store config, feature flags, tax setup, notifications, integrations
-- **Audit Log** - Full immutable audit trail with JSON diff, device info, IP tracking
+- **Audit Log** - Activity history with field-level changes and device information
 - **AI Assistant (Pixi)** - Conversational AI with import capability (CSV/Excel to products), Text2SQL analytics, product substitution, and natural language cart staging
 - **Authentication** - Better Auth with email/password, Google OAuth, email verification, password reset, 2FA
 - **Multi-Tenant** - Organization-based stores with per-store settings`,
@@ -88,7 +134,7 @@ SkillGuard uses a multi-category scoring system with weighted averages:
 ## Install
 
 # Binary\n
-brew install ossafrica/skillguard
+brew install ossafrica/skillguard/skillguard
 
 # Docker\n
 docker pull ghcr.io/ossafrica/skillguard:latest
@@ -108,28 +154,25 @@ go build -o skillguard .
     {
         id: 'bvault-js',
         title: 'bVault.js',
-        description: 'A type-safe, lightweight, zero-dependency cryptographic library for secure encryption and decryption in browser environments.',
-        longDescription: `bVault-js is a type-safe, lightweight, zero-dependency cryptographic library for secure encryption and decryption in browser environments. It implements AES-GCM encryption with PBKDF2 key derivation, providing a simple API for data protection.
+        description: 'A zero-dependency TypeScript library that encrypts localStorage and sessionStorage data with a non-exportable browser key.',
+        longDescription: `bVault-js provides encrypted wrappers for localStorage and sessionStorage using the Web Crypto API. It generates a non-extractable AES-GCM key and stores it in IndexedDB. The key is never derived from a password.
 
 ## Features
 
 - AES-GCM 256-bit encryption
-- Password-based key derivation (PBKDF2 with 100 thousand iterations)
-- Automatic salt and IV generation
-- Built-in error handling for cryptographic operations
-- Works in browsers (using Web Crypto API)
-- Secure Local Storage Wrapper – store/retrieve data in localStorage securely with automatic encryption/decryption
-- Secure Session Storage Wrapper – store/retrieve data in sessionStorage securely with automatic encryption/decryption
+- Non-extractable CryptoKey generated and stored in IndexedDB
+- Fresh IV for each encrypted value
+- Encrypted localStorage and sessionStorage wrappers
+- Safe to import during server-side rendering
+- Fully typed with no runtime dependencies
 
 ## Security Notes
 
-- Always use strong, unique passwords for encryption
-- Safely store IVs and salts with encrypted data
-- Never hardcode passwords in source code
-- Consider rotating encryption keys periodically
-- Use HTTPS when transmitting encrypted data`,
+- Protects against copying browser storage for replay elsewhere
+- Does not protect against live malicious scripts that can call the decryption API
+- Clearing the IndexedDB key makes stored values unreadable; use it for recoverable data`,
         type: 'library',
-        techStack: ['TypeScript', 'Go', 'Rust'],
+        techStack: ['TypeScript', 'Web Crypto API', 'IndexedDB'],
         tags: ['Security', 'Cryptography', 'Browser'],
         links: {
             github: 'https://github.com/ossafrica/bvault-js',
@@ -150,7 +193,7 @@ go build -o skillguard .
 - Instant log ingestion with zero configuration
 - Zero-config PII scrubbing for compliance
 - Edge-powered performance with <50ms latency
-- Complete SDK ecosystem for all major programming languages
+- SDKs for JavaScript/TypeScript, Python, Dart, and Go
 - Beautiful, minimalist dashboard for log management
 
 ## SDK Support
@@ -200,6 +243,7 @@ Built for modern developers who want simplicity without sacrificing power. It de
         techStack: ['Fumadocs', 'TypeScript', 'Tailwind CSS'],
         tags: ['Documentation', 'SDK', 'MDX'],
         links: {
+            github: 'https://github.com/VedaTrace/vedatrace-docs',
             live: 'https://docs.vedatrace.dev/',
         },
         image: 'https://assets.iamaaronwilldjaba.me/projects/vedatrace-docs.jpeg',
@@ -255,19 +299,19 @@ Developer Experience
     {
         id: 'dhclc',
         title: 'DHCLC Website',
-        description: 'Website for Divine Heals Counselling Centre - a professional online presence for counseling and mental health services.',
-        longDescription: `A professional website for Divine Heals Counselling Centre - providing accessible counseling and mental health services.
+        description: 'A responsive website for Divine Heals Counseling & Leadership Consultancy, presenting counseling, leadership, and virtual support services.',
+        longDescription: `A website for Divine Heals Counseling & Leadership Consultancy, presenting its faith-based counseling, leadership development, and virtual support services.
 
 ## Features
 
 - Professional service presentation
-- Contact information and booking
+- Contact information and inquiry form
 - Service descriptions
 - Responsive design for all devices
 - Professional imagery and branding`,
         type: 'client',
-        techStack: ['React', 'Next.js'],
-        tags: ['Healthcare', 'Counseling'],
+        techStack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+        tags: ['Counseling', 'Leadership', 'Client'],
         links: {
             live: 'https://dhclc.org/',
         },
@@ -293,13 +337,14 @@ DCDO focuses on five key impact areas:
 - Landing page with impact area highlights and gallery
 - About page with organisation history and mission
 - Gallery page showcasing community events and projects
-- Contact and donation pages with form integrations
+- Gallery of community activities and a contact page
 - Mobile-first responsive design with smooth animations
 - SEO-optimized with structured data for local search`,
         type: 'client',
         techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
         tags: ['Client', 'NGO', 'Community', 'Web Design', 'Non-Profit'],
         links: {
+            github: 'https://github.com/kurtiz/dcdo-website',
             live: 'https://dcdo-website.vercel.app/',
         },
         image: 'https://assets.iamaaronwilldjaba.me/projects/dcdo.avif',

@@ -10,6 +10,7 @@ import { EmptyState } from './empty-state';
 const filterTypes: { value: ProjectType | 'all'; label: string }[] = [
     { value: 'all', label: 'All' },
     { value: 'web-app', label: 'Web Apps' },
+    { value: 'mobile-app', label: 'Mobile Apps' },
     { value: 'cli-tool', label: 'CLI Tools' },
     { value: 'library', label: 'Libraries' },
     { value: 'client', label: 'Client Projects' },
